@@ -3,6 +3,8 @@ import type Stripe from "stripe";
 import { stripe } from "@/lib/stripe";
 import { env } from "@/lib/env";
 import { limiters, clientIp } from "@/lib/rate-limit";
+import { fulfilOrder } from "@/db/orders";
+import { sendOrderConfirmation } from "@/lib/email";
 
 /**
  * Stripe webhook handler — the source of truth that a payment succeeded.
@@ -50,18 +52,47 @@ export async function POST(req: Request) {
     );
   }
 
-  // TODO(commerce phase): wrap in a DB transaction, key idempotency off
-  // event.id, mark the order paid, atomically decrement/lock stock, and queue
-  // the confirmation email. See docs/IMPLEMENTATION.md → "Checkout flow".
-  switch (event.type) {
-    case "payment_intent.succeeded":
-      // const intent = event.data.object as Stripe.PaymentIntent;
-      break;
-    case "payment_intent.payment_failed":
-      break;
-    default:
-      // Unhandled event types are acknowledged so Stripe stops retrying.
-      break;
+  // `checkout.session.completed` is our source of truth that payment succeeded.
+  // Fulfilment is transactional + idempotent (keyed on event.id) in fulfilOrder.
+  if (event.type === "checkout.session.completed") {
+    const session = event.data.object as Stripe.Checkout.Session;
+    const orderId = session.metadata?.orderId;
+
+    if (!orderId) {
+      // Not one of ours / missing metadata — acknowledge so Stripe stops retrying.
+      console.error(`[webhook] ${event.id}: session without orderId metadata`);
+      return NextResponse.json({ received: true });
+    }
+
+    const paymentIntentId =
+      typeof session.payment_intent === "string"
+        ? session.payment_intent
+        : (session.payment_intent?.id ?? null);
+
+    try {
+      const result = await fulfilOrder({
+        eventId: event.id,
+        eventType: event.type,
+        orderId,
+        paymentIntentId,
+        customerEmail: session.customer_details?.email ?? null,
+      });
+
+      if (result.status === "fulfilled") {
+        if (result.oversold.length > 0) {
+          // Payment is real but stock was already gone — needs a manual refund.
+          console.error(
+            `[webhook] order ${orderId} OVERSOLD (refund needed): ${result.oversold.join(", ")}`,
+          );
+        }
+        // Best-effort email; never blocks acknowledging the webhook.
+        await sendOrderConfirmation(result.email);
+      }
+    } catch (err) {
+      // A real failure (e.g. DB down): return 500 so Stripe retries later.
+      console.error(`[webhook] fulfilment failed for ${event.id}:`, err);
+      return NextResponse.json({ error: "fulfilment_failed" }, { status: 500 });
+    }
   }
 
   // Acknowledge receipt. Returning 2xx tells Stripe the event was handled.

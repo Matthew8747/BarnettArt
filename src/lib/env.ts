@@ -65,6 +65,12 @@ const serverSchema = z.object({
 
   ADMIN_EMAILS: z.string().default(""),
 
+  // Secret used to HMAC-sign the cart cookie (tamper detection). Required in
+  // production; in dev a fixed fallback keeps local carts working without setup.
+  CART_SECRET: enforceRequired
+    ? z.string().min(16, "CART_SECRET must be at least 16 chars")
+    : z.string().default("dev-only-insecure-cart-secret-change-me"),
+
   SENTRY_DSN: z.string().optional().default(""),
 });
 
