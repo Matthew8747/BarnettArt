@@ -1,0 +1,187 @@
+{
+  "C:\\Users\\Matthew\\Desktop\\Coding\\BarnettArt\\.prettierrc.json": {
+    "mtime": 1780307618.5410717,
+    "ast_hash": "0d2b031deb1dda117f76e283b3562e84",
+    "semantic_hash": "0d2b031deb1dda117f76e283b3562e84"
+  },
+  "C:\\Users\\Matthew\\Desktop\\Coding\\BarnettArt\\drizzle.config.ts": {
+    "mtime": 1780307448.0591526,
+    "ast_hash": "f1b079f29ba28ffa37696335e34f1893",
+    "semantic_hash": "f1b079f29ba28ffa37696335e34f1893"
+  },
+  "C:\\Users\\Matthew\\Desktop\\Coding\\BarnettArt\\eslint.config.mjs": {
+    "mtime": 1779294925.0881433,
+    "ast_hash": "dfa1f5f6a7037bf39dc510f30b180002",
+    "semantic_hash": "dfa1f5f6a7037bf39dc510f30b180002"
+  },
+  "C:\\Users\\Matthew\\Desktop\\Coding\\BarnettArt\\next.config.ts": {
+    "mtime": 1780307252.0981705,
+    "ast_hash": "e8cd13f254018cda38d5e5443dcc6016",
+    "semantic_hash": "e8cd13f254018cda38d5e5443dcc6016"
+  },
+  "C:\\Users\\Matthew\\Desktop\\Coding\\BarnettArt\\package.json": {
+    "mtime": 1780311252.5586922,
+    "ast_hash": "261d7d9df5140a13d82706c57b796816",
+    "semantic_hash": "261d7d9df5140a13d82706c57b796816"
+  },
+  "C:\\Users\\Matthew\\Desktop\\Coding\\BarnettArt\\postcss.config.mjs": {
+    "mtime": 1779294925.12515,
+    "ast_hash": "239f3ebf717465dc636818a1a619398d",
+    "semantic_hash": "239f3ebf717465dc636818a1a619398d"
+  },
+  "C:\\Users\\Matthew\\Desktop\\Coding\\BarnettArt\\skills-lock.json": {
+    "mtime": 1780326973.8165727,
+    "ast_hash": "69622641407ed16fbf99e48bfebd0017",
+    "semantic_hash": "69622641407ed16fbf99e48bfebd0017"
+  },
+  "C:\\Users\\Matthew\\Desktop\\Coding\\BarnettArt\\tsconfig.json": {
+    "mtime": 1780307004.9866529,
+    "ast_hash": "ee17fd1c97c735e9f3564e3f5251f125",
+    "semantic_hash": "ee17fd1c97c735e9f3564e3f5251f125"
+  },
+  "C:\\Users\\Matthew\\Desktop\\Coding\\BarnettArt\\drizzle\\0000_abnormal_revanche.sql": {
+    "mtime": 1780311018.3417034,
+    "ast_hash": "5fda1d389598ac3956502cc6df0fddbe",
+    "semantic_hash": "5fda1d389598ac3956502cc6df0fddbe"
+  },
+  "C:\\Users\\Matthew\\Desktop\\Coding\\BarnettArt\\drizzle\\meta\\0000_snapshot.json": {
+    "mtime": 1780311018.3391795,
+    "ast_hash": "faf9931baed5487bac98176213044418",
+    "semantic_hash": "faf9931baed5487bac98176213044418"
+  },
+  "C:\\Users\\Matthew\\Desktop\\Coding\\BarnettArt\\drizzle\\meta\\_journal.json": {
+    "mtime": 1780311018.3406863,
+    "ast_hash": "5a16c70eb55971b17084fab23d8c83d8",
+    "semantic_hash": "5a16c70eb55971b17084fab23d8c83d8"
+  },
+  "C:\\Users\\Matthew\\Desktop\\Coding\\BarnettArt\\scripts\\dev.mjs": {
+    "mtime": 1780311394.8549354,
+    "ast_hash": "3d685f2e7017106dac44f78412cc9a47",
+    "semantic_hash": "3d685f2e7017106dac44f78412cc9a47"
+  },
+  "C:\\Users\\Matthew\\Desktop\\Coding\\BarnettArt\\src\\app\\layout.tsx": {
+    "mtime": 1780308294.4653673,
+    "ast_hash": "a698547d3104ae1b6c1f27ce348b309f",
+    "semantic_hash": "a698547d3104ae1b6c1f27ce348b309f"
+  },
+  "C:\\Users\\Matthew\\Desktop\\Coding\\BarnettArt\\src\\app\\page.tsx": {
+    "mtime": 1780308294.5043757,
+    "ast_hash": "27c728c31d6ab3d6da7b644f30930fe3",
+    "semantic_hash": "27c728c31d6ab3d6da7b644f30930fe3"
+  },
+  "C:\\Users\\Matthew\\Desktop\\Coding\\BarnettArt\\src\\app\\api\\health\\route.ts": {
+    "mtime": 1780307567.784117,
+    "ast_hash": "a13dc31f105779ed060f8c0d61359939",
+    "semantic_hash": "a13dc31f105779ed060f8c0d61359939"
+  },
+  "C:\\Users\\Matthew\\Desktop\\Coding\\BarnettArt\\src\\app\\api\\webhooks\\stripe\\route.ts": {
+    "mtime": 1780307593.7431078,
+    "ast_hash": "81dc54867fd4b4a7235bcbb8de8b7507",
+    "semantic_hash": "81dc54867fd4b4a7235bcbb8de8b7507"
+  },
+  "C:\\Users\\Matthew\\Desktop\\Coding\\BarnettArt\\src\\app\\privacy\\page.tsx": {
+    "mtime": 1780308294.5668929,
+    "ast_hash": "d4268b07b1e3a16a3fdeaa1d0c9bfb58",
+    "semantic_hash": "d4268b07b1e3a16a3fdeaa1d0c9bfb58"
+  },
+  "C:\\Users\\Matthew\\Desktop\\Coding\\BarnettArt\\src\\app\\terms\\page.tsx": {
+    "mtime": 1780308294.6167588,
+    "ast_hash": "8cb9ada1482c5048275bcaf7376083fa",
+    "semantic_hash": "8cb9ada1482c5048275bcaf7376083fa"
+  },
+  "C:\\Users\\Matthew\\Desktop\\Coding\\BarnettArt\\src\\db\\index.ts": {
+    "mtime": 1780307430.3892858,
+    "ast_hash": "f98158b1fb78ed3e81056a5d670c3a6c",
+    "semantic_hash": "f98158b1fb78ed3e81056a5d670c3a6c"
+  },
+  "C:\\Users\\Matthew\\Desktop\\Coding\\BarnettArt\\src\\db\\schema.ts": {
+    "mtime": 1780307410.1944869,
+    "ast_hash": "ef2f63c87ca7e8f2c394eae3c58efb8b",
+    "semantic_hash": "ef2f63c87ca7e8f2c394eae3c58efb8b"
+  },
+  "C:\\Users\\Matthew\\Desktop\\Coding\\BarnettArt\\src\\lib\\env.ts": {
+    "mtime": 1780308569.3999047,
+    "ast_hash": "dbce842b9ecc40fd0658fef5f47f5e76",
+    "semantic_hash": "dbce842b9ecc40fd0658fef5f47f5e76"
+  },
+  "C:\\Users\\Matthew\\Desktop\\Coding\\BarnettArt\\src\\lib\\money.ts": {
+    "mtime": 1780307527.7210052,
+    "ast_hash": "846ce45872eca8b1b1311047678f0350",
+    "semantic_hash": "846ce45872eca8b1b1311047678f0350"
+  },
+  "C:\\Users\\Matthew\\Desktop\\Coding\\BarnettArt\\src\\lib\\rate-limit.ts": {
+    "mtime": 1780308294.8850815,
+    "ast_hash": "a87036491957b3b406f176de2be2f895",
+    "semantic_hash": "a87036491957b3b406f176de2be2f895"
+  },
+  "C:\\Users\\Matthew\\Desktop\\Coding\\BarnettArt\\src\\lib\\stripe.ts": {
+    "mtime": 1780308639.3180058,
+    "ast_hash": "3676d17aa2c400a50022ff6467797b6f",
+    "semantic_hash": "3676d17aa2c400a50022ff6467797b6f"
+  },
+  "C:\\Users\\Matthew\\Desktop\\Coding\\BarnettArt\\docker-compose.yml": {
+    "mtime": 1780307341.5520797,
+    "ast_hash": "2b69a894bba2a22c0aa649c1f576f724",
+    "semantic_hash": "2b69a894bba2a22c0aa649c1f576f724"
+  },
+  "C:\\Users\\Matthew\\Desktop\\Coding\\BarnettArt\\README.md": {
+    "mtime": 1780311462.969389,
+    "ast_hash": "b76ae07da1e6cfcd745574ec6f8f33c1",
+    "semantic_hash": "b76ae07da1e6cfcd745574ec6f8f33c1"
+  },
+  "C:\\Users\\Matthew\\Desktop\\Coding\\BarnettArt\\SECURITY.md": {
+    "mtime": 1780307865.8078513,
+    "ast_hash": "e082ff19dd95ae3c794b98874cf17358",
+    "semantic_hash": "e082ff19dd95ae3c794b98874cf17358"
+  },
+  "C:\\Users\\Matthew\\Desktop\\Coding\\BarnettArt\\docs\\anna-art-platform-plan.md": {
+    "mtime": 1780301697.5455856,
+    "ast_hash": "c8e284b92f5f1fef4e7c3aa8420c4cb2",
+    "semantic_hash": "c8e284b92f5f1fef4e7c3aa8420c4cb2"
+  },
+  "C:\\Users\\Matthew\\Desktop\\Coding\\BarnettArt\\docs\\EXTERNAL-SETUP.md": {
+    "mtime": 1780311484.4499803,
+    "ast_hash": "1bf867325e6b0f28df58c491e46b3073",
+    "semantic_hash": "1bf867325e6b0f28df58c491e46b3073"
+  },
+  "C:\\Users\\Matthew\\Desktop\\Coding\\BarnettArt\\docs\\HANDOVER.md": {
+    "mtime": 1780307940.7291875,
+    "ast_hash": "e30bf3ff5408b133be4886e98ebdf8bf",
+    "semantic_hash": "e30bf3ff5408b133be4886e98ebdf8bf"
+  },
+  "C:\\Users\\Matthew\\Desktop\\Coding\\BarnettArt\\docs\\IMPLEMENTATION.md": {
+    "mtime": 1780311505.3682654,
+    "ast_hash": "1373707f880727dc6a38282a825413ad",
+    "semantic_hash": "1373707f880727dc6a38282a825413ad"
+  },
+  "C:\\Users\\Matthew\\Desktop\\Coding\\BarnettArt\\docs\\RUNBOOK.md": {
+    "mtime": 1780311522.9062726,
+    "ast_hash": "c403fa9d909094755ff3db3b52342028",
+    "semantic_hash": "c403fa9d909094755ff3db3b52342028"
+  },
+  "C:\\Users\\Matthew\\Desktop\\Coding\\BarnettArt\\public\\file.svg": {
+    "mtime": 1779294925.1381464,
+    "ast_hash": "d09f95206c3fa0bb9bd9fefabfd0ea71",
+    "semantic_hash": "d09f95206c3fa0bb9bd9fefabfd0ea71"
+  },
+  "C:\\Users\\Matthew\\Desktop\\Coding\\BarnettArt\\public\\globe.svg": {
+    "mtime": 1779294925.157575,
+    "ast_hash": "2aaafa6a49b6563925fe440891e32717",
+    "semantic_hash": "2aaafa6a49b6563925fe440891e32717"
+  },
+  "C:\\Users\\Matthew\\Desktop\\Coding\\BarnettArt\\public\\next.svg": {
+    "mtime": 1779294925.175575,
+    "ast_hash": "8e061864f388b47f33a1c3780831193e",
+    "semantic_hash": "8e061864f388b47f33a1c3780831193e"
+  },
+  "C:\\Users\\Matthew\\Desktop\\Coding\\BarnettArt\\public\\vercel.svg": {
+    "mtime": 1779294925.194961,
+    "ast_hash": "c0af2f507b369b085b35ef4bbe3bcf1e",
+    "semantic_hash": "c0af2f507b369b085b35ef4bbe3bcf1e"
+  },
+  "C:\\Users\\Matthew\\Desktop\\Coding\\BarnettArt\\public\\window.svg": {
+    "mtime": 1779294925.2079613,
+    "ast_hash": "a2760511c65806022ad20adf74370ff3",
+    "semantic_hash": "a2760511c65806022ad20adf74370ff3"
+  }
+}

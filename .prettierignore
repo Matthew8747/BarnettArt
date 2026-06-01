@@ -7,3 +7,9 @@ drizzle/meta
 package-lock.json
 *.md
 public
+# Vendored tooling / generated artifacts — not application source.
+.agents
+.claude
+.vscode
+graphify-out
+*.db

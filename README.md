@@ -53,6 +53,7 @@ Installed via husky on `npm install`:
 | `npm run build` / `start` | Production build / serve |
 | `npm run lint` | ESLint |
 | `npm run typecheck` | `tsc --noEmit` |
+| `npm test` / `test:watch` | Vitest unit tests (run once / watch) |
 | `npm run format` / `format:check` | Prettier write / check |
 | `npm run db:generate` | Generate SQL migration from `src/db/schema.ts` |
 | `npm run db:migrate` | Apply migrations |
@@ -67,13 +68,24 @@ src/
     api/webhooks/stripe # Stripe webhook (signature-verified)
     privacy, terms     # legal pages
   db/                  # Drizzle schema + client
-  lib/                 # env (Zod), stripe, rate-limit, money
-docs/                  # plan, implementation status, runbook, handover, setup
+  lib/                 # env (Zod), stripe, rate-limit, money, validation
+                       #   + co-located *.test.ts (Vitest)
+docs/                  # plan, implementation, runbook, handover, setup,
+                       #   security audit, design system
 drizzle/               # generated migrations (after db:generate)
 ```
 
 ## Security
 
-See [`SECURITY.md`](SECURITY.md). Highlights: secrets never in git, server-side
-pricing, signature-verified webhooks, hardened headers + CSP, parameterised
-queries, rate limiting, automated dependency + secret scanning in CI.
+See [`SECURITY.md`](SECURITY.md) and the full OWASP Top-10 mapping +
+remaining-findings list in [`docs/SECURITY-AUDIT.md`](docs/SECURITY-AUDIT.md).
+Highlights: secrets never in git, server-side pricing, signature-verified
+webhooks, hardened headers + CSP, parameterised queries, input validation with
+size/shape limits (`src/lib/validation.ts`), rate limiting (auth = 5 attempts /
+15 min), and automated dependency + secret scanning + unit tests in CI.
+
+## Design
+
+Look, feel, and motion decisions (with backtrack notes) live in
+[`docs/DESIGN.md`](docs/DESIGN.md): dark-immersive theme, per-artwork accent
+colour with an artist override, and reduced-motion-aware animation.

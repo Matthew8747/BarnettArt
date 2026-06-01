@@ -26,8 +26,18 @@ const skipValidation =
 const enforceRequired = isProd && !skipValidation;
 
 // Required in production runtime; optional (blank-allowed) in dev and at build.
+// In the relaxed (dev/build) case we accept either a value that satisfies the
+// refined schema (e.g. a real `https://` URL or `sk_…` key), an empty string
+// (a freshly-copied .env leaves integration vars blank), or nothing at all.
+// Without the empty-string branch, refinements like `.url()`/`.email()` reject
+// "" and break `npm run build` locally.
 const requiredInProd = (schema: z.ZodString) =>
-  enforceRequired ? schema.min(1) : schema.optional().default("");
+  enforceRequired
+    ? schema.min(1)
+    : z
+        .union([schema, z.literal("")])
+        .optional()
+        .default("");
 
 const serverSchema = z.object({
   NODE_ENV: z

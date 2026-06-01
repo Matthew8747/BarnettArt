@@ -1,0 +1,1240 @@
+{
+  "nodes": [
+    {
+      "id": "dockercompose_localstack",
+      "label": "Local Dev Stack (Docker Compose)",
+      "file_type": "code",
+      "source_file": "docker-compose.yml",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "dockercompose_postgres",
+      "label": "Local Postgres 17 Container",
+      "file_type": "code",
+      "source_file": "docker-compose.yml",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "readme_platform",
+      "label": "Barnett Art Platform",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "readme_stack",
+      "label": "Tech Stack",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "readme_githooks",
+      "label": "Git Hooks (Husky)",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "readme_devup",
+      "label": "dev:up One-Command Spin-up",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "security_posture",
+      "label": "Security Posture",
+      "file_type": "document",
+      "source_file": "SECURITY.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "security_secretsmgmt",
+      "label": "Secrets Management",
+      "file_type": "rationale",
+      "source_file": "SECURITY.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "security_pcisaqa",
+      "label": "PCI SAQ-A Payments Scope",
+      "file_type": "rationale",
+      "source_file": "SECURITY.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "security_headerscsp",
+      "label": "Transport Security Headers + CSP",
+      "file_type": "rationale",
+      "source_file": "SECURITY.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "security_applayer",
+      "label": "Application-Layer Defences",
+      "file_type": "rationale",
+      "source_file": "SECURITY.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "security_accesscontrol",
+      "label": "Access Control (Admin Allow-list)",
+      "file_type": "rationale",
+      "source_file": "SECURITY.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "security_supplychain",
+      "label": "Supply Chain & Infra Hardening",
+      "file_type": "rationale",
+      "source_file": "SECURITY.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "security_gdpr",
+      "label": "Privacy (UK GDPR)",
+      "file_type": "rationale",
+      "source_file": "SECURITY.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "plan_engineeringplan",
+      "label": "Anna's Art Platform Engineering Plan",
+      "file_type": "document",
+      "source_file": "docs/anna-art-platform-plan.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "plan_guidingprinciples",
+      "label": "Guiding Principles (Client-First)",
+      "file_type": "rationale",
+      "source_file": "docs/anna-art-platform-plan.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "plan_techstack",
+      "label": "Tech Stack Rationale",
+      "file_type": "rationale",
+      "source_file": "docs/anna-art-platform-plan.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "plan_architecture",
+      "label": "System Architecture",
+      "file_type": "document",
+      "source_file": "docs/anna-art-platform-plan.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "plan_checkoutflow",
+      "label": "Checkout Flow (Critical Path)",
+      "file_type": "rationale",
+      "source_file": "docs/anna-art-platform-plan.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "plan_datamodel",
+      "label": "Data Model",
+      "file_type": "document",
+      "source_file": "docs/anna-art-platform-plan.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "plan_pricesnapshots",
+      "label": "Order Item Price Snapshots",
+      "file_type": "rationale",
+      "source_file": "docs/anna-art-platform-plan.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "plan_integermoney",
+      "label": "Money as Integer Cents/Pence",
+      "file_type": "rationale",
+      "source_file": "docs/anna-art-platform-plan.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "plan_inventoryintegrity",
+      "label": "Transactional Inventory Integrity",
+      "file_type": "rationale",
+      "source_file": "docs/anna-art-platform-plan.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "plan_securityarch",
+      "label": "Security Architecture",
+      "file_type": "document",
+      "source_file": "docs/anna-art-platform-plan.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "plan_cloudinfra",
+      "label": "Cloud Infrastructure & DevOps",
+      "file_type": "document",
+      "source_file": "docs/anna-art-platform-plan.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "plan_hostingtradeoff",
+      "label": "Hosting Trade-off (Full AWS vs Hybrid)",
+      "file_type": "rationale",
+      "source_file": "docs/anna-art-platform-plan.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "plan_cicd",
+      "label": "CI/CD Pipeline",
+      "file_type": "rationale",
+      "source_file": "docs/anna-art-platform-plan.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "plan_testingstrategy",
+      "label": "Testing Strategy",
+      "file_type": "rationale",
+      "source_file": "docs/anna-art-platform-plan.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "plan_roadmap",
+      "label": "Delivery Roadmap",
+      "file_type": "document",
+      "source_file": "docs/anna-art-platform-plan.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "extsetup_checklist",
+      "label": "External Setup Checklist",
+      "file_type": "document",
+      "source_file": "docs/EXTERNAL-SETUP.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "extsetup_ownership",
+      "label": "Account Ownership Rule (Anna's Name)",
+      "file_type": "rationale",
+      "source_file": "docs/EXTERNAL-SETUP.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "extsetup_stripe",
+      "label": "Stripe Account Setup",
+      "file_type": "document",
+      "source_file": "docs/EXTERNAL-SETUP.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "extsetup_neon",
+      "label": "Neon Production Postgres",
+      "file_type": "document",
+      "source_file": "docs/EXTERNAL-SETUP.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "extsetup_upstash",
+      "label": "Upstash Redis (Rate Limiting)",
+      "file_type": "document",
+      "source_file": "docs/EXTERNAL-SETUP.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "extsetup_resend",
+      "label": "Resend Transactional Email",
+      "file_type": "document",
+      "source_file": "docs/EXTERNAL-SETUP.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "extsetup_vercel",
+      "label": "Vercel App Hosting",
+      "file_type": "document",
+      "source_file": "docs/EXTERNAL-SETUP.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "extsetup_aws",
+      "label": "AWS Media Pipeline (S3 + CloudFront)",
+      "file_type": "document",
+      "source_file": "docs/EXTERNAL-SETUP.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "extsetup_sentry",
+      "label": "Sentry Error Monitoring",
+      "file_type": "document",
+      "source_file": "docs/EXTERNAL-SETUP.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "handover_doc",
+      "label": "Handover Document",
+      "file_type": "document",
+      "source_file": "docs/HANDOVER.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "handover_invariants",
+      "label": "Key Invariants (Do Not Break)",
+      "file_type": "rationale",
+      "source_file": "docs/HANDOVER.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "impl_status",
+      "label": "Implementation Status & Roadmap",
+      "file_type": "document",
+      "source_file": "docs/IMPLEMENTATION.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "impl_phase0",
+      "label": "Phase 0 — Foundations",
+      "file_type": "document",
+      "source_file": "docs/IMPLEMENTATION.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "impl_lockeddecisions",
+      "label": "Locked Decisions (Hybrid, Drizzle, GBP)",
+      "file_type": "rationale",
+      "source_file": "docs/IMPLEMENTATION.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "runbook_doc",
+      "label": "Operations Runbook",
+      "file_type": "document",
+      "source_file": "docs/RUNBOOK.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "runbook_incidentplaybook",
+      "label": "Incident Playbook",
+      "file_type": "rationale",
+      "source_file": "docs/RUNBOOK.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "runbook_environments",
+      "label": "Environments (Local/Preview/Prod)",
+      "file_type": "document",
+      "source_file": "docs/RUNBOOK.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "dockercompose_localstack",
+      "target": "dockercompose_postgres",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docker-compose.yml",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "readme_platform",
+      "target": "plan_engineeringplan",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "readme_platform",
+      "target": "impl_status",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "readme_platform",
+      "target": "extsetup_checklist",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "readme_platform",
+      "target": "security_posture",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "readme_platform",
+      "target": "readme_stack",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "readme_platform",
+      "target": "readme_githooks",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "readme_platform",
+      "target": "readme_devup",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "readme_devup",
+      "target": "dockercompose_postgres",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "readme_stack",
+      "target": "plan_techstack",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "security_posture",
+      "target": "security_secretsmgmt",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "SECURITY.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "security_posture",
+      "target": "security_pcisaqa",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "SECURITY.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "security_posture",
+      "target": "security_headerscsp",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "SECURITY.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "security_posture",
+      "target": "security_applayer",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "SECURITY.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "security_posture",
+      "target": "security_accesscontrol",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "SECURITY.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "security_posture",
+      "target": "security_supplychain",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "SECURITY.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "security_posture",
+      "target": "security_gdpr",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "SECURITY.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "security_applayer",
+      "target": "extsetup_upstash",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "SECURITY.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "plan_engineeringplan",
+      "target": "plan_guidingprinciples",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/anna-art-platform-plan.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "plan_engineeringplan",
+      "target": "plan_techstack",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/anna-art-platform-plan.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "plan_engineeringplan",
+      "target": "plan_architecture",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/anna-art-platform-plan.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "plan_engineeringplan",
+      "target": "plan_datamodel",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/anna-art-platform-plan.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "plan_engineeringplan",
+      "target": "plan_securityarch",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/anna-art-platform-plan.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "plan_engineeringplan",
+      "target": "plan_cloudinfra",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/anna-art-platform-plan.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "plan_engineeringplan",
+      "target": "plan_roadmap",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/anna-art-platform-plan.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "plan_engineeringplan",
+      "target": "plan_testingstrategy",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/anna-art-platform-plan.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "plan_architecture",
+      "target": "plan_checkoutflow",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/anna-art-platform-plan.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "plan_datamodel",
+      "target": "plan_pricesnapshots",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/anna-art-platform-plan.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "plan_datamodel",
+      "target": "plan_integermoney",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/anna-art-platform-plan.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "plan_datamodel",
+      "target": "plan_inventoryintegrity",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/anna-art-platform-plan.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "plan_cloudinfra",
+      "target": "plan_hostingtradeoff",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/anna-art-platform-plan.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "plan_cloudinfra",
+      "target": "plan_cicd",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/anna-art-platform-plan.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "plan_checkoutflow",
+      "target": "plan_inventoryintegrity",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "docs/anna-art-platform-plan.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "plan_securityarch",
+      "target": "security_posture",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "docs/anna-art-platform-plan.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "plan_securityarch",
+      "target": "security_pcisaqa",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "docs/anna-art-platform-plan.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "extsetup_checklist",
+      "target": "extsetup_ownership",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/EXTERNAL-SETUP.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "extsetup_checklist",
+      "target": "extsetup_stripe",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/EXTERNAL-SETUP.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "extsetup_checklist",
+      "target": "extsetup_neon",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/EXTERNAL-SETUP.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "extsetup_checklist",
+      "target": "extsetup_upstash",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/EXTERNAL-SETUP.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "extsetup_checklist",
+      "target": "extsetup_resend",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/EXTERNAL-SETUP.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "extsetup_checklist",
+      "target": "extsetup_vercel",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/EXTERNAL-SETUP.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "extsetup_checklist",
+      "target": "extsetup_aws",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/EXTERNAL-SETUP.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "extsetup_checklist",
+      "target": "extsetup_sentry",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/EXTERNAL-SETUP.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "extsetup_neon",
+      "target": "dockercompose_postgres",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "docs/EXTERNAL-SETUP.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "extsetup_ownership",
+      "target": "plan_guidingprinciples",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "docs/EXTERNAL-SETUP.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "handover_doc",
+      "target": "extsetup_checklist",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/HANDOVER.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "handover_doc",
+      "target": "plan_engineeringplan",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/HANDOVER.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "handover_doc",
+      "target": "impl_status",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/HANDOVER.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "handover_doc",
+      "target": "runbook_doc",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/HANDOVER.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "handover_doc",
+      "target": "security_posture",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/HANDOVER.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "handover_doc",
+      "target": "handover_invariants",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/HANDOVER.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "handover_invariants",
+      "target": "plan_pricesnapshots",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "docs/HANDOVER.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "handover_invariants",
+      "target": "plan_integermoney",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "docs/HANDOVER.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "handover_invariants",
+      "target": "plan_checkoutflow",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "docs/HANDOVER.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "impl_status",
+      "target": "plan_engineeringplan",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/IMPLEMENTATION.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "impl_status",
+      "target": "impl_phase0",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/IMPLEMENTATION.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "impl_status",
+      "target": "impl_lockeddecisions",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/IMPLEMENTATION.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "impl_status",
+      "target": "extsetup_checklist",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/IMPLEMENTATION.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "impl_phase0",
+      "target": "dockercompose_postgres",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/IMPLEMENTATION.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "impl_phase0",
+      "target": "readme_githooks",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/IMPLEMENTATION.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "impl_lockeddecisions",
+      "target": "plan_hostingtradeoff",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "docs/IMPLEMENTATION.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "runbook_doc",
+      "target": "runbook_environments",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/RUNBOOK.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "runbook_doc",
+      "target": "runbook_incidentplaybook",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/RUNBOOK.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "runbook_environments",
+      "target": "extsetup_neon",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "docs/RUNBOOK.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "runbook_environments",
+      "target": "extsetup_vercel",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "docs/RUNBOOK.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "runbook_incidentplaybook",
+      "target": "plan_checkoutflow",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "docs/RUNBOOK.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "security_secretsmgmt",
+      "target": "extsetup_ownership",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "SECURITY.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "plan_cicd",
+      "target": "readme_githooks",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.7,
+      "source_file": "docs/anna-art-platform-plan.md",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "checkout_critical_path",
+      "label": "Checkout Critical Path (Stripe + Inventory + Idempotency)",
+      "nodes": [
+        "plan_checkoutflow",
+        "plan_inventoryintegrity",
+        "plan_pricesnapshots",
+        "security_pcisaqa",
+        "handover_invariants"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "docs/anna-art-platform-plan.md"
+    },
+    {
+      "id": "defence_in_depth",
+      "label": "Defence-in-Depth Security Model",
+      "nodes": [
+        "security_secretsmgmt",
+        "security_headerscsp",
+        "security_applayer",
+        "security_supplychain",
+        "plan_securityarch"
+      ],
+      "relation": "form",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "SECURITY.md"
+    },
+    {
+      "id": "local_dev_onboarding",
+      "label": "Local Dev Onboarding Flow",
+      "nodes": [
+        "readme_devup",
+        "dockercompose_postgres",
+        "extsetup_checklist",
+        "runbook_environments"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "README.md"
+    }
+  ],
+  "input_tokens": 52324,
+  "output_tokens": 0
+}

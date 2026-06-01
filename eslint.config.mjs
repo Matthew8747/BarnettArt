@@ -12,6 +12,10 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Vendored tooling / generated artifacts — not application source.
+    ".agents/**",
+    ".claude/**",
+    "graphify-out/**",
   ]),
 ]);
 

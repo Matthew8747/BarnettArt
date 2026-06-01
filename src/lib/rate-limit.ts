@@ -66,6 +66,9 @@ function makeLimiter(requests: number, windowSeconds: number): Limiter {
 
 /** Per-endpoint-class limiters. Tune as real traffic patterns emerge. */
 export const limiters = {
+  // Brute-force protection for authentication routes (sign-in, admin login,
+  // password/email actions): max 5 attempts per 15 minutes per IP.
+  auth: makeLimiter(5, 15 * 60),
   checkout: makeLimiter(10, 60), // 10 checkout attempts / min / IP
   webhook: makeLimiter(100, 60), // generous; Stripe retries legitimately
   admin: makeLimiter(30, 60),

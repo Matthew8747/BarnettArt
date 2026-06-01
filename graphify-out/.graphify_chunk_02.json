@@ -1,0 +1,108 @@
+{
+  "nodes": [
+    {
+      "id": "file_document_icon",
+      "label": "File / Document Icon",
+      "file_type": "image",
+      "source_file": "public/file.svg",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "globe_icon",
+      "label": "Globe / World Icon",
+      "file_type": "image",
+      "source_file": "public/globe.svg",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "next_wordmark_logo",
+      "label": "Next.js Wordmark Logo",
+      "file_type": "image",
+      "source_file": "public/next.svg",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "vercel_triangle_logo",
+      "label": "Vercel Triangle Logo",
+      "file_type": "image",
+      "source_file": "public/vercel.svg",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "window_browser_icon",
+      "label": "Window / Browser Icon",
+      "file_type": "image",
+      "source_file": "public/window.svg",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    }
+  ],
+  "edges": [
+    {
+      "source": "next_wordmark_logo",
+      "target": "vercel_triangle_logo",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "public/next.svg",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "file_document_icon",
+      "target": "window_browser_icon",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "public/file.svg",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "window_browser_icon",
+      "target": "globe_icon",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "public/window.svg",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "nextjs_default_assets",
+      "label": "Next.js Default Scaffolding Assets",
+      "nodes": [
+        "next_wordmark_logo",
+        "vercel_triangle_logo",
+        "file_document_icon"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "public/next.svg"
+    }
+  ],
+  "input_tokens": 22152,
+  "output_tokens": 0
+}

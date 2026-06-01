@@ -52,6 +52,9 @@ aws-credentials*
 # vercel
 .vercel
 
+# brainstorming visual-companion working dir
+.superpowers/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

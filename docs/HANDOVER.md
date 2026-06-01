@@ -38,7 +38,8 @@ billing). The engineer holds collaborator/team access. See
 - Architecture: [`anna-art-platform-plan.md`](./anna-art-platform-plan.md).
 - Current status: [`IMPLEMENTATION.md`](./IMPLEMENTATION.md).
 - Operations: [`RUNBOOK.md`](./RUNBOOK.md).
-- Security: [`../SECURITY.md`](../SECURITY.md).
+- Security: [`../SECURITY.md`](../SECURITY.md) + audit [`SECURITY-AUDIT.md`](./SECURITY-AUDIT.md).
+- Design system & decisions: [`DESIGN.md`](./DESIGN.md).
 - Local setup: README + [`EXTERNAL-SETUP.md`](./EXTERNAL-SETUP.md).
 
 ## Key invariants — do not break

@@ -37,10 +37,19 @@ open a public issue for security problems. We aim to acknowledge within 72 hours
 - `poweredByHeader` disabled.
 
 ### Application layer
-- Input validated with Zod at every boundary.
+- Input validated with Zod at every boundary. `parseJsonRequest`
+  (`src/lib/validation.ts`) is the single front door for user JSON: it caps body
+  size (100 KB — rejects oversized payloads with `413`), rejects malformed JSON
+  (`400`), validates against a Zod schema (`400` + issues), and with `.strict()`
+  schemas rejects unknown keys (no mass-assignment). Unit-tested.
 - Parameterised queries via Drizzle — no string-concatenated SQL.
 - React's default output escaping mitigates XSS; any rich text will be sanitised.
-- Rate limiting on checkout/webhook/admin/api endpoints (`src/lib/rate-limit.ts`).
+- Rate limiting on every endpoint class (`src/lib/rate-limit.ts`): **auth =
+  5 attempts / 15 min / IP** (brute-force protection), plus checkout, webhook,
+  admin, and api limiters. Every new route must call a limiter.
+
+A full OWASP Top 10 mapping and list of remaining findings lives in
+[`docs/SECURITY-AUDIT.md`](./docs/SECURITY-AUDIT.md) (re-run each phase).
 
 ### Access control
 - Admin area behind an email allow-list (`ADMIN_EMAILS`) on a protected route.

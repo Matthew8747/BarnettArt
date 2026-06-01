@@ -35,12 +35,16 @@ Originals + Prints · Stripe, UK-only (GBP).
 | ✅ | Drizzle schema | `src/db/schema.ts` (products, variants, images, orders, order_items) |
 | ✅ | DB client | `src/db/index.ts` (postgres-js, server-only, pooled) |
 | ✅ | Local Postgres | `docker-compose.yml` (Postgres 17) |
-| ✅ | Rate limiting | `src/lib/rate-limit.ts` (Upstash + in-memory dev fallback) |
+| ✅ | Rate limiting | `src/lib/rate-limit.ts` (auth 5/15min, checkout, webhook, admin, api; Upstash + in-memory dev fallback) |
+| ✅ | Input validation guard | `src/lib/validation.ts` — body-size cap (413), malformed-JSON reject (400), Zod `.strict()` (400) |
+| ✅ | Unit tests (Vitest) | `*.test.ts` for money, validation, rate-limit (17 cases); gates CI |
+| ✅ | Security audit + OWASP map | `docs/SECURITY-AUDIT.md` |
 | ✅ | Money helpers | `src/lib/money.ts` (integer pence) |
 | ✅ | Stripe server client | `src/lib/stripe.ts` |
 | ✅ | Health endpoint | `src/app/api/health/route.ts` |
 | ✅ | Stripe webhook handler (stub) | `src/app/api/webhooks/stripe/route.ts` — verifies signature; fulfilment TODO |
-| ✅ | CI pipeline | `.github/workflows/ci.yml` (lint, typecheck, build, audit, gitleaks) |
+| ✅ | CI pipeline | `.github/workflows/ci.yml` (format, lint, typecheck, **test**, build, audit, gitleaks) |
+| ✅ | Design system & decisions | `docs/DESIGN.md` — dark-immersive, per-artwork accent + override, motion (approved; pending Anna feedback) |
 | ✅ | Dependabot | `.github/dependabot.yml` |
 | ✅ | Prettier + EditorConfig | formatting consistency |
 | ✅ | Git hooks (husky) | pre-commit: lint-staged + gitleaks; pre-push: typecheck |
@@ -53,14 +57,19 @@ Originals + Prints · Stripe, UK-only (GBP).
 
 ## Phase 1 — Core domain (next up)
 
+> UI work in this phase follows the approved [`DESIGN.md`](./DESIGN.md)
+> (dark-immersive theme, per-artwork accent, in-between motion).
+
 | Status | Item |
 |--------|------|
 | ⬜ | Generate + apply initial migration (`db:generate` → `db:migrate`) |
+| ⬜ | Design system: theme/accent provider + motion utilities (reduced-motion aware) |
 | ⬜ | Product repository/query layer (typed, parameterised) |
-| ⬜ | Product listing page (SSR/ISR) + detail page |
+| ⬜ | Product listing/gallery page (SSR/ISR) + animated product detail page |
+| ⬜ | Per-artwork accent: extract palette on upload; store `accent_hex` + uniform-mode flag |
 | ⬜ | Image pipeline: S3 upload + CloudFront serving + `next/image` |
-| ⬜ | Admin auth (allow-listed email + protected route) |
-| ⬜ | Admin: product CRUD (create/edit/archive, variants, images) |
+| ⬜ | Admin auth (allow-listed email + protected route, `limiters.auth`) |
+| ⬜ | Admin: product CRUD + accent controls (swatch + picker, uniform override) |
 | ⬜ | Seed script with sample artwork for local dev |
 
 ## Phase 2 — Commerce (the critical path)
@@ -73,16 +82,17 @@ Originals + Prints · Stripe, UK-only (GBP).
 | ⬜ | Webhook fulfilment: transaction → mark paid + atomic stock decrement + email |
 | ⬜ | Idempotency keyed on Stripe event id |
 | ⬜ | Order confirmation email (Resend) |
-| ⬜ | Vitest unit tests: pricing, inventory, validation |
+| 🚧 | Vitest unit tests: pricing, inventory, validation (validation + money done; inventory/pricing next) |
 | ⬜ | Playwright E2E: full checkout incl. replayed webhook |
 
 ## Phase 3 — Portfolio & polish
 
 | Status | Item |
 |--------|------|
-| ⬜ | Portfolio: home, gallery, about, contact |
+| ⬜ | Portfolio: home, gallery, about, contact (per `DESIGN.md`) |
+| ⬜ | Motion polish: scroll reveals, hover/cursor effects (honour `prefers-reduced-motion`) |
 | ⬜ | SEO: metadata, sitemap, structured data (Product schema) |
-| ⬜ | Accessibility pass + Core Web Vitals |
+| ⬜ | Accessibility pass (incl. accent-on-dark contrast clamp) + Core Web Vitals |
 | ⬜ | Cookie consent banner (GDPR) |
 | ⬜ | CSP hardening: nonce-based script-src (drop `unsafe-inline`) |
 

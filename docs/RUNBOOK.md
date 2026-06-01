@@ -30,6 +30,10 @@ already up and migrated.
 ### Inspect data
 `npm run db:studio` opens Drizzle Studio against the DB in `DATABASE_URL`.
 
+### Run tests
+`npm test` runs the Vitest unit suite once (money, validation, rate-limit);
+`npm run test:watch` re-runs on change. Tests gate CI before build.
+
 ### Deploy
 Push to `main` → Vercel builds and deploys. Roll back from the Vercel dashboard
 (Deployments → previous → Promote).
