@@ -16,10 +16,13 @@ system matures; today it covers the groundwork.
 ### Run locally
 ```powershell
 npm run dev:up     # .env + Postgres (waited) + migrations + dev server
+npm run db:seed    # (first run) sample artwork: generates art, extracts
+                   #   palettes, stores via the adapter, inserts products
 npm run dev:down   # stop the database container
 ```
 `dev:up` is idempotent — safe to re-run. Use plain `npm run dev` if the DB is
-already up and migrated.
+already up and migrated. `db:seed` populates `/shop`; images are written to the
+git-ignored `public/uploads` by the local storage adapter.
 
 ### Change the database schema
 1. Edit `src/db/schema.ts`.

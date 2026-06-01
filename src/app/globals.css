@@ -1,26 +1,141 @@
 @import "tailwindcss";
 
+/*
+ * Barnett Art design system (DESIGN.md).
+ * Dark-immersive "gallery at night": a lifted charcoal canvas so artwork glows.
+ * One shifting accent at a time drives focus; never a rainbow at once.
+ */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* §1 Mood — dark immersive, lifted off pure black */
+  --bg: #15151d;
+  --panel: #1e1e28;
+  --text: #f5f4f9;
+  --muted: #a6a5b6;
+  --border: #2a2a36;
+
+  /* §2 Accent — overridden per-artwork by the theme provider; this is the
+     uniform/site default. --accent-text is the contrast-clamped variant safe
+     for text on the dark canvas; --accent-soft is a translucent glow. */
+  --accent: #8a7bff;
+  --accent-text: #b5abff;
+  --accent-soft: rgba(138, 123, 255, 0.22);
+
+  /* §3 Motion — tune intensity in one place ("in between", not heavy) */
+  --motion-duration: 600ms;
+  --motion-distance: 24px;
+  --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-bg: var(--bg);
+  --color-panel: var(--panel);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-text: var(--accent-text);
+  --font-sans: var(--font-sans-stack);
+  --font-display: var(--font-display);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background-color: var(--bg);
+  color: var(--text);
   font-family: var(--font-sans), system-ui, sans-serif;
+  /* §1 ambient: a soft top white wash + corner accent glows for depth. */
+  background-image:
+    radial-gradient(
+      120% 80% at 50% -20%,
+      rgba(255, 255, 255, 0.06),
+      transparent 60%
+    ),
+    radial-gradient(60% 50% at 0% 0%, var(--accent-soft), transparent 60%),
+    radial-gradient(60% 50% at 100% 100%, var(--accent-soft), transparent 60%);
+  background-attachment: fixed;
+}
+
+/* Large, tight-tracked editorial display headings (§4 typography). */
+.display {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.02;
+}
+
+/* Uppercase eyebrow/label treatment (§4 typography). */
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+/* ── §3 Motion utilities — all reduced-motion aware ───────────────────────── */
+
+/* Reveal-on-scroll: hidden until JS adds .is-visible (see <Reveal/>). */
+.reveal {
+  opacity: 0;
+  transform: translateY(var(--motion-distance));
+  transition:
+    opacity var(--motion-duration) var(--motion-ease),
+    transform var(--motion-duration) var(--motion-ease);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Open-product hero: artwork scales up with its glow (§3). */
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: scale(0.965);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.hero-rise {
+  animation: hero-rise 900ms var(--motion-ease) both;
+}
+
+/* Gentle card lift + accent glow on hover (§3). */
+.hover-lift {
+  transition:
+    transform 280ms var(--motion-ease),
+    box-shadow 280ms var(--motion-ease);
+}
+.hover-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 50px -12px var(--accent-soft);
+}
+
+/*
+ * Non-negotiable accessibility guard (DESIGN.md §3): when the user prefers
+ * reduced motion, content still appears (no reliance on motion to reveal) and
+ * large transforms / the cursor glow are disabled.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .hover-lift {
+    transition: none;
+  }
+  .hover-lift:hover {
+    transform: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
 }

@@ -108,11 +108,21 @@ Tasteful, smooth motion. Explicitly **not** the heavy/playful tier.
 
 ## 6. Open items to settle during implementation
 
-- Confirm the colour-extraction approach (build-time/admin-time library vs a
-  service) and store results — never extract live on the client.
-- Final web-font pairing (self-hosted; add to CSP `font-src`/`style-src`).
-- Contrast-clamp helper rules for accent-as-text.
+- ✅ **Colour extraction** — `node-vibrant`, admin-time, server-only
+  (`src/lib/palette.ts`); stores `accent_hex` + `palette_json`. Never on client.
+- ✅ **Contrast-clamp helper** — `src/lib/color.ts` `clampAccentForText()` lifts
+  any accent used as text to ≥4.5:1 on the dark canvas; raw accent kept for fills.
+  `src/lib/accent.ts` is the single owner of accent resolution + CSS vars.
+- ✅ **Web-font pairing** — Fraunces (display) + Geist (body), self-hosted via
+  `next/font`. Swap is a one-line config change in `layout.tsx`.
+  _CSP note:_ confirm `font-src`/`style-src` still cover self-hosted fonts when
+  the nonce-based CSP hardening lands (Phase 3).
 - Light-mode: out of scope for launch unless Anna asks.
+
+> **Implementation note (Phase 1a):** per-card and per-page accent retint are
+> live; "lift one card's accent to the whole scene on hover" is deferred as a
+> polish item. The cursor glow, scroll reveals, hover-lift and hero-rise are all
+> implemented and reduced-motion aware.
 
 ---
 
