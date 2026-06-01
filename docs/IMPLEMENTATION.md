@@ -43,9 +43,11 @@ Originals + Prints · Stripe, UK-only (GBP).
 | ✅ | CI pipeline | `.github/workflows/ci.yml` (lint, typecheck, build, audit, gitleaks) |
 | ✅ | Dependabot | `.github/dependabot.yml` |
 | ✅ | Prettier + EditorConfig | formatting consistency |
+| ✅ | Git hooks (husky) | pre-commit: lint-staged + gitleaks; pre-push: typecheck |
+| ✅ | One-command dev spin-up | `npm run dev:up` (`scripts/dev.mjs`) |
+| ✅ | First DB migration | `drizzle/0000_*.sql` generated |
 | ✅ | Legal pages (drafts) | `/privacy`, `/terms` — **must be reviewed by Anna/solicitor** |
-| 🔒 | First DB migration generated | run `npm run db:generate` after `npm install` + `.env` |
-| 🔒 | Push to GitHub remote | needs the repo created (see EXTERNAL-SETUP) |
+| 🔒 | Push to GitHub remote | repo exists; push after sanitising placeholders (done) |
 
 ---
 

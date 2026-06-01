@@ -15,9 +15,11 @@ system matures; today it covers the groundwork.
 
 ### Run locally
 ```powershell
-docker compose up -d
-npm run dev
+npm run dev:up     # .env + Postgres (waited) + migrations + dev server
+npm run dev:down   # stop the database container
 ```
+`dev:up` is idempotent — safe to re-run. Use plain `npm run dev` if the DB is
+already up and migrated.
 
 ### Change the database schema
 1. Edit `src/db/schema.ts`.

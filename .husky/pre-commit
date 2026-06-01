@@ -1,0 +1,17 @@
+# Auto-fix lint + formatting on staged files (fast — staged only).
+npx lint-staged
+
+# Block commits that contain secrets, if gitleaks is installed locally.
+# This is the local counterpart to the CI secret scan and GitHub push protection.
+# Install gitleaks to enable: https://github.com/gitleaks/gitleaks#installing
+if command -v gitleaks >/dev/null 2>&1; then
+  gitleaks protect --staged --config .gitleaks.toml --redact || {
+    echo ""
+    echo "✗ gitleaks detected a potential secret in your staged changes."
+    echo "  Remove it before committing. If it is a false positive, add it to"
+    echo "  the allowlist in .gitleaks.toml."
+    exit 1
+  }
+else
+  echo "ℹ gitleaks not installed — skipping local secret scan (CI still runs it)."
+fi

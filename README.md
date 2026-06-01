@@ -25,15 +25,25 @@ infrastructure as code, and CI/CD.
 ## Quick start
 
 ```powershell
-Copy-Item .env.example .env     # placeholders are fine for local dev
-npm install
-docker compose up -d            # local Postgres
-npm run db:generate             # generate first migration from schema
-npm run db:migrate              # apply migrations
-npm run dev                     # http://localhost:3000
+npm install        # also installs git hooks (husky)
+npm run dev:up     # .env + Postgres + migrations + dev server, one command
 ```
 
+`dev:up` creates `.env` from the example if missing, starts the Postgres
+container and waits for it, applies migrations (generating the first one if
+needed), then launches the dev server at `http://localhost:3000`. Requires
+Docker Desktop running. Stop the DB with `npm run dev:down`.
+
 Health check: `http://localhost:3000/api/health`
+
+## Git hooks (automatic)
+
+Installed via husky on `npm install`:
+
+- **pre-commit** — `lint-staged` auto-fixes ESLint + Prettier on staged files,
+  then a `gitleaks` secret scan (if gitleaks is installed) blocks committing keys.
+- **pre-push** — `npm run typecheck` mirrors the CI gate so type errors surface
+  before they reach the remote.
 
 ## Scripts
 

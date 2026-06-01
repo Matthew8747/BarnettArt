@@ -1,0 +1,4 @@
+# Full-project type check before pushing. Slower than lint, so it runs on push
+# rather than on every commit — mirrors the CI gate so failures surface locally.
+echo "▶ Type-checking before push…"
+npm run typecheck

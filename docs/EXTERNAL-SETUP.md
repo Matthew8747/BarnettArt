@@ -22,14 +22,14 @@ You can run the whole app locally before signing up for anything.
    [Node.js 20+](https://nodejs.org).
 2. In the project root:
    ```powershell
-   Copy-Item .env.example .env      # then leave the placeholder values for now
-   npm install
-   docker compose up -d             # starts local Postgres
-   npm run db:generate              # creates the first migration from the schema
-   npm run db:migrate               # applies it to the local DB
-   npm run dev                      # http://localhost:3000
+   npm install        # installs deps + git hooks
+   npm run dev:up     # one command: .env + Postgres + migrations + dev server
    ```
 3. Visit `http://localhost:3000/api/health` — you should get `{"status":"ok"}`.
+4. **(Recommended) Install [gitleaks](https://github.com/gitleaks/gitleaks#installing)**
+   so the pre-commit hook can scan for secrets locally before they're committed
+   (the same check that runs in CI). On Windows: `winget install gitleaks` or
+   `scoop install gitleaks`.
 
 The app boots with placeholder Stripe/Upstash/Resend values in development; those
 integrations only become required in production (enforced by `src/lib/env.ts`).
