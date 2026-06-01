@@ -4,9 +4,11 @@
 > whenever you complete or start a piece of work. The architecture reference is
 > [`anna-art-platform-plan.md`](./anna-art-platform-plan.md).
 
-**Last updated:** 2026-06-01
+**Last updated:** 2026-06-01 (Phase 1a)
 **Decisions locked:** Hybrid hosting (Vercel app + AWS media) · Drizzle ORM ·
-Originals + Prints · Stripe, UK-only (GBP).
+Originals + Prints · Stripe, UK-only (GBP) · Auth.js passwordless (admin) ·
+node-vibrant palette extraction · storage abstraction (local adapter now,
+S3+CloudFront later).
 
 ---
 
@@ -55,22 +57,37 @@ Originals + Prints · Stripe, UK-only (GBP).
 
 ---
 
-## Phase 1 — Core domain (next up)
+## Phase 1 — Core domain (in progress)
 
 > UI work in this phase follows the approved [`DESIGN.md`](./DESIGN.md)
 > (dark-immersive theme, per-artwork accent, in-between motion).
 
-| Status | Item |
-|--------|------|
-| ⬜ | Generate + apply initial migration (`db:generate` → `db:migrate`) |
-| ⬜ | Design system: theme/accent provider + motion utilities (reduced-motion aware) |
-| ⬜ | Product repository/query layer (typed, parameterised) |
-| ⬜ | Product listing/gallery page (SSR/ISR) + animated product detail page |
-| ⬜ | Per-artwork accent: extract palette on upload; store `accent_hex` + uniform-mode flag |
-| ⬜ | Image pipeline: S3 upload + CloudFront serving + `next/image` |
-| ⬜ | Admin auth (allow-listed email + protected route, `limiters.auth`) |
-| ⬜ | Admin: product CRUD + accent controls (swatch + picker, uniform override) |
-| ⬜ | Seed script with sample artwork for local dev |
+**Phase 1a — domain + design foundation (this PR, `phase-1-domain-design`):**
+
+| Status | Item | Notes |
+|--------|------|-------|
+| ✅ | Schema: per-artwork accent + uniform mode | `accent_hex` (+ DB hex CHECK), `palette_json`, `site_settings` singleton; migration `drizzle/0001_*.sql` |
+| ✅ | Design system: dark-immersive theme | `globals.css` tokens (`--bg/--panel/--text/--accent…`), Fraunces display + Geist body, ambient glows |
+| ✅ | Theme/accent provider | `AccentScope` writes `--accent`/`--accent-text`/`--accent-soft` per subtree (server-side, no flicker) |
+| ✅ | Motion utilities (reduced-motion aware) | `Reveal` (scroll), `.hover-lift`, `hero-rise`, `CursorGlow` (desktop only); all honour `prefers-reduced-motion` |
+| ✅ | Accent contrast guard | `src/lib/color.ts` clamps accent-as-text to ≥4.5:1 on dark; `src/lib/accent.ts` resolves accent + builds CSS vars |
+| ✅ | Palette extraction (admin-time) | `src/lib/palette.ts` via `node-vibrant`; server-only, never on the client |
+| ✅ | Storage abstraction + local adapter | `src/lib/storage/*` — `Storage` interface + `LocalStorage` (S3 adapter swaps in with no call-site changes) |
+| ✅ | Product query layer (typed, parameterised) | `src/db/products.ts` (`listAvailableProducts`, `getProductBySlug`, `listAllProducts`), `src/db/settings.ts` |
+| ✅ | Gallery + animated product detail page | `/shop` grid + `/shop/[slug]`; per-artwork accent retint; SSR (force-dynamic so availability is always current) |
+| ✅ | Seed script with sample artwork | `npm run db:seed` — generates abstract art, extracts palettes, stores via adapter, inserts 6 products |
+| ✅ | Unit tests for new logic | color (13), accent (8), storage (6), palette (2) — suite now 48 tests |
+
+**Phase 1b — admin (next PR):**
+
+| Status | Item | Notes |
+|--------|------|-------|
+| ⬜ | Apply migration to a live DB | `npm run dev:up` (Docker Postgres) then `db:migrate` + `db:seed` — local verification step |
+| ⬜ | Admin auth | **Decided:** Auth.js v5 passwordless email magic-links via Resend (£0), JWT sessions, `ADMIN_EMAILS` allow-list, `limiters.auth` |
+| ⬜ | Admin: product CRUD + image upload | uses the storage adapter + `extractPalette` on upload |
+| ⬜ | Admin: accent controls | extracted swatches + colour picker (per `DESIGN.md` §2) |
+| ⬜ | Admin: uniform-mode toggle | edits `site_settings` (no deploy) |
+| 🔒 | Image pipeline: S3 upload + CloudFront | blocked on AWS ([EXTERNAL-SETUP.md](./EXTERNAL-SETUP.md)); add `S3Storage` implementing `Storage`, select in `getStorage()` |
 
 ## Phase 2 — Commerce (the critical path)
 
@@ -118,3 +135,11 @@ Originals + Prints · Stripe, UK-only (GBP).
   matches your Stripe dashboard's current version before going live.
 - **Legal pages are drafts** — `/privacy` and `/terms` need Anna's real business
   details and a solicitor/template-service review before launch.
+- **Storefront is `force-dynamic`** — correct for live inventory, but revisit a
+  data-cache/ISR strategy in Phase 3 for Core Web Vitals.
+- **`node-vibrant` pulls a moderate-severity transitive dep** (`file-type` ASF
+  loop). Dev/admin-time only, on Anna's own trusted images; CI gate is high-only.
+  Re-check on `node-vibrant` updates.
+- **Storefront images use the local-disk adapter** — `public/uploads` is
+  git-ignored, so a fresh clone shows an empty gallery until `db:seed` runs.
+  Real media lands with the S3 adapter (Phase 1b/4, blocked on AWS).

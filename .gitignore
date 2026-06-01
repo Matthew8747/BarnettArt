@@ -20,6 +20,9 @@
 /.next/
 /out/
 
+# local uploads (LocalStorage adapter dev fallback; real media lives in S3)
+/public/uploads/
+
 # production
 /build
 

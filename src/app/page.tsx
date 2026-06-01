@@ -1,23 +1,29 @@
 import Link from "next/link";
 
+// The full portfolio home lands in Phase 3; for now this is an on-brand
+// entry point that routes visitors into the Phase 1 shop.
 export default function Home() {
   return (
     <main className="flex flex-1 flex-col items-center justify-center px-6 py-24 text-center">
-      <p className="mb-4 text-sm tracking-[0.2em] text-neutral-500 uppercase">
-        Coming soon
+      <p className="eyebrow mb-4">Original art &amp; prints</p>
+      <h1 className="display text-text text-5xl sm:text-7xl">Anna Barnett</h1>
+      <p className="text-muted mt-5 max-w-xl text-lg">
+        A collection of original artwork and fine-art prints. The full portfolio
+        is on its way — the shop is open to browse now.
       </p>
-      <h1 className="text-4xl font-semibold tracking-tight sm:text-6xl">
-        Anna Barnett
-      </h1>
-      <p className="mt-4 max-w-xl text-lg text-neutral-600 dark:text-neutral-400">
-        Original artwork and fine-art prints. The shop and portfolio are being
-        built — check back soon.
-      </p>
-      <nav className="mt-10 flex gap-6 text-sm text-neutral-500">
-        <Link href="/privacy" className="hover:underline">
+      <div className="mt-10 flex items-center gap-5">
+        <Link
+          href="/shop"
+          className="rounded-full bg-[var(--accent)] px-7 py-3 text-sm font-medium text-[#15151d] transition-transform hover:scale-[1.03]"
+        >
+          Enter the shop
+        </Link>
+      </div>
+      <nav className="text-muted mt-12 flex gap-6 text-sm">
+        <Link href="/privacy" className="hover:text-text">
           Privacy
         </Link>
-        <Link href="/terms" className="hover:underline">
+        <Link href="/terms" className="hover:text-text">
           Terms
         </Link>
       </nav>

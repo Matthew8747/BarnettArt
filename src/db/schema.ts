@@ -6,6 +6,7 @@ import {
   integer,
   timestamp,
   jsonb,
+  boolean,
   index,
   uniqueIndex,
   check,
@@ -22,6 +23,17 @@ import { sql } from "drizzle-orm";
  *  - Inventory integrity is enforced in the DB (CHECK constraints), not just
  *    in app code — stock can never go negative.
  */
+
+/**
+ * One extracted accent candidate (see DESIGN.md §2). Stored on the product so
+ * the admin editor can offer the swatches; `population` is the relative weight
+ * node-vibrant assigns, used to order candidates by prominence.
+ */
+export type PaletteCandidate = {
+  hex: string; // #RRGGBB
+  name: string; // e.g. "Vibrant", "DarkMuted"
+  population: number;
+};
 
 export const productType = pgEnum("product_type", ["original", "print"]);
 export const productStatus = pgEnum("product_status", [
@@ -48,6 +60,13 @@ export const products = pgTable(
     basePriceCents: integer("base_price_cents").notNull(),
     currency: text("currency").notNull().default("GBP"),
     status: productStatus("status").notNull().default("available"),
+    // Per-artwork accent (DESIGN.md §2). Null = fall back to the uniform site
+    // accent. Stored at admin-time (auto-extracted then artist-adjusted) — never
+    // computed live on the client. Validated as #RRGGBB at the DB layer too.
+    accentHex: text("accent_hex"),
+    // Extracted palette candidates (dominant + a few swatches) shown to Anna in
+    // the product editor so she can pick/tweak the accent.
+    paletteJson: jsonb("palette_json").$type<PaletteCandidate[]>(),
     createdAt: timestamp("created_at", { withTimezone: true })
       .notNull()
       .defaultNow(),
@@ -59,6 +78,11 @@ export const products = pgTable(
     uniqueIndex("products_slug_idx").on(t.slug),
     index("products_status_idx").on(t.status),
     check("products_base_price_nonneg", sql`${t.basePriceCents} >= 0`),
+    // Belt-and-braces: a stored accent must be a 6-digit hex colour.
+    check(
+      "products_accent_hex_format",
+      sql`${t.accentHex} IS NULL OR ${t.accentHex} ~ '^#[0-9a-fA-F]{6}$'`,
+    ),
   ],
 );
 
@@ -150,6 +174,21 @@ export const orderItems = pgTable(
   ],
 );
 
+/**
+ * Site-wide settings (DESIGN.md §2 "uniform override"). A single pinned row
+ * (id = 'singleton'). When `matchArtworkColours` is false, every product uses
+ * `uniformAccentHex` instead of its own accent — Anna's escape hatch, toggled
+ * in admin with no deploy.
+ */
+export const siteSettings = pgTable("site_settings", {
+  id: text("id").primaryKey().default("singleton"),
+  matchArtworkColours: boolean("match_artwork_colours").notNull().default(true),
+  uniformAccentHex: text("uniform_accent_hex").notNull().default("#8a7bff"),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+});
+
 // Inferred types for use across the app.
 export type Product = typeof products.$inferSelect;
 export type NewProduct = typeof products.$inferInsert;
@@ -157,3 +196,4 @@ export type ProductVariant = typeof productVariants.$inferSelect;
 export type Image = typeof images.$inferSelect;
 export type Order = typeof orders.$inferSelect;
 export type OrderItem = typeof orderItems.$inferSelect;
+export type SiteSettings = typeof siteSettings.$inferSelect;
