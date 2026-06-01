@@ -1,0 +1,25 @@
+# Gitleaks configuration — secret scanning.
+# Runs in CI (see .github/workflows/ci.yml) and can be run locally:
+#   gitleaks detect --source . --config .gitleaks.toml
+# Optionally install as a pre-commit hook — see docs/EXTERNAL-SETUP.md.
+
+# Extend the maintained default rule set (AWS keys, Stripe keys, generic tokens…)
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Files and patterns that are safe to ignore"
+paths = [
+  '''\.env\.example$''',
+  '''(.*?)(test|spec|mock|fixture)(.*?)''',
+  '''docs/.*\.md$''',
+  '''package-lock\.json$''',
+]
+# Placeholder values used in .env.example and docs must not trip the scanner.
+regexes = [
+  '''sk_test_<[^>]+>''',
+  '''pk_test_<[^>]+>''',
+  '''whsec_<[^>]+>''',
+  '''re_<[^>]+>''',
+  '''barnett_dev_password''',
+]
