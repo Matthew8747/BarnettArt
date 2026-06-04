@@ -45,6 +45,15 @@ describe("LocalStorage", () => {
     );
   });
 
+  it("passes through already-absolute keys (demo catalog / CDN URLs)", () => {
+    expect(storage.publicUrl("/sample-art/lily-pond.jpg")).toBe(
+      "/sample-art/lily-pond.jpg",
+    );
+    expect(storage.publicUrl("https://cdn.example.com/x.jpg")).toBe(
+      "https://cdn.example.com/x.jpg",
+    );
+  });
+
   it("refuses path traversal outside the upload root", async () => {
     await expect(
       storage.put("../escape.txt", Buffer.from("x"), "text/plain"),

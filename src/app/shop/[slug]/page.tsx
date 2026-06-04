@@ -9,6 +9,7 @@ import { getStorage } from "@/lib/storage";
 import { formatMoney } from "@/lib/money";
 import { AccentScope } from "@/components/AccentScope";
 import { Reveal } from "@/components/Reveal";
+import { addToCartAction } from "@/app/cart/actions";
 
 type Params = { params: Promise<{ slug: string }> };
 
@@ -138,18 +139,55 @@ export default async function ProductPage({ params }: Params) {
 
             <Reveal delay={400}>
               <div className="mt-9">
-                {/* Cart + checkout arrive in Phase 2 (the commerce path). */}
-                <button
-                  type="button"
-                  disabled
-                  className="border-border text-text cursor-not-allowed rounded-full border bg-[var(--accent-soft)] px-7 py-3 text-sm font-medium opacity-80"
-                >
-                  {isSold ? "Sold" : "Checkout opening soon"}
-                </button>
-                <p className="text-muted mt-3 text-xs">
-                  Secure checkout is being finalised. To enquire about this
-                  piece, please get in touch.
-                </p>
+                {isSold ? (
+                  <button
+                    type="button"
+                    disabled
+                    className="border-border text-text cursor-not-allowed rounded-full border bg-[var(--accent-soft)] px-7 py-3 text-sm font-medium opacity-80"
+                  >
+                    Sold
+                  </button>
+                ) : (
+                  <form
+                    action={addToCartAction}
+                    className="flex flex-col gap-4"
+                  >
+                    <input type="hidden" name="productId" value={product.id} />
+                    {product.type === "print" &&
+                      product.variants.length > 0 && (
+                        <label className="flex flex-col gap-1 text-sm">
+                          <span className="text-muted">Choose an option</span>
+                          <select
+                            name="variantId"
+                            className="border-border bg-bg text-text rounded-md border px-3 py-2"
+                            defaultValue={
+                              product.variants.find((v) => v.stockQty > 0)
+                                ?.id ?? product.variants[0].id
+                            }
+                          >
+                            {product.variants.map((v) => (
+                              <option
+                                key={v.id}
+                                value={v.id}
+                                disabled={v.stockQty === 0}
+                              >
+                                {v.name} —{" "}
+                                {formatMoney(v.priceCents, product.currency)}
+                                {v.stockQty === 0 ? " (sold out)" : ""}
+                              </option>
+                            ))}
+                          </select>
+                        </label>
+                      )}
+                    <input type="hidden" name="quantity" value={1} />
+                    <button
+                      type="submit"
+                      className="self-start rounded-full bg-[var(--accent)] px-7 py-3 text-sm font-medium text-[#15151d] transition-transform hover:scale-[1.02]"
+                    >
+                      Add to cart
+                    </button>
+                  </form>
+                )}
               </div>
             </Reveal>
           </div>

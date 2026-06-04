@@ -1,6 +1,7 @@
 import "server-only";
 import { eq } from "drizzle-orm";
 import { db } from "./index";
+import { isDemoMode } from "@/lib/env";
 import { siteSettings, type SiteSettings } from "./schema";
 
 /**
@@ -21,6 +22,7 @@ const DEFAULTS: SiteSettings = {
 };
 
 export async function getSiteSettings(): Promise<SiteSettings> {
+  if (isDemoMode) return DEFAULTS;
   const [row] = await db
     .select()
     .from(siteSettings)

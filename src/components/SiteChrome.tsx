@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 /** Shared header. Restrained, uppercase nav (DESIGN.md §4). */
-export function SiteHeader() {
+export function SiteHeader({ cartCount = 0 }: { cartCount?: number }) {
   return (
     <header className="border-border/60 sticky top-0 z-20 border-b bg-[var(--bg)]/80 backdrop-blur">
       <div className="mx-auto flex max-w-[1180px] items-center justify-between px-6 py-4">
@@ -14,6 +14,13 @@ export function SiteHeader() {
           </Link>
           <Link href="/" className="hover:text-text transition-colors">
             Portfolio
+          </Link>
+          <Link
+            href="/cart"
+            className="hover:text-text transition-colors"
+            aria-label={`Cart, ${cartCount} item${cartCount === 1 ? "" : "s"}`}
+          >
+            Cart{cartCount > 0 ? ` (${cartCount})` : ""}
           </Link>
         </nav>
       </div>

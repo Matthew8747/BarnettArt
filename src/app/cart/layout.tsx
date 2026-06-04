@@ -3,7 +3,7 @@ import { StoreShell } from "@/components/StoreShell";
 import { readCart } from "@/lib/cart-cookie";
 import { cartCount } from "@/lib/cart";
 
-export default async function ShopLayout({
+export default async function CartLayout({
   children,
 }: {
   children: ReactNode;

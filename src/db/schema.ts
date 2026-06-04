@@ -139,6 +139,9 @@ export const orders = pgTable(
     totalCents: integer("total_cents").notNull(),
     currency: text("currency").notNull().default("GBP"),
     stripePaymentIntentId: text("stripe_payment_intent_id"),
+    // Stripe Checkout Session that created this order; correlates the redirect
+    // flow with the order before the payment_intent is known.
+    stripeCheckoutSessionId: text("stripe_checkout_session_id"),
     createdAt: timestamp("created_at", { withTimezone: true })
       .notNull()
       .defaultNow(),
@@ -185,6 +188,20 @@ export const siteSettings = pgTable("site_settings", {
   matchArtworkColours: boolean("match_artwork_colours").notNull().default(true),
   uniformAccentHex: text("uniform_accent_hex").notNull().default("#8a7bff"),
   updatedAt: timestamp("updated_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+});
+
+/**
+ * Webhook idempotency ledger. Stripe retries deliveries, so every event id we
+ * act on is recorded here inside the same transaction as fulfilment. A duplicate
+ * delivery hits the primary-key conflict and is skipped — processing an event
+ * twice can never double-decrement stock or re-send an email.
+ */
+export const processedEvents = pgTable("processed_events", {
+  eventId: text("event_id").primaryKey(),
+  type: text("type").notNull(),
+  processedAt: timestamp("processed_at", { withTimezone: true })
     .notNull()
     .defaultNow(),
 });

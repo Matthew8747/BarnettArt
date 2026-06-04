@@ -1,6 +1,8 @@
 import "server-only";
 import { eq, asc, desc, inArray } from "drizzle-orm";
 import { db } from "./index";
+import { isDemoMode } from "@/lib/env";
+import { getDemoProducts, getDemoProductBySlug } from "@/lib/demo-data";
 import {
   products,
   productVariants,
@@ -26,6 +28,7 @@ export type ProductWithMedia = Product & {
 
 /** Products to show in the public gallery: available, newest first. */
 export async function listAvailableProducts(): Promise<ProductWithMedia[]> {
+  if (isDemoMode) return getDemoProducts();
   const rows = await db
     .select()
     .from(products)
@@ -38,6 +41,7 @@ export async function listAvailableProducts(): Promise<ProductWithMedia[]> {
 export async function getProductBySlug(
   slug: string,
 ): Promise<ProductWithMedia | null> {
+  if (isDemoMode) return getDemoProductBySlug(slug);
   const [product] = await db
     .select()
     .from(products)

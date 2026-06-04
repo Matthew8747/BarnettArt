@@ -60,8 +60,17 @@ stripe trigger payment_intent.succeeded
 ### Payments failing
 1. Stripe dashboard → Developers → Webhooks: check delivery + signature errors.
 2. Confirm `STRIPE_WEBHOOK_SECRET` in Vercel matches the live endpoint's secret.
-3. Check Vercel function logs for `/api/webhooks/stripe`.
-4. Stripe is the source of truth — reconcile orders against Stripe payments.
+3. Confirm the endpoint subscribes to `checkout.session.completed`.
+4. Check Vercel function logs for `/api/webhooks/stripe`.
+5. Stripe is the source of truth — reconcile orders against Stripe payments.
+
+### Oversell (a paid order couldn't claim stock)
+The fulfilment handler decrements stock atomically; if an item was already sold
+(rare race), it logs `order <id> OVERSOLD (refund needed): <items>` and still
+marks the order paid (the payment is real).
+1. Find the order id in the log line; open the matching payment in Stripe.
+2. **Refund** the affected amount in the Stripe dashboard.
+3. Email the customer to apologise. (A future enhancement may automate refunds.)
 
 ### Site down
 1. Vercel status + latest deployment health.
