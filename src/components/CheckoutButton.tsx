@@ -6,9 +6,32 @@ import { useState } from "react";
  * Starts checkout: POSTs to /api/checkout (which prices the cart server-side and
  * creates a Stripe Checkout Session) then redirects to Stripe's hosted page.
  */
-export function CheckoutButton({ disabled }: { disabled?: boolean }) {
+export function CheckoutButton({
+  disabled,
+  demo,
+}: {
+  disabled?: boolean;
+  demo?: boolean;
+}) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  if (demo) {
+    return (
+      <div className="text-right">
+        <button
+          type="button"
+          disabled
+          className="border-border text-text w-full cursor-not-allowed rounded-full border bg-[var(--accent-soft)] px-7 py-3 text-sm font-medium opacity-80 sm:w-auto"
+        >
+          Checkout (disabled in preview)
+        </button>
+        <p className="text-muted mt-2 text-xs">
+          This is a preview — payments are switched off.
+        </p>
+      </div>
+    );
+  }
 
   async function start() {
     setLoading(true);

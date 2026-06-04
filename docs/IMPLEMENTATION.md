@@ -12,6 +12,11 @@ extraction · storage abstraction (local adapter now, S3+CloudFront later).
 
 > **Manual steps you must do** (accounts, secrets, local services): see
 > [`MANUAL-TODO.md`](./MANUAL-TODO.md).
+>
+> **Prototype:** set `DEMO_MODE=true` to run with **no database/Stripe** — the
+> storefront serves a curated in-repo catalog of sample paintings
+> (`src/lib/demo-data.ts`, images in `public/sample-art/`). Deployable to a
+> Vercel preview with zero external services; see MANUAL-TODO §0.
 
 ---
 

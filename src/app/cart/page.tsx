@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { readCart } from "@/lib/cart-cookie";
 import { priceCartFromDb } from "@/db/orders";
+import { isDemoMode } from "@/lib/env";
 import { formatMoney } from "@/lib/money";
 import { CheckoutButton } from "@/components/CheckoutButton";
 import { updateQtyAction, removeFromCartAction } from "@/app/cart/actions";
@@ -122,7 +123,7 @@ export default async function CartPage() {
           </div>
 
           <div className="mt-8 flex justify-end">
-            <CheckoutButton />
+            <CheckoutButton demo={isDemoMode} />
           </div>
           <p className="text-muted mt-3 text-right text-xs">
             Secure payment by Stripe. Card details never touch our servers.

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
-import { env } from "@/lib/env";
+import { env, isDemoMode } from "@/lib/env";
 import { limiters, clientIp } from "@/lib/rate-limit";
 import { readCart } from "@/lib/cart-cookie";
 import {
@@ -19,6 +19,14 @@ import {
  *  - Rate limited per IP. Card data goes straight to Stripe's hosted page.
  */
 export async function POST(req: Request) {
+  // Demo/prototype previews have no payment provider — checkout is disabled.
+  if (isDemoMode) {
+    return NextResponse.json(
+      { error: "demo_checkout_disabled" },
+      { status: 503 },
+    );
+  }
+
   const { success } = await limiters.checkout.limit(clientIp(req));
   if (!success) {
     return NextResponse.json({ error: "rate_limited" }, { status: 429 });

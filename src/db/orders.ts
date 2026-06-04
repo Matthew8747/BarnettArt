@@ -16,6 +16,8 @@ import {
   type PriceableVariant,
 } from "@/lib/pricing";
 import type { CartItem } from "@/lib/cart";
+import { isDemoMode } from "@/lib/env";
+import { demoPricingMaps } from "@/lib/demo-data";
 
 const UUID_RE =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -27,6 +29,7 @@ const UUID_RE =
  * issue instead).
  */
 export async function priceCartFromDb(items: CartItem[]): Promise<PricedCart> {
+  if (isDemoMode) return priceCart(items, demoPricingMaps());
   const productIds = unique(
     items.map((i) => i.productId).filter((id) => UUID_RE.test(id)),
   );

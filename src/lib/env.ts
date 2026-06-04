@@ -23,7 +23,12 @@ const skipValidation =
   process.env.NEXT_PHASE === "phase-production-build" ||
   process.env.SKIP_ENV_VALIDATION === "true";
 
-const enforceRequired = isProd && !skipValidation;
+// Demo/prototype mode: serve a curated in-repo catalog with no database or
+// payment provider, so a Vercel preview boots with zero external services. When
+// on, the integration secrets below are NOT required even in production.
+const isDemo = process.env.DEMO_MODE === "true";
+
+const enforceRequired = isProd && !skipValidation && !isDemo;
 
 // Required in production runtime; optional (blank-allowed) in dev and at build.
 // In the relaxed (dev/build) case we accept either a value that satisfies the
@@ -44,9 +49,13 @@ const serverSchema = z.object({
     .enum(["development", "production", "test"])
     .default("development"),
 
-  DATABASE_URL: skipValidation
-    ? z.string().optional().default("")
-    : z.string().min(1, "DATABASE_URL is required"),
+  DATABASE_URL:
+    skipValidation || isDemo
+      ? z.string().optional().default("")
+      : z.string().min(1, "DATABASE_URL is required"),
+
+  // "true" enables the no-database demo catalog (see isDemoMode below).
+  DEMO_MODE: z.string().optional().default(""),
 
   STRIPE_SECRET_KEY: requiredInProd(z.string().startsWith("sk_")),
   STRIPE_WEBHOOK_SECRET: requiredInProd(z.string().startsWith("whsec_")),
@@ -110,3 +119,10 @@ export const env = {
 export const adminEmails = env.ADMIN_EMAILS.split(",")
   .map((e) => e.trim().toLowerCase())
   .filter(Boolean);
+
+/**
+ * Demo/prototype mode — true when `DEMO_MODE=true`. The storefront then serves a
+ * curated in-repo catalog (src/lib/demo-data.ts) and never touches the database;
+ * checkout is disabled. Lets a Vercel preview run with no external services.
+ */
+export const isDemoMode = env.DEMO_MODE === "true";

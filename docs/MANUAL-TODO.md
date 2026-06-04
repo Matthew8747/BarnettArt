@@ -9,6 +9,28 @@ Legend: 🔴 blocks local testing now · 🟠 needed before deploy · 🟢 nice-
 
 ---
 
+## 0. Deploy a prototype for Anna (no accounts needed) 🟢
+
+The fastest way to put a clickable preview in front of Anna — **no database, no
+Stripe, nothing to provision**. It serves a curated set of sample paintings
+(public-domain placeholders until Anna's high-res photos arrive); browsing,
+per-artwork colour, motion and the cart all work, and checkout is shown as
+disabled.
+
+1. Push this branch to GitHub (done) and import the repo at
+   <https://vercel.com/new> (free Hobby plan, sign in with GitHub).
+2. In the Vercel project: **Settings → Environment Variables**, add
+   **`DEMO_MODE` = `true`** (all environments). That's the only var needed.
+3. Deploy. Share the `*.vercel.app` URL with Anna.
+
+CLI alternative (from the repo root): `npx vercel` → follow prompts, then
+`npx vercel env add DEMO_MODE` (value `true`) → `npx vercel --prod`.
+
+To switch off demo mode later, remove `DEMO_MODE` and add the real
+`DATABASE_URL` + Stripe vars (sections below).
+
+---
+
 ## 1. To run + test the build locally (Phase 1 + 2)
 
 - 🔴 **Start Docker Desktop**, then `npm run dev:up` (boots Postgres, runs

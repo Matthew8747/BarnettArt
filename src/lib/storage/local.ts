@@ -42,6 +42,9 @@ export class LocalStorage implements Storage {
   }
 
   publicUrl(key: string): string {
+    // Already-absolute keys (demo catalog points at committed /sample-art
+    // images, or a future CDN URL) pass through unchanged.
+    if (/^(https?:)?\/\//.test(key) || key.startsWith("/")) return key;
     const safe = key
       .replace(/^[/\\]+/, "")
       .split(path.sep)
