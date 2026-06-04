@@ -26,7 +26,16 @@ const skipValidation =
 // Demo/prototype mode: serve a curated in-repo catalog with no database or
 // payment provider, so a Vercel preview boots with zero external services. When
 // on, the integration secrets below are NOT required even in production.
-const isDemo = process.env.DEMO_MODE === "true";
+//
+// Enabled explicitly via DEMO_MODE=true, OR automatically whenever no
+// DATABASE_URL is configured — so a fresh deploy with no database shows the
+// sample catalog instead of crashing (and you don't have to remember to set the
+// flag, or worry about Vercel per-environment scoping). A real deploy always has
+// DATABASE_URL, so demo turns itself off there.
+const hasDatabaseUrl =
+  typeof process.env.DATABASE_URL === "string" &&
+  process.env.DATABASE_URL.length > 0;
+const isDemo = process.env.DEMO_MODE === "true" || !hasDatabaseUrl;
 
 const enforceRequired = isProd && !skipValidation && !isDemo;
 
@@ -121,8 +130,10 @@ export const adminEmails = env.ADMIN_EMAILS.split(",")
   .filter(Boolean);
 
 /**
- * Demo/prototype mode — true when `DEMO_MODE=true`. The storefront then serves a
- * curated in-repo catalog (src/lib/demo-data.ts) and never touches the database;
- * checkout is disabled. Lets a Vercel preview run with no external services.
+ * Demo/prototype mode — true when `DEMO_MODE=true` OR no `DATABASE_URL` is
+ * configured. The storefront then serves a curated in-repo catalog
+ * (src/lib/demo-data.ts) and never touches the database; checkout is disabled.
+ * Lets a fresh Vercel deploy run with no external services and never crash for
+ * lack of a database.
  */
-export const isDemoMode = env.DEMO_MODE === "true";
+export const isDemoMode = env.DEMO_MODE === "true" || !env.DATABASE_URL;

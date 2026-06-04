@@ -12,22 +12,29 @@ Legend: 🔴 blocks local testing now · 🟠 needed before deploy · 🟢 nice-
 ## 0. Deploy a prototype for Anna (no accounts needed) 🟢
 
 The fastest way to put a clickable preview in front of Anna — **no database, no
-Stripe, nothing to provision**. It serves a curated set of sample paintings
-(public-domain placeholders until Anna's high-res photos arrive); browsing,
-per-artwork colour, motion and the cart all work, and checkout is shown as
-disabled.
+Stripe, nothing to provision, no env vars to set**. It serves a curated set of
+sample paintings (public-domain placeholders until Anna's high-res photos
+arrive); browsing, per-artwork colour, motion and the cart all work, and
+checkout is shown as disabled.
 
-1. Push this branch to GitHub (done) and import the repo at
-   <https://vercel.com/new> (free Hobby plan, sign in with GitHub).
-2. In the Vercel project: **Settings → Environment Variables**, add
-   **`DEMO_MODE` = `true`** (all environments). That's the only var needed.
-3. Deploy. Share the `*.vercel.app` URL with Anna.
+**Demo mode turns itself on automatically whenever no `DATABASE_URL` is set** —
+so a fresh deploy just works. (You can also force it with `DEMO_MODE=true`.)
 
-CLI alternative (from the repo root): `npx vercel` → follow prompts, then
-`npx vercel env add DEMO_MODE` (value `true`) → `npx vercel --prod`.
+1. Import the repo at <https://vercel.com/new> (free Hobby plan, sign in with
+   GitHub). Pick the `phase-2-commerce` branch if prompted.
+2. Click **Deploy** — leave everything default, **no env vars needed**.
+3. Share the `*.vercel.app` URL with Anna.
 
-To switch off demo mode later, remove `DEMO_MODE` and add the real
-`DATABASE_URL` + Stripe vars (sections below).
+CLI alternative (from the repo root): `npx vercel` → accept defaults →
+`npx vercel --prod`.
+
+> **Why your first try failed:** Vercel env vars are scoped per-environment and
+> only apply to *new* deploys made after they're added, so a `DEMO_MODE` set
+> after deploying didn't take effect. The app now auto-detects "no database" and
+> serves the demo, so you don't need the flag at all.
+
+Later, to go live for real: add `DATABASE_URL` + the Stripe vars (sections
+below) and redeploy — demo mode switches itself off automatically.
 
 ---
 
