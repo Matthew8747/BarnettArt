@@ -6,6 +6,7 @@ import {
   contrastRatio,
   clampAccentForText,
   DARK_BG,
+  PAGE_BG,
 } from "./color";
 
 describe("isHex", () => {
@@ -84,5 +85,23 @@ describe("clampAccentForText", () => {
     const r = parseInt(clamped.slice(1, 3), 16);
     const b = parseInt(clamped.slice(5, 7), 16);
     expect(b).toBeGreaterThan(r); // blue channel still dominant
+  });
+
+  it("darkens a too-bright accent until it meets 4.5:1 on the paper canvas", () => {
+    const accent = "#f2c14e"; // bright yellow, unreadable as text on paper
+    expect(contrastRatio(accent, PAGE_BG)).toBeLessThan(4.5);
+    const clamped = clampAccentForText(accent, PAGE_BG);
+    expect(isHex(clamped)).toBe(true);
+    expect(contrastRatio(clamped, PAGE_BG)).toBeGreaterThanOrEqual(4.5);
+  });
+
+  it("preserves the hue family while darkening on paper", () => {
+    // A clamped green should still read green, not drift to grey/black.
+    const clamped = clampAccentForText("#5fe08a", PAGE_BG);
+    const r = parseInt(clamped.slice(1, 3), 16);
+    const g = parseInt(clamped.slice(3, 5), 16);
+    const b = parseInt(clamped.slice(5, 7), 16);
+    expect(g).toBeGreaterThan(r);
+    expect(g).toBeGreaterThan(b);
   });
 });

@@ -75,10 +75,10 @@ extraction · storage abstraction (local adapter now, S3+CloudFront later).
 | Status | Item | Notes |
 |--------|------|-------|
 | ✅ | Schema: per-artwork accent + uniform mode | `accent_hex` (+ DB hex CHECK), `palette_json`, `site_settings` singleton; migration `drizzle/0001_*.sql` |
-| ✅ | Design system: dark-immersive theme | `globals.css` tokens (`--bg/--panel/--text/--accent…`), Fraunces display + Geist body, ambient glows |
+| ✅ | Design system: light editorial "gallery wall" (redesigned 2026-06-05) | `globals.css` tokens (`--bg #f3efe6` paper / `--panel` / `--text` ink / `--accent #9c4221` sienna), Cormorant Garamond display + Hanken Grotesk body, paper grain + faint vignette (no glow). See `docs/DESIGN.md` |
 | ✅ | Theme/accent provider | `AccentScope` writes `--accent`/`--accent-text`/`--accent-soft` per subtree (server-side, no flicker) |
-| ✅ | Motion utilities (reduced-motion aware) | `Reveal` (scroll), `.hover-lift`, `hero-rise`, `CursorGlow` (desktop only); all honour `prefers-reduced-motion` |
-| ✅ | Accent contrast guard | `src/lib/color.ts` clamps accent-as-text to ≥4.5:1 on dark; `src/lib/accent.ts` resolves accent + builds CSS vars |
+| ✅ | Motion utilities (reduced-motion aware) | `Reveal` (scroll), `.hover-lift` + image zoom, `hero-rise`, `.wipe-underline`, `.btn`; all honour `prefers-reduced-motion`. Cursor glow removed in the 2026-06-05 redesign |
+| ✅ | Accent contrast guard | `src/lib/color.ts` `clampAccentForText` is direction-aware (darkens accent-as-text to ≥4.5:1 on the paper canvas `PAGE_BG`); `src/lib/accent.ts` resolves accent + builds CSS vars |
 | ✅ | Palette extraction (admin-time) | `src/lib/palette.ts` via `node-vibrant`; server-only, never on the client |
 | ✅ | Storage abstraction + local adapter | `src/lib/storage/*` — `Storage` interface + `LocalStorage` (S3 adapter swaps in with no call-site changes) |
 | ✅ | Product query layer (typed, parameterised) | `src/db/products.ts` (`listAvailableProducts`, `getProductBySlug`, `listAllProducts`), `src/db/settings.ts` |

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
@@ -9,17 +10,20 @@ export const metadata: Metadata = {
 // placeholders with real business details. See docs/IMPLEMENTATION.md.
 export default function PrivacyPage() {
   return (
-    <main className="mx-auto max-w-2xl px-6 py-16">
-      <h1 className="text-3xl font-semibold tracking-tight">Privacy Policy</h1>
-      <p className="mt-2 text-sm text-neutral-500">Last updated: [DATE]</p>
+    <main className="mx-auto max-w-2xl px-6 py-20">
+      <Link href="/" className="eyebrow link-accent inline-block">
+        ← Back home
+      </Link>
+      <h1 className="display text-text mt-6 text-5xl">Privacy Policy</h1>
+      <p className="text-muted mt-3 text-sm">Last updated: [DATE]</p>
 
-      <div className="prose mt-8 space-y-6 text-neutral-700 dark:text-neutral-300">
+      <div className="text-text/80 mt-10 space-y-8 leading-relaxed">
         <section>
-          <h2 className="text-xl font-medium">Who we are</h2>
+          <h2 className="display text-text text-2xl">Who we are</h2>
           <p>
             This site is operated by Anna Barnett (&ldquo;we&rdquo;,
             &ldquo;us&rdquo;). For any privacy questions, contact{" "}
-            <a className="underline" href="mailto:[CONTACT EMAIL]">
+            <a className="link-accent" href="mailto:[CONTACT EMAIL]">
               [CONTACT EMAIL]
             </a>
             . We are the data controller for the personal data described here.
@@ -27,7 +31,7 @@ export default function PrivacyPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-medium">What we collect</h2>
+          <h2 className="display text-text text-2xl">What we collect</h2>
           <p>
             We collect only what we need to fulfil your order: your name, email,
             delivery address, and order details. Payment card details are
@@ -37,7 +41,7 @@ export default function PrivacyPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-medium">How we use it</h2>
+          <h2 className="display text-text text-2xl">How we use it</h2>
           <p>
             To process and deliver your order, send order confirmations, handle
             returns or queries, and meet our legal and tax obligations. The
@@ -47,7 +51,7 @@ export default function PrivacyPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-medium">Who we share it with</h2>
+          <h2 className="display text-text text-2xl">Who we share it with</h2>
           <p>
             Only the service providers needed to run the shop: our payment
             processor (Stripe), email provider (Resend), hosting/infrastructure
@@ -56,7 +60,7 @@ export default function PrivacyPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-medium">How long we keep it</h2>
+          <h2 className="display text-text text-2xl">How long we keep it</h2>
           <p>
             We keep order records for as long as required for accounting and
             legal purposes (typically [X] years), then delete or anonymise them.
@@ -64,12 +68,12 @@ export default function PrivacyPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-medium">Your rights</h2>
+          <h2 className="display text-text text-2xl">Your rights</h2>
           <p>
             Under UK GDPR you have the right to access, correct, delete, or
             restrict use of your personal data, and to object to processing. To
             exercise these, email{" "}
-            <a className="underline" href="mailto:[CONTACT EMAIL]">
+            <a className="link-accent" href="mailto:[CONTACT EMAIL]">
               [CONTACT EMAIL]
             </a>
             . You may also complain to the UK Information Commissioner&rsquo;s
@@ -78,7 +82,7 @@ export default function PrivacyPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-medium">Cookies</h2>
+          <h2 className="display text-text text-2xl">Cookies</h2>
           <p>
             We use only essential cookies needed for the site and checkout to
             function. If we add analytics or marketing cookies, we will ask for

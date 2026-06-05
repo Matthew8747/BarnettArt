@@ -1,23 +1,26 @@
 import Link from "next/link";
 
-/** Shared header. Restrained, uppercase nav (DESIGN.md §4). */
+/** Shared header. Restrained, uppercase nav with a wipe-in underline (§3, §4). */
 export function SiteHeader({ cartCount = 0 }: { cartCount?: number }) {
   return (
-    <header className="border-border/60 sticky top-0 z-20 border-b bg-[var(--bg)]/80 backdrop-blur">
-      <div className="mx-auto flex max-w-[1180px] items-center justify-between px-6 py-4">
-        <Link href="/" className="display text-text text-lg">
+    <header className="border-border/70 sticky top-0 z-20 border-b bg-[var(--bg)]/85 backdrop-blur-md">
+      <div className="mx-auto flex max-w-[1180px] items-center justify-between px-7 py-5 sm:px-9">
+        <Link
+          href="/"
+          className="text-text text-[0.82rem] font-semibold tracking-[0.32em] uppercase"
+        >
           Anna Barnett
         </Link>
-        <nav className="text-muted flex items-center gap-7 text-xs tracking-[0.18em] uppercase">
-          <Link href="/shop" className="hover:text-text transition-colors">
+        <nav className="text-muted flex items-center gap-8 text-[0.7rem] font-medium tracking-[0.2em] uppercase">
+          <Link href="/shop" className="wipe-underline hover:text-text">
             Shop
           </Link>
-          <Link href="/" className="hover:text-text transition-colors">
+          <Link href="/" className="wipe-underline hover:text-text">
             Portfolio
           </Link>
           <Link
             href="/cart"
-            className="hover:text-text transition-colors"
+            className="wipe-underline hover:text-text"
             aria-label={`Cart, ${cartCount} item${cartCount === 1 ? "" : "s"}`}
           >
             Cart{cartCount > 0 ? ` (${cartCount})` : ""}
@@ -31,14 +34,19 @@ export function SiteHeader({ cartCount = 0 }: { cartCount?: number }) {
 /** Shared footer. */
 export function SiteFooter() {
   return (
-    <footer className="border-border/60 mt-24 border-t">
-      <div className="text-muted mx-auto flex max-w-[1180px] flex-col gap-2 px-6 py-10 text-sm sm:flex-row sm:items-center sm:justify-between">
-        <p>© {new Date().getFullYear()} Anna Barnett. All rights reserved.</p>
-        <nav className="flex gap-6">
-          <Link href="/privacy" className="hover:text-text">
+    <footer className="border-border/70 relative z-10 mt-28 border-t">
+      <div className="text-muted mx-auto flex max-w-[1180px] flex-col gap-3 px-7 py-12 text-sm sm:flex-row sm:items-center sm:justify-between sm:px-9">
+        <p className="text-text text-[0.78rem] font-semibold tracking-[0.3em] uppercase">
+          Anna Barnett
+        </p>
+        <p className="order-3 sm:order-2">
+          © {new Date().getFullYear()} Anna Barnett. All rights reserved.
+        </p>
+        <nav className="order-2 flex gap-6 sm:order-3">
+          <Link href="/privacy" className="hover:text-text transition-colors">
             Privacy
           </Link>
-          <Link href="/terms" className="hover:text-text">
+          <Link href="/terms" className="hover:text-text transition-colors">
             Terms
           </Link>
         </nav>

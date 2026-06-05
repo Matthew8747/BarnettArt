@@ -15,20 +15,17 @@ export const dynamic = "force-dynamic";
  */
 export default function CheckoutSuccessPage() {
   return (
-    <div className="mx-auto max-w-[640px] px-6 py-24 text-center">
+    <div className="mx-auto max-w-[640px] px-6 py-28 text-center">
       <ClearCartOnMount />
       <p className="eyebrow">Thank you</p>
-      <h1 className="display text-text mt-3 text-4xl sm:text-5xl">
+      <h1 className="display text-text mt-4 text-5xl sm:text-6xl">
         Your order is confirmed
       </h1>
-      <p className="text-muted mt-5">
+      <p className="text-muted mt-6 leading-relaxed">
         A confirmation email is on its way. We&apos;ll be in touch when your
         piece is ready to ship.
       </p>
-      <Link
-        href="/shop"
-        className="mt-10 inline-block rounded-full bg-[var(--accent)] px-7 py-3 text-sm font-medium text-[#15151d] transition-transform hover:scale-[1.02]"
-      >
+      <Link href="/shop" className="btn btn-primary mt-10">
         Continue browsing
       </Link>
     </div>

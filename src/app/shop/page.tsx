@@ -24,16 +24,18 @@ export default async function ShopPage() {
   const storage = getStorage();
 
   return (
-    <div className="mx-auto max-w-[1180px] px-6 py-16">
+    <div className="mx-auto max-w-[1180px] px-6 py-20">
       <Reveal>
-        <p className="eyebrow">The Collection</p>
-        <h1 className="display text-text mt-3 text-4xl sm:text-6xl">
-          Original art &amp; prints
-        </h1>
-        <p className="text-muted mt-4 max-w-xl text-lg">
-          Each piece sets the mood — the colour you see follows the work in
-          focus.
-        </p>
+        <header className="border-border max-w-2xl border-b pb-10">
+          <p className="eyebrow">The Collection</p>
+          <h1 className="display text-text mt-4 text-5xl sm:text-7xl">
+            Original art &amp; prints
+          </h1>
+          <p className="text-muted mt-5 max-w-xl text-lg leading-relaxed">
+            Each piece sets the mood — the colour of the page follows the work
+            in focus. Browse the collection below and take your time.
+          </p>
+        </header>
       </Reveal>
 
       {items.length === 0 ? (
@@ -41,7 +43,7 @@ export default async function ShopPage() {
           The collection is being hung. Please check back soon.
         </p>
       ) : (
-        <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-14 grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
           {items.map((p, i) => {
             const primary = p.images[0];
             return (
