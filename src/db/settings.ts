@@ -17,7 +17,7 @@ const SINGLETON_ID = "singleton";
 const DEFAULTS: SiteSettings = {
   id: SINGLETON_ID,
   matchArtworkColours: true,
-  uniformAccentHex: "#8a7bff",
+  uniformAccentHex: "#9c4221",
   updatedAt: new Date(0),
 };
 

@@ -15,23 +15,20 @@ export default async function CartPage() {
   const priced = await priceCartFromDb(cart.items);
 
   return (
-    <div className="mx-auto max-w-[900px] px-6 py-16">
-      <h1 className="display text-text text-4xl sm:text-5xl">Your cart</h1>
+    <div className="mx-auto max-w-[900px] px-6 py-20">
+      <h1 className="display text-text text-5xl sm:text-6xl">Your cart</h1>
 
       {priced.lines.length === 0 ? (
         <div className="text-muted mt-8">
           <p>Your cart is empty.</p>
-          <Link
-            href="/shop"
-            className="mt-4 inline-block text-[var(--accent-text)] hover:underline"
-          >
+          <Link href="/shop" className="link-accent mt-4 inline-block">
             Browse the collection →
           </Link>
         </div>
       ) : (
         <>
           {priced.issues.length > 0 && (
-            <p className="border-border bg-panel mt-6 rounded-lg border px-4 py-3 text-sm text-amber-300">
+            <p className="mt-6 rounded-[2px] border border-amber-300/60 bg-amber-50 px-4 py-3 text-sm text-amber-900">
               Some items changed availability and were adjusted.
             </p>
           )}
@@ -69,11 +66,11 @@ export default async function CartPage() {
                     min={1}
                     max={20}
                     defaultValue={l.quantity}
-                    className="border-border bg-bg text-text w-16 rounded-md border px-2 py-1"
+                    className="border-border bg-panel text-text w-16 rounded-[2px] border px-2 py-1"
                   />
                   <button
                     type="submit"
-                    className="border-border text-muted hover:text-text rounded-md border px-3 py-1 text-sm"
+                    className="border-border text-muted hover:text-text hover:border-text rounded-[2px] border px-3 py-1 text-sm transition-colors"
                   >
                     Update
                   </button>

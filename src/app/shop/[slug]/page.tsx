@@ -42,37 +42,36 @@ export default async function ProductPage({ params }: Params) {
 
   return (
     <AccentScope accentHex={accent} as="section">
-      <div className="mx-auto max-w-[1180px] px-6 py-12">
-        <Link
-          href="/shop"
-          className="eyebrow hover:text-text inline-block transition-colors"
-        >
+      <div className="mx-auto max-w-[1180px] px-6 py-14">
+        <Link href="/shop" className="eyebrow link-accent inline-block">
           ← Back to the collection
         </Link>
 
-        <div className="mt-8 grid grid-cols-1 gap-10 lg:grid-cols-2">
-          {/* Hero artwork — scales up with its glow on open */}
+        <div className="mt-10 grid grid-cols-1 gap-14 lg:grid-cols-2">
+          {/* Hero artwork — settles up into its paper mount on open */}
           <div className="hero-rise">
-            <div className="border-border relative aspect-[3/4] overflow-hidden rounded-2xl border bg-[var(--accent-soft)] shadow-[0_30px_80px_-20px_var(--accent-soft)]">
-              {hero ? (
-                <Image
-                  src={storage.publicUrl(hero.s3Key)}
-                  alt={hero.altText || product.title}
-                  fill
-                  priority
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover"
-                />
-              ) : (
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,var(--accent-soft),transparent_70%)]" />
-              )}
+            <div className="border-border bg-panel relative border p-3 shadow-[0_40px_90px_-50px_rgba(28,26,22,0.55)]">
+              <div className="border-border/60 relative aspect-[3/4] overflow-hidden border bg-[var(--accent-soft)]">
+                {hero ? (
+                  <Image
+                    src={storage.publicUrl(hero.s3Key)}
+                    alt={hero.altText || product.title}
+                    fill
+                    priority
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    className="object-cover"
+                  />
+                ) : (
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,var(--accent-soft),transparent_70%)]" />
+                )}
+              </div>
             </div>
             {rest.length > 0 && (
               <div className="mt-4 grid grid-cols-4 gap-3">
                 {rest.map((img) => (
                   <div
                     key={img.id}
-                    className="border-border relative aspect-square overflow-hidden rounded-lg border"
+                    className="border-border bg-panel relative aspect-square overflow-hidden border p-1"
                   >
                     <Image
                       src={storage.publicUrl(img.s3Key)}
@@ -93,7 +92,7 @@ export default async function ProductPage({ params }: Params) {
               <p className="eyebrow">
                 {product.type === "print" ? "Fine-art print" : "Original work"}
               </p>
-              <h1 className="display text-text mt-3 text-4xl sm:text-5xl">
+              <h1 className="display text-text mt-3 text-5xl sm:text-6xl">
                 {product.title}
               </h1>
             </Reveal>
@@ -121,7 +120,7 @@ export default async function ProductPage({ params }: Params) {
                     {product.variants.map((v) => (
                       <li
                         key={v.id}
-                        className="border-border bg-panel flex items-center justify-between rounded-lg border px-4 py-3 text-sm"
+                        className="border-border bg-panel flex items-center justify-between rounded-[2px] border px-4 py-3 text-sm"
                       >
                         <span className="text-text">{v.name}</span>
                         <span className="text-[var(--accent-text)]">
@@ -140,11 +139,7 @@ export default async function ProductPage({ params }: Params) {
             <Reveal delay={400}>
               <div className="mt-9">
                 {isSold ? (
-                  <button
-                    type="button"
-                    disabled
-                    className="border-border text-text cursor-not-allowed rounded-full border bg-[var(--accent-soft)] px-7 py-3 text-sm font-medium opacity-80"
-                  >
+                  <button type="button" disabled className="btn btn-ghost">
                     Sold
                   </button>
                 ) : (
@@ -159,7 +154,7 @@ export default async function ProductPage({ params }: Params) {
                           <span className="text-muted">Choose an option</span>
                           <select
                             name="variantId"
-                            className="border-border bg-bg text-text rounded-md border px-3 py-2"
+                            className="border-border bg-panel text-text rounded-[2px] border px-3 py-2"
                             defaultValue={
                               product.variants.find((v) => v.stockQty > 0)
                                 ?.id ?? product.variants[0].id
@@ -182,7 +177,7 @@ export default async function ProductPage({ params }: Params) {
                     <input type="hidden" name="quantity" value={1} />
                     <button
                       type="submit"
-                      className="self-start rounded-full bg-[var(--accent)] px-7 py-3 text-sm font-medium text-[#15151d] transition-transform hover:scale-[1.02]"
+                      className="btn btn-primary self-start"
                     >
                       Add to cart
                     </button>

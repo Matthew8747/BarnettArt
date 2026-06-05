@@ -2,28 +2,30 @@
 
 /*
  * Barnett Art design system (DESIGN.md).
- * Dark-immersive "gallery at night": a lifted charcoal canvas so artwork glows.
- * One shifting accent at a time drives focus; never a rainbow at once.
+ * "The gallery wall": a warm paper-white canvas with a faint printed grain, so
+ * artwork hangs against it like work in a contemporary gallery. Ink-black type,
+ * a refined serif display, and one restrained per-artwork accent used sparingly
+ * (thin rules, hover underlines, a tinted price) — never a glow, never a gradient.
  */
 
 :root {
-  /* §1 Mood — dark immersive, lifted off pure black */
-  --bg: #15151d;
-  --panel: #1e1e28;
-  --text: #f5f4f9;
-  --muted: #a6a5b6;
-  --border: #2a2a36;
+  /* §1 Mood — warm paper, lifted off pure white */
+  --bg: #f3efe6; /* page canvas — warm bone/paper */
+  --panel: #fbf9f3; /* cards / raised surfaces */
+  --text: #1c1a16; /* warm near-black ink */
+  --muted: #6b6457; /* secondary text — warm taupe */
+  --border: #e2dccd; /* hairline rules */
 
-  /* §2 Accent — overridden per-artwork by the theme provider; this is the
-     uniform/site default. --accent-text is the contrast-clamped variant safe
-     for text on the dark canvas; --accent-soft is a translucent glow. */
-  --accent: #8a7bff;
-  --accent-text: #b5abff;
-  --accent-soft: rgba(138, 123, 255, 0.22);
+  /* §2 Accent — overridden per-artwork by AccentScope; this is the site default
+     (burnt sienna). --accent-text is the contrast-clamped variant safe for text
+     on paper; --accent-soft is a low-alpha wash (no glow). */
+  --accent: #9c4221;
+  --accent-text: #8a3a1d;
+  --accent-soft: rgba(156, 66, 33, 0.12);
 
   /* §3 Motion — tune intensity in one place ("in between", not heavy) */
-  --motion-duration: 600ms;
-  --motion-distance: 24px;
+  --motion-duration: 700ms;
+  --motion-distance: 22px;
   --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -43,32 +45,129 @@ body {
   background-color: var(--bg);
   color: var(--text);
   font-family: var(--font-sans), system-ui, sans-serif;
-  /* §1 ambient: a soft top white wash + corner accent glows for depth. */
-  background-image:
-    radial-gradient(
-      120% 80% at 50% -20%,
-      rgba(255, 255, 255, 0.06),
-      transparent 60%
-    ),
-    radial-gradient(60% 50% at 0% 0%, var(--accent-soft), transparent 60%),
-    radial-gradient(60% 50% at 100% 100%, var(--accent-soft), transparent 60%);
-  background-attachment: fixed;
+  font-feature-settings: "kern", "liga";
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Large, tight-tracked editorial display headings (§4 typography). */
+/*
+ * §1 atmosphere: a faint, even printed-paper grain (fractal noise) for tooth.
+ * Fixed, decorative, behind all content (main is z-10). Deliberately even — no
+ * vignette/gradient (an earlier vignette produced a visible tonal seam).
+ */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.025;
+  mix-blend-mode: multiply;
+}
+
+/*
+ * §1 a hairline frame inset from the viewport — a quiet gallery/editorial device
+ * that frames the whole page like a mounted work. Fixed + decorative.
+ */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 12px;
+  z-index: 40;
+  pointer-events: none;
+  border: 1px solid color-mix(in srgb, var(--text) 14%, transparent);
+}
+@media (max-width: 640px) {
+  body::after {
+    inset: 7px;
+  }
+}
+
+/* Large, editorial serif display headings (§4 typography). */
 .display {
   font-family: var(--font-display), Georgia, serif;
   font-weight: 500;
-  letter-spacing: -0.02em;
-  line-height: 1.02;
+  letter-spacing: -0.012em;
+  line-height: 1.04;
 }
 
 /* Uppercase eyebrow/label treatment (§4 typography). */
 .eyebrow {
   text-transform: uppercase;
-  letter-spacing: 0.22em;
-  font-size: 0.72rem;
+  letter-spacing: 0.26em;
+  font-size: 0.7rem;
+  font-weight: 500;
   color: var(--muted);
+}
+
+/* ── Editorial buttons (§4) ──────────────────────────────────────────────────
+ * Squared, small-caps, wide-tracked — gallery signage, not generic pills. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  border-radius: 2px;
+  padding: 0.95rem 1.9rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    transform 240ms var(--motion-ease),
+    background-color 240ms var(--motion-ease),
+    color 240ms var(--motion-ease),
+    border-color 240ms var(--motion-ease);
+}
+.btn-primary {
+  background-color: var(--text);
+  color: var(--bg);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  background-color: #36322a;
+}
+.btn-ghost {
+  background-color: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+.btn-ghost:hover {
+  border-color: var(--text);
+}
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  transform: none;
+}
+
+/* Inline accent link: an underline in the active accent that wipes in on hover. */
+.link-accent {
+  color: var(--accent-text);
+  background-image: linear-gradient(var(--accent-text), var(--accent-text));
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 380ms var(--motion-ease);
+}
+.link-accent:hover {
+  background-size: 100% 1px;
+}
+
+/* Animated underline for nav + card titles (wipes from the left, in accent). */
+.wipe-underline {
+  background-image: linear-gradient(var(--accent), var(--accent));
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 420ms var(--motion-ease);
+  padding-bottom: 2px;
+}
+.wipe-underline:hover,
+.group:hover .wipe-underline {
+  background-size: 100% 1px;
 }
 
 /* ── §3 Motion utilities — all reduced-motion aware ───────────────────────── */
@@ -88,11 +187,11 @@ body {
   transform: none;
 }
 
-/* Open-product hero: artwork scales up with its glow (§3). */
+/* Open-product hero: artwork settles up into its mount (§3). */
 @keyframes hero-rise {
   from {
     opacity: 0;
-    transform: scale(0.965);
+    transform: translateY(14px) scale(0.985);
   }
   to {
     opacity: 1;
@@ -100,24 +199,24 @@ body {
   }
 }
 .hero-rise {
-  animation: hero-rise 900ms var(--motion-ease) both;
+  animation: hero-rise 1000ms var(--motion-ease) both;
 }
 
-/* Gentle card lift + accent glow on hover (§3). */
+/* Gentle card lift with a soft ink shadow on hover (§3) — no accent glow. */
 .hover-lift {
   transition:
-    transform 280ms var(--motion-ease),
-    box-shadow 280ms var(--motion-ease);
+    transform 320ms var(--motion-ease),
+    box-shadow 320ms var(--motion-ease);
 }
 .hover-lift:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 18px 50px -12px var(--accent-soft);
+  transform: translateY(-5px);
+  box-shadow: 0 26px 50px -28px rgba(28, 26, 22, 0.38);
 }
 
 /*
  * Non-negotiable accessibility guard (DESIGN.md §3): when the user prefers
  * reduced motion, content still appears (no reliance on motion to reveal) and
- * large transforms / the cursor glow are disabled.
+ * large transforms are disabled.
  */
 @media (prefers-reduced-motion: reduce) {
   .reveal {
@@ -129,6 +228,9 @@ body {
     transition: none;
   }
   .hover-lift:hover {
+    transform: none;
+  }
+  .btn-primary:hover {
     transform: none;
   }
   *,

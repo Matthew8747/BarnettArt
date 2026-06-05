@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { resolveAccent, accentTheme, DEFAULT_ACCENT } from "./accent";
-import { contrastRatio, DARK_BG, isHex } from "./color";
+import { contrastRatio, PAGE_BG, isHex } from "./color";
 
 const uniform = { matchArtworkColours: true, uniformAccentHex: "#8a7bff" };
 
@@ -31,21 +31,22 @@ describe("accentTheme", () => {
     expect(theme["--accent-soft"]).toContain("rgba(");
   });
 
-  it("guarantees the text accent clears 4.5:1 on the dark canvas", () => {
-    const theme = accentTheme("#3a2f7a");
+  it("guarantees the text accent clears 4.5:1 on the paper canvas", () => {
+    // A bright yellow is unreadable as text on paper and must be darkened.
+    const theme = accentTheme("#f2c14e");
     expect(
-      contrastRatio(theme["--accent-text"], DARK_BG),
+      contrastRatio(theme["--accent-text"], PAGE_BG),
     ).toBeGreaterThanOrEqual(4.5);
   });
 
-  it("keeps the raw accent for fills even when it is too dark for text", () => {
-    const theme = accentTheme("#3a2f7a");
-    expect(theme["--accent"]).toBe("#3a2f7a");
+  it("keeps the raw accent for fills even when it is too bright for text", () => {
+    const theme = accentTheme("#f2c14e");
+    expect(theme["--accent"]).toBe("#f2c14e");
   });
 });
 
 describe("DEFAULT_ACCENT", () => {
   it("is the documented site default", () => {
-    expect(DEFAULT_ACCENT).toBe("#8a7bff");
+    expect(DEFAULT_ACCENT).toBe("#9c4221");
   });
 });

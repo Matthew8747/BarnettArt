@@ -22,7 +22,7 @@ export function CheckoutButton({
         <button
           type="button"
           disabled
-          className="border-border text-text w-full cursor-not-allowed rounded-full border bg-[var(--accent-soft)] px-7 py-3 text-sm font-medium opacity-80 sm:w-auto"
+          className="btn btn-ghost w-full sm:w-auto"
         >
           Checkout (disabled in preview)
         </button>
@@ -57,11 +57,11 @@ export function CheckoutButton({
         type="button"
         onClick={start}
         disabled={disabled || loading}
-        className="w-full rounded-full bg-[var(--accent)] px-7 py-3 text-sm font-medium text-[#15151d] transition-transform hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+        className="btn btn-primary w-full sm:w-auto"
       >
         {loading ? "Redirecting…" : "Proceed to secure checkout"}
       </button>
-      {error && <p className="mt-3 text-sm text-red-400">{error}</p>}
+      {error && <p className="mt-3 text-sm text-[#b42318]">{error}</p>}
     </div>
   );
 }

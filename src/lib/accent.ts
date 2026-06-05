@@ -1,4 +1,4 @@
-import { clampAccentForText, DARK_BG, normalizeHex } from "./color";
+import { clampAccentForText, PAGE_BG, normalizeHex } from "./color";
 
 /**
  * Accent resolution + theming (DESIGN.md §2, §5).
@@ -9,8 +9,8 @@ import { clampAccentForText, DARK_BG, normalizeHex } from "./color";
  * unit-testable without a browser or DB.
  */
 
-/** The documented uniform/site default accent (DESIGN.md §2). */
-export const DEFAULT_ACCENT = "#8a7bff";
+/** The documented uniform/site default accent (DESIGN.md §2): burnt sienna. */
+export const DEFAULT_ACCENT = "#9c4221";
 
 export type AccentSettings = {
   matchArtworkColours: boolean;
@@ -44,7 +44,7 @@ export type AccentTheme = {
 /** Build the CSS variables for an accent, enforcing the text-contrast guard. */
 export function accentTheme(
   accentHex: string,
-  bg: string = DARK_BG,
+  bg: string = PAGE_BG,
 ): AccentTheme {
   const accent = normalizeHex(accentHex);
   const r = parseInt(accent.slice(1, 3), 16);
@@ -53,6 +53,8 @@ export function accentTheme(
   return {
     "--accent": accent,
     "--accent-text": clampAccentForText(accent, bg),
-    "--accent-soft": `rgba(${r}, ${g}, ${b}, 0.22)`,
+    // A whisper of the artwork's colour for tints on the light canvas — never a
+    // glow. Kept low-alpha so it reads as a wash, not a halo.
+    "--accent-soft": `rgba(${r}, ${g}, ${b}, 0.12)`,
   };
 }

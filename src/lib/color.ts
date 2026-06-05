@@ -2,14 +2,21 @@
  * Colour utilities for the per-artwork accent system (DESIGN.md §2).
  *
  * Single home for the accessibility guarantee: any accent used as *text* on the
- * dark canvas is clamped to meet WCAG AA contrast (≥ 4.5:1). Large fills/glows
+ * page canvas is clamped to meet WCAG AA contrast (≥ 4.5:1). Large fills/glows
  * are exempt and may use the raw accent. Keep this logic here so the rule is
  * enforced in exactly one place.
  *
  * Pure functions, no I/O — safe to use on server or (where needed) client.
  */
 
-/** The page canvas accents are read against (DESIGN.md §1 `--bg`). */
+/** The page canvas accents are read against (DESIGN.md §1 `--bg`, warm paper). */
+export const PAGE_BG = "#f3efe6";
+
+/**
+ * The previous dark canvas, kept as a named constant so the contrast helpers can
+ * still be exercised against a dark background in tests and so a future dark
+ * theme has a reference. The live storefront reads against {@link PAGE_BG}.
+ */
 export const DARK_BG = "#15151d";
 
 /** WCAG AA minimum contrast for normal-size text. */
@@ -115,23 +122,34 @@ function hslToRgb({ h, s, l }: HSL): RGB {
 
 /**
  * Return an accent safe to use as text against `bg`, preserving hue and
- * saturation while raising lightness only as far as needed to clear
- * `minRatio`. If even pure-lightness can't reach the target (rare on a dark
- * canvas), returns the lightest in-hue colour we tried.
+ * saturation while moving lightness only as far as needed to clear `minRatio`.
+ *
+ * The direction is chosen from the background: on a light canvas (the live
+ * paper-white storefront) a too-bright accent is *darkened*; on a dark canvas it
+ * is *lightened*. If pure-lightness can't reach the target, returns the most
+ * extreme in-hue colour we tried.
  */
 export function clampAccentForText(
   accent: string,
-  bg: string = DARK_BG,
+  bg: string = PAGE_BG,
   minRatio: number = MIN_TEXT_CONTRAST,
 ): string {
   if (contrastRatio(accent, bg) >= minRatio) {
     return normalizeHex(accent);
   }
   const hsl = rgbToHsl(toRgb(accent));
+  // Light background → walk lightness down (darken); dark background → up.
+  const darken = relativeLuminance(bg) >= 0.5;
+  const step = 0.02;
   let best = normalizeHex(accent);
-  // Walk lightness up in small steps; first hit that clears the bar wins.
-  for (let l = hsl.l; l <= 1.0001; l += 0.02) {
-    const candidate = toHex(hslToRgb({ ...hsl, l: Math.min(l, 1) }));
+  for (
+    let l = hsl.l;
+    darken ? l >= -0.0001 : l <= 1.0001;
+    l += darken ? -step : step
+  ) {
+    const candidate = toHex(
+      hslToRgb({ ...hsl, l: Math.min(Math.max(l, 0), 1) }),
+    );
     best = candidate;
     if (contrastRatio(candidate, bg) >= minRatio) {
       return candidate;
