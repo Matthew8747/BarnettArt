@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { readCart } from "@/lib/cart-cookie";
 import { priceCartFromDb } from "@/db/orders";
-import { isDemoMode } from "@/lib/env";
+import { isDemoMode, isInquiryMode } from "@/lib/env";
 import { formatMoney } from "@/lib/money";
 import { CheckoutButton } from "@/components/CheckoutButton";
 import { updateQtyAction, removeFromCartAction } from "@/app/cart/actions";
@@ -119,12 +119,28 @@ export default async function CartPage() {
             </p>
           </div>
 
-          <div className="mt-8 flex justify-end">
-            <CheckoutButton demo={isDemoMode} />
-          </div>
-          <p className="text-muted mt-3 text-right text-xs">
-            Secure payment by Stripe. Card details never touch our servers.
-          </p>
+          {isInquiryMode ? (
+            <>
+              <div className="mt-8 flex justify-end">
+                <Link href="/contact" className="btn btn-primary">
+                  Enquire about these pieces
+                </Link>
+              </div>
+              <p className="text-muted mt-3 text-right text-xs">
+                Anna sells each piece personally — send these through and
+                she&rsquo;ll arrange price, framing and delivery with you.
+              </p>
+            </>
+          ) : (
+            <>
+              <div className="mt-8 flex justify-end">
+                <CheckoutButton demo={isDemoMode} />
+              </div>
+              <p className="text-muted mt-3 text-right text-xs">
+                Secure payment by Stripe. Card details never touch our servers.
+              </p>
+            </>
+          )}
         </>
       )}
     </div>

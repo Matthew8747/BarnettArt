@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
-import { env, isDemoMode } from "@/lib/env";
+import { env, isDemoMode, isInquiryMode } from "@/lib/env";
 import { limiters, clientIp } from "@/lib/rate-limit";
 import { readCart } from "@/lib/cart-cookie";
 import {
@@ -24,6 +24,15 @@ export async function POST(req: Request) {
     return NextResponse.json(
       { error: "demo_checkout_disabled" },
       { status: 503 },
+    );
+  }
+
+  // Enquiry model: direct payment is switched off — orders go via the contact
+  // form. Refuse here too, so the API can't be driven independently of the UI.
+  if (isInquiryMode) {
+    return NextResponse.json(
+      { error: "inquiry_mode_no_checkout" },
+      { status: 403 },
     );
   }
 

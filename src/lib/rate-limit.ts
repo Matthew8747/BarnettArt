@@ -70,6 +70,7 @@ export const limiters = {
   // password/email actions): max 5 attempts per 15 minutes per IP.
   auth: makeLimiter(5, 15 * 60),
   checkout: makeLimiter(10, 60), // 10 checkout attempts / min / IP
+  contact: makeLimiter(5, 60 * 60), // 5 enquiries / hour / IP (anti-spam)
   webhook: makeLimiter(100, 60), // generous; Stripe retries legitimately
   admin: makeLimiter(30, 60),
   api: makeLimiter(60, 60), // general read endpoints

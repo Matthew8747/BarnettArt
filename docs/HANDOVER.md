@@ -21,7 +21,7 @@ billing). The engineer holds collaborator/team access. See
 | Neon | Database | Engineer/Anna team |
 | Stripe | Payments | **Anna** |
 | Upstash | Rate limiting | Engineer |
-| Resend | Order emails | Engineer/Anna |
+| Resend | Order emails + contact-form enquiries | Engineer/Anna |
 | AWS | Image storage/CDN | **Anna** (billing) |
 | Domain registrar | annabarnett.art | **Anna** |
 
@@ -33,6 +33,33 @@ billing). The engineer holds collaborator/team access. See
   succeeds, so it can't be double-sold.
 - **You never see card numbers** — Stripe handles all of that.
 - If something looks wrong with a payment, check the **Stripe dashboard** first.
+- **Enquiries reach you by email.** The "Contact" page sends straight to your
+  inbox (`CONTACT_EMAIL`), with the sender's address as reply-to — just hit
+  reply. Each artwork also has an "Enquire about this piece" link that tells you
+  which painting they mean.
+
+## The paintings & gallery (current state)
+- Anna's 26 photos were imported, web-optimised, and stripped of metadata
+  (including the GPS location iPhone photos embed — a privacy fix). They power
+  the **Gallery** (all works) and the **Shop** (a curated front page of them).
+- **Titles and prices are placeholders** ("Untitled No. 01", a uniform draft
+  price). They are *not* real listings. Rename and price each piece — for now by
+  editing `src/lib/gallery-manifest.json` (titles) and `src/lib/demo-data.ts`
+  (which become which shop listings, and the draft price); from Phase 1b, in the
+  admin UI.
+- **Several photos are in-situ shots** (paintings on a desk/wall, not cropped).
+  For a cleaner gallery, re-shoot or crop to just the artwork and drop the files
+  into `paintings/`, then re-run `node scripts/import-paintings.mjs`.
+
+## Switching to enquiry-based ordering (when Anna's ready)
+The site can move from instant Stripe checkout to "enquire to buy" with **one
+setting** — no code change, no data migration:
+- In Vercel → Project → Settings → Environment Variables, set
+  **`COMMERCE_MODE=inquiry`** and redeploy.
+- Every buy button becomes "Enquire to buy" and routes to the contact form; the
+  cart and checkout are disabled. Set it back to `checkout` to re-enable Stripe.
+- Full rationale: [`anna-art-platform-plan.md`](./anna-art-platform-plan.md)
+  §2.4 "Commerce model".
 
 ## For an engineer
 - Architecture: [`anna-art-platform-plan.md`](./anna-art-platform-plan.md).

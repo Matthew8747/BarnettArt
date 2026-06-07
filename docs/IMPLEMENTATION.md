@@ -4,18 +4,21 @@
 > whenever you complete or start a piece of work. The architecture reference is
 > [`anna-art-platform-plan.md`](./anna-art-platform-plan.md).
 
-**Last updated:** 2026-06-01 (Phase 2a)
+**Last updated:** 2026-06-05 (Phase 2b — gallery, enquiries, commerce toggle)
 **Decisions locked:** Hybrid hosting (Vercel app + AWS media) · Drizzle ORM ·
 Originals + Prints · Stripe, UK-only (GBP) · **Stripe Checkout (hosted)** ·
-signed-cookie cart · Auth.js passwordless (admin) · node-vibrant palette
-extraction · storage abstraction (local adapter now, S3+CloudFront later).
+**`COMMERCE_MODE` toggle (checkout now → enquiry later)** · signed-cookie cart ·
+Auth.js passwordless (admin) · node-vibrant palette extraction · storage
+abstraction (local adapter now, S3+CloudFront later) · light "gallery wall"
+design system (`DESIGN.md`).
 
 > **Manual steps you must do** (accounts, secrets, local services): see
 > [`MANUAL-TODO.md`](./MANUAL-TODO.md).
 >
-> **Prototype:** set `DEMO_MODE=true` to run with **no database/Stripe** — the
-> storefront serves a curated in-repo catalog of sample paintings
-> (`src/lib/demo-data.ts`, images in `public/sample-art/`). Deployable to a
+> **Prototype:** runs with **no database/Stripe** whenever `DATABASE_URL` is
+> unset (or `DEMO_MODE=true`) — the storefront serves an in-repo catalog built
+> from Anna's real paintings (`src/lib/demo-data.ts` over
+> `src/lib/gallery-manifest.json`, images in `public/gallery/`). Deployable to a
 > Vercel preview with zero external services; see MANUAL-TODO §0.
 
 ---
@@ -122,14 +125,32 @@ extraction · storage abstraction (local adapter now, S3+CloudFront later).
 > line is logged for a **manual Stripe refund** — payment is real, so it's never
 > silently dropped. See `RUNBOOK.md`.
 
+**Phase 2b — gallery, enquiries, commerce model (`phase-2-commerce`):**
+
+| Status | Item | Notes |
+|--------|------|-------|
+| ✅ | Painting import pipeline | `scripts/import-paintings.mjs` — HEIC→web (sharp + `heic-convert` fallback), EXIF/GPS stripped, node-vibrant accent, → `public/gallery/` + `src/lib/gallery-manifest.json` (26 works) |
+| ✅ | Gallery showcase | `/gallery` masonry (true aspect ratios) + keyboard-accessible lightbox; manifest-driven |
+| ✅ | Shop wired to real paintings | `src/lib/demo-data.ts` builds placeholder products from the manifest (titles/prices are drafts) |
+| ✅ | **Commerce-model toggle** | `COMMERCE_MODE` (`checkout`\|`inquiry`) in `env.ts`; checkout API + cart + product CTAs switch to "Enquire to buy" in inquiry mode |
+| ✅ | Direct-communication feature | `/contact` form → `POST /api/contact` (Zod `.strict()`, rate-limited `limiters.contact` 5/h, honeypot, same-origin) → `sendContactMessage` (Resend, reply-to, dev no-op) |
+| ✅ | "Enquire about this piece" | product page + gallery lightbox deep-link to `/contact?artwork=…` |
+| ✅ | Portfolio base (home) | story-driven editorial home: painter/engineer hero, selected work, practice essay, enquiry CTA; reduced-motion aware |
+| ✅ | Bugfix | `COMMERCE_MODE` empty-string `.default()` gap would crash boot — fixed with preprocess |
+| ✅ | Vitest unit tests | contact schema (8) + commerce-mode/contact-email env (5); suite now **84** |
+
+> **Note:** titles/prices on imported paintings are placeholders — see
+> MANUAL-TODO §2. Portfolio **stretch** ideas (about page, per-piece stories,
+> case study) are parked in MANUAL-TODO §5, not half-built.
+
 ## Phase 3 — Portfolio & polish
 
 | Status | Item |
 |--------|------|
-| ⬜ | Portfolio: home, gallery, about, contact (per `DESIGN.md`) |
-| ⬜ | Motion polish: scroll reveals, hover/cursor effects (honour `prefers-reduced-motion`) |
-| ⬜ | SEO: metadata, sitemap, structured data (Product schema) |
-| ⬜ | Accessibility pass (incl. accent-on-dark contrast clamp) + Core Web Vitals |
+| ✅ | Portfolio: home, gallery, contact (per `DESIGN.md`) — *about page parked (MANUAL-TODO §5)* |
+| ✅ | Motion polish: scroll reveals, hover effects (honour `prefers-reduced-motion`) |
+| ⬜ | SEO: sitemap, structured data (Product schema) — *metadata done per route* |
+| 🚧 | Accessibility pass + Core Web Vitals — *reduced-motion + labels in place; full audit pending* |
 | ⬜ | Cookie consent banner (GDPR) |
 | ⬜ | CSP hardening: nonce-based script-src (drop `unsafe-inline`) |
 

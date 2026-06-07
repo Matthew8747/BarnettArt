@@ -39,3 +39,53 @@ describe("environment validation (dev / build)", () => {
     expect(mod.env.UPSTASH_REDIS_REST_URL).toBe("https://eu1.upstash.io");
   });
 });
+
+describe("commerce mode", () => {
+  beforeEach(() => vi.resetModules());
+  afterEach(() => vi.unstubAllEnvs());
+
+  it("defaults to checkout when COMMERCE_MODE is unset", async () => {
+    vi.stubEnv("NODE_ENV", "development");
+    vi.stubEnv("COMMERCE_MODE", "");
+    const mod = await import("./env");
+    expect(mod.commerceMode).toBe("checkout");
+    expect(mod.isInquiryMode).toBe(false);
+  });
+
+  it("switches to inquiry when COMMERCE_MODE=inquiry", async () => {
+    vi.stubEnv("NODE_ENV", "development");
+    vi.stubEnv("COMMERCE_MODE", "inquiry");
+    const mod = await import("./env");
+    expect(mod.commerceMode).toBe("inquiry");
+    expect(mod.isInquiryMode).toBe(true);
+  });
+});
+
+describe("contact email resolution", () => {
+  beforeEach(() => vi.resetModules());
+  afterEach(() => vi.unstubAllEnvs());
+
+  it("prefers CONTACT_EMAIL when set", async () => {
+    vi.stubEnv("NODE_ENV", "development");
+    vi.stubEnv("CONTACT_EMAIL", "anna@example.com");
+    vi.stubEnv("ADMIN_EMAILS", "admin@example.com");
+    const mod = await import("./env");
+    expect(mod.contactEmail).toBe("anna@example.com");
+  });
+
+  it("falls back to the first admin email", async () => {
+    vi.stubEnv("NODE_ENV", "development");
+    vi.stubEnv("CONTACT_EMAIL", "");
+    vi.stubEnv("ADMIN_EMAILS", "anna@studio.com, helper@studio.com");
+    const mod = await import("./env");
+    expect(mod.contactEmail).toBe("anna@studio.com");
+  });
+
+  it("is empty when neither is configured (email layer then logs)", async () => {
+    vi.stubEnv("NODE_ENV", "development");
+    vi.stubEnv("CONTACT_EMAIL", "");
+    vi.stubEnv("ADMIN_EMAILS", "");
+    const mod = await import("./env");
+    expect(mod.contactEmail).toBe("");
+  });
+});

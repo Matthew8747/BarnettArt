@@ -1,5 +1,5 @@
 import "server-only";
-import { env } from "@/lib/env";
+import { env, contactEmail } from "@/lib/env";
 import { formatMoney } from "./money";
 
 /**
@@ -76,6 +76,70 @@ export async function sendOrderConfirmation(params: {
     }
   } catch (err) {
     console.error(`[email] Resend error for order ${orderId}:`, err);
+  }
+}
+
+/**
+ * Deliver a "contact Anna" enquiry. Sends to `contactEmail` via Resend with the
+ * visitor's address as Reply-To, so Anna can reply directly from her inbox.
+ *
+ * Returns `{ delivered }`: false when no recipient/key is configured (dev, or
+ * before Resend is set up) — the message is logged server-side instead and the
+ * caller still shows a graceful confirmation. Never throws into the request.
+ */
+export async function sendContactMessage(params: {
+  name: string;
+  email: string;
+  message: string;
+  artwork?: string;
+}): Promise<{ delivered: boolean }> {
+  const { name, email, message, artwork } = params;
+
+  const subject = artwork
+    ? `Enquiry about "${artwork}" — ${name}`
+    : `New enquiry from ${name}`;
+
+  if (!env.RESEND_API_KEY || !env.EMAIL_FROM || !contactEmail) {
+    console.info(
+      `[contact] (dev no-op) from ${name} <${email}>` +
+        (artwork ? ` re: ${artwork}` : "") +
+        ` — ${message.length} chars. Configure RESEND_API_KEY, EMAIL_FROM and ` +
+        `CONTACT_EMAIL to deliver.`,
+    );
+    return { delivered: false };
+  }
+
+  const html = `
+    <h2>${escapeHtml(subject)}</h2>
+    <p><strong>From:</strong> ${escapeHtml(name)} &lt;${escapeHtml(email)}&gt;</p>
+    ${artwork ? `<p><strong>Artwork:</strong> ${escapeHtml(artwork)}</p>` : ""}
+    <p style="white-space:pre-wrap">${escapeHtml(message)}</p>`;
+
+  try {
+    const res = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${env.RESEND_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: env.EMAIL_FROM,
+        to: contactEmail,
+        reply_to: email,
+        subject,
+        html,
+      }),
+    });
+    if (!res.ok) {
+      console.error(
+        `[contact] Resend failed: ${res.status} ${await res.text()}`,
+      );
+      return { delivered: false };
+    }
+    return { delivered: true };
+  } catch (err) {
+    console.error("[contact] Resend error:", err);
+    return { delivered: false };
   }
 }
 

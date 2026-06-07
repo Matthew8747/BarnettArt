@@ -59,6 +59,47 @@ A two-part product sharing one codebase and design system:
 
 Scoping discipline is itself a CV signal — "I shipped a focused MVP and iterated based on real usage" beats "I built 40 half-finished features."
 
+### 2.4 Commerce model — direct payment now, enquiry-based later
+
+A deliberate product decision, agreed with Anna, captured here as the source of
+truth.
+
+**The constraint.** Anna does not want customers buying instantly with one
+click. She makes the work by hand and can't commit to the fulfilment volume and
+turnaround that frictionless checkout invites. She would rather people **enquire
+and order through a conversation with her** — so she can talk through size,
+framing, commissions, and timing personally.
+
+**The decision.** We still build the full **Stripe Checkout** integration first
+(server-side pricing, Payment Intents, signed idempotent webhooks, atomic
+inventory). That is the hard, genuinely impressive engineering and the
+centrepiece of the CV story — it must be real, tested, and demonstrable. Then,
+when Anna is ready, we **flip the site to enquiry-based ordering**: every buy
+button becomes "Enquire to buy" and routes to a contact form that reaches her
+directly. Payment is arranged off-platform, by conversation.
+
+**How it's implemented.** A single environment variable, `COMMERCE_MODE`:
+
+- `checkout` (default) — Stripe flow live.
+- `inquiry` — direct payment disabled; cart and the `/api/checkout` endpoint
+  refuse; CTAs across the product page, gallery and cart become enquiry links.
+
+Flipping it is a one-line change in Vercel + redeploy. **No database migration,
+and the Stripe code stays in the repo** — built, working, and on show. This is
+the honest, senior framing for interviews:
+
+> **CV line:** "Built a production Stripe Checkout integration — server-side
+> pricing, webhook-driven idempotent fulfilment, atomic inventory — then adapted
+> the commercial model to the client's real operating constraints, switching the
+> storefront to an enquiry-based ordering flow behind a single config flag with
+> zero data migration. Demonstrates both the payments engineering and the product
+> judgement to know when not to ship frictionless checkout."
+
+The direct-communication surface this depends on (the contact / enquiry feature)
+is therefore not a "nice to have" — it's the eventual primary order channel, and
+is built to that standard (validated, rate-limited, spam-guarded, emailed to
+Anna with reply-to set so she can answer from her inbox).
+
 ---
 
 ## 3. Tech stack
