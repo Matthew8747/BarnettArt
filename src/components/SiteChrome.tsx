@@ -11,12 +11,15 @@ export function SiteHeader({ cartCount = 0 }: { cartCount?: number }) {
         >
           Anna Barnett
         </Link>
-        <nav className="text-muted flex items-center gap-8 text-[0.7rem] font-medium tracking-[0.2em] uppercase">
+        <nav className="text-muted flex items-center gap-6 text-[0.7rem] font-medium tracking-[0.2em] uppercase sm:gap-8">
+          <Link href="/gallery" className="wipe-underline hover:text-text">
+            Gallery
+          </Link>
           <Link href="/shop" className="wipe-underline hover:text-text">
             Shop
           </Link>
-          <Link href="/" className="wipe-underline hover:text-text">
-            Portfolio
+          <Link href="/contact" className="wipe-underline hover:text-text">
+            Contact
           </Link>
           <Link
             href="/cart"
@@ -42,7 +45,13 @@ export function SiteFooter() {
         <p className="order-3 sm:order-2">
           © {new Date().getFullYear()} Anna Barnett. All rights reserved.
         </p>
-        <nav className="order-2 flex gap-6 sm:order-3">
+        <nav className="order-2 flex flex-wrap gap-x-6 gap-y-2 sm:order-3">
+          <Link href="/gallery" className="hover:text-text transition-colors">
+            Gallery
+          </Link>
+          <Link href="/contact" className="hover:text-text transition-colors">
+            Contact
+          </Link>
           <Link href="/privacy" className="hover:text-text transition-colors">
             Privacy
           </Link>

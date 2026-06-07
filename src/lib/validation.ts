@@ -1,4 +1,29 @@
-import type { z } from "zod";
+import { z } from "zod";
+
+/**
+ * Contact / enquiry form payload. `.strict()` rejects unknown keys (no mass
+ * assignment); every field is length-bounded so a single request can't carry a
+ * huge body past the size cap. `artwork` is an optional reference to the piece
+ * the visitor is enquiring about (a product slug), pre-filled from the URL.
+ */
+export const contactSchema = z
+  .object({
+    name: z.string().trim().min(1, "Please enter your name").max(120),
+    email: z.string().trim().email("Enter a valid email").max(200),
+    message: z
+      .string()
+      .trim()
+      .min(10, "Please write a little more")
+      .max(4000, "Message is too long"),
+    artwork: z.string().trim().max(160).optional().default(""),
+    // Honeypot: a hidden field real users never see. Accepted by the schema so a
+    // bot gets no validation signal; the ROUTE checks it and silently drops the
+    // message (returns a fake success) when it's non-empty.
+    company: z.string().max(200).optional().default(""),
+  })
+  .strict();
+
+export type ContactInput = z.infer<typeof contactSchema>;
 
 /**
  * Safe request-body parsing for API routes — the single front door for every

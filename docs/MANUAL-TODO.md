@@ -72,6 +72,20 @@ below) and redeploy — demo mode switches itself off automatically.
 
 ## 2. Decisions / content I need from you (and Anna)
 
+- 🟠 **Name + price the paintings.** The 26 imported photos show as placeholders
+  ("Untitled No. 01", a uniform draft price) — *not* real listings. Give me real
+  titles, sizes/media, and prices (or rename in `src/lib/gallery-manifest.json`
+  and set prices in `src/lib/demo-data.ts`). Until then nothing should be
+  presented to buyers as final.
+- 🟠 **Crop the in-situ photos.** Several paintings are photographed on a
+  desk/wall. Re-shoot or crop to just the artwork, drop into `paintings/`, and
+  re-run `node scripts/import-paintings.mjs` for a cleaner gallery.
+- 🟠 **Anna's enquiry inbox:** set `CONTACT_EMAIL` to where the "Contact Anna"
+  form should deliver (falls back to `ADMIN_EMAILS`, then to a server log).
+- 🟢 **Commerce model decision:** ships in `checkout` (Stripe live). When Anna
+  wants to stop direct payment, set `COMMERCE_MODE=inquiry` in Vercel and
+  redeploy — buy buttons become "Enquire to buy". See `EXTERNAL-SETUP.md` §11 /
+  `anna-art-platform-plan.md` §2.4. No rush; decide when fulfilment load is real.
 - 🟠 **Confirm the Stripe API version** pinned in `src/lib/stripe.ts`
   (`2026-05-27.dahlia`) matches your Stripe dashboard before going live.
 - 🟠 **Shipping policy:** currently **free shipping** (placeholder in
@@ -119,4 +133,20 @@ All money/identity accounts in **Anna's name** (see `HANDOVER.md`).
   replayed webhook; real shipping rules once you decide them.
 - **Tech debt:** ESLint pinned back to v9 (the Dependabot bump to v10 is
   incompatible with `eslint-config-next` 16 — revert the pin when upstream
-  supports it); `node-vibrant` moderate transitive dep (dev/admin-time only).
+  supports it); `node-vibrant` moderate transitive dep (dev/admin-time only);
+  `heic-convert` is a **devDependency** used only by `scripts/import-paintings.mjs`
+  (one-time, local) — its moderate transitive advisories never ship to prod.
+
+## 5. Portfolio — base shipped, stretch ideas parked
+
+The portfolio **base** is live (story-driven home: painter/engineer hero,
+selected work, practice essay, gallery, contact). Bigger ideas, deliberately
+**not built yet** to avoid half-finished work — pick these up when there's time:
+
+- 🟢 Dedicated `/about` long-form page with process/studio imagery.
+- 🟢 Per-painting "story" fields (medium, year, dimensions, a sentence of
+  narrative) once Anna provides them — shown on the gallery lightbox + product.
+- 🟢 Scroll-driven parallax on the hero; an animated SVG signature.
+- 🟢 A written **engineering case study** (problem → decisions → trade-offs →
+  outcome, incl. the checkout→enquiry pivot) — the actual CV artifact.
+- 🟢 Press / exhibitions section if/when Anna has coverage to show.

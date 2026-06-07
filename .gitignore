@@ -23,6 +23,14 @@
 # local uploads (LocalStorage adapter dev fallback; real media lives in S3)
 /public/uploads/
 
+# Raw painting originals (large HEIC/JPEG straight off the camera). These are the
+# INPUT to scripts/import-paintings.mjs; the optimised, metadata-stripped outputs
+# it generates (public/gallery/ + src/lib/gallery-manifest.json) ARE committed
+# and are what the app serves. Keep the heavy originals out of git history — back
+# them up separately / move to the S3 media pipeline. To re-import, drop files
+# here and run: node scripts/import-paintings.mjs
+/paintings/
+
 # production
 /build
 

@@ -105,16 +105,27 @@ in-memory, so this is only required for production.
 
 ---
 
-## 5. 🟡 Resend (transactional email)
+## 5. 🟡 Resend (transactional email + the contact form)
 
-**Why:** order confirmation emails.
+**Why:** two things now run through Resend — **order confirmation emails** and
+the **"Contact Anna" enquiry form** (the direct line customers use to reach her,
+and the primary order channel once the site moves to enquiry mode — see §11).
 
 1. Sign up at <https://resend.com>.
 2. Add and **verify Anna's sending domain** (DNS records — see §8). Until the
    domain is verified you can use Resend's test sender for development.
 3. Create an API key.
+4. Decide where enquiries land: set **`CONTACT_EMAIL`** to Anna's real inbox
+   (e.g. `anna@annabarnett.art`). If you leave it blank it falls back to the
+   first address in `ADMIN_EMAILS`; if that's blank too, the contact form logs
+   the message server-side instead of sending (so local dev never breaks).
 
-**Produces:** `RESEND_API_KEY`, `EMAIL_FROM` (a verified address on Anna's domain).
+> **Until Resend is configured, the contact form still works** — it accepts and
+> validates the message and logs it server-side (a dev no-op), so you can build
+> and demo without an email account. Only real delivery needs the key.
+
+**Produces:** `RESEND_API_KEY`, `EMAIL_FROM` (a verified address on Anna's
+domain), `CONTACT_EMAIL` (Anna's enquiry inbox).
 
 ---
 
@@ -176,6 +187,29 @@ Terraform in Phase 4 (infra-as-code — nothing clicked by hand).
 
 ---
 
+## 11. ⚙️ Commerce model — no account needed, but a key decision
+
+This isn't an external account — it's a single config switch, documented here so
+it's not missed. **`COMMERCE_MODE`** controls how customers buy:
+
+| Value | Behaviour |
+|---|---|
+| `checkout` (default) | Stripe Checkout is live. The full payment + webhook + fulfilment flow runs. This is the engineering story for your CV. |
+| `inquiry` | Direct payment is switched **off**. Every "buy"/"add to cart"/checkout button becomes **"Enquire to buy"** and routes to the contact form. Cart and the checkout API are disabled. |
+
+**The plan (agreed with Anna):** build and ship `checkout` so the Stripe
+integration is real and demonstrable, then **later flip to `inquiry`** — Anna
+takes orders by conversation rather than instant payment, because she can't
+commit to the fulfilment volume that one-click buying invites. Flipping is a
+one-line env change (`COMMERCE_MODE=inquiry` in Vercel → redeploy); nothing in
+the database changes, and the Stripe code stays in the repo as a portfolio
+artifact. See `anna-art-platform-plan.md` §"Commerce model" for the full
+rationale.
+
+**Produces:** `COMMERCE_MODE` (set in `.env` locally, Vercel env in prod).
+
+---
+
 ## Quick reference — which step produces which secret
 
 | Env var | From | When |
@@ -186,6 +220,8 @@ Terraform in Phase 4 (infra-as-code — nothing clicked by hand).
 | `STRIPE_WEBHOOK_SECRET` | Stripe CLI / dashboard (§2) | 🟡 |
 | `UPSTASH_REDIS_REST_URL` / `_TOKEN` | Upstash (§4) | 🟡 |
 | `RESEND_API_KEY` / `EMAIL_FROM` | Resend (§5) | 🟡 |
+| `CONTACT_EMAIL` | You decide (Anna's enquiry inbox) (§5) | 🟡 |
+| `COMMERCE_MODE` | You decide (`checkout` → later `inquiry`) (§11) | 🟢 |
 | `S3_BUCKET_NAME` / `CLOUDFRONT_URL` / AWS creds | AWS + Terraform (§7) | 🔵 |
 | `NEXT_PUBLIC_SITE_URL` | Domain/Vercel (§6, §8) | 🟡 |
 | `SENTRY_DSN` / `NEXT_PUBLIC_SENTRY_DSN` | Sentry (§9) | 🔵 |

@@ -143,6 +143,29 @@ body::after {
   transform: none;
 }
 
+/* Form fields (contact / enquiry) — quiet paper inputs with an accent focus
+ * ring that matches the active scope. No heavy shadows; gallery-restrained. */
+.field {
+  width: 100%;
+  background-color: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 0.8rem 0.95rem;
+  font-size: 0.95rem;
+  transition:
+    border-color 220ms var(--motion-ease),
+    box-shadow 220ms var(--motion-ease);
+}
+.field::placeholder {
+  color: color-mix(in srgb, var(--muted) 80%, transparent);
+}
+.field:focus {
+  outline: none;
+  border-color: var(--accent-text);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
 /* Inline accent link: an underline in the active accent that wipes in on hover. */
 .link-accent {
   color: var(--accent-text);

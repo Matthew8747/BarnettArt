@@ -1,115 +1,44 @@
 import type { ProductWithMedia } from "@/db/products";
 import type { PriceableProduct, PriceableVariant } from "@/lib/pricing";
+import { getGalleryItems, type GalleryItem } from "@/lib/gallery";
 
 /**
- * Demo/prototype catalog (DEMO_MODE=true). A curated, in-repo set of products so
- * a Vercel preview runs with no database — enough for Anna to click through the
- * look, feel and motion. Images are committed public-domain paintings under
- * `public/sample-art/` (placeholders until Anna's high-res photos arrive); the
- * accent for each was extracted from its image with the same node-vibrant
- * pipeline the real admin uses.
+ * Demo/prototype catalog (DEMO_MODE, or any deploy without a DATABASE_URL).
  *
- * Replaced wholesale by the database catalog once DEMO_MODE is off.
+ * Built from Anna's real paintings (the manifest produced by
+ * `scripts/import-paintings.mjs`) so the shop shows her own work with zero
+ * external services. Titles and prices here are PLACEHOLDERS — Anna renames and
+ * prices each piece later (via the manifest now, the admin in Phase 3). See
+ * docs/HANDOVER.md. Once the database catalog is live this is replaced wholesale.
+ *
+ * The gallery shows every painting; the shop lists a curated front page of them.
  */
 
-type DemoSpec = {
-  slug: string;
-  title: string;
-  type: "original" | "print";
-  description: string;
-  basePriceCents: number;
-  accentHex: string;
-  image: string; // file under /public/sample-art
-  variants?: { name: string; priceCents: number; stockQty: number }[];
-};
+// How many paintings surface as shop listings (the rest live in the gallery).
+const SHOP_COUNT = 9;
 
-// Accents were extracted from each image with node-vibrant; a couple are nudged
-// toward the painting's secondary colour for variety — exactly the "artist
-// adjusts the accent" step in DESIGN.md §2. Images are public-domain paintings
-// (placeholders until Anna's own photos arrive).
-const SPECS: DemoSpec[] = [
-  {
-    slug: "lily-pond",
-    title: "Lily Pond, Morning",
-    type: "original",
-    description:
-      "Oil on canvas, 90×70cm. Still water and floating colour at first light.",
-    basePriceCents: 145000,
-    accentHex: "#5f9e76",
-    image: "lily-pond.jpg",
-  },
-  {
-    slug: "wheat-and-cypress",
-    title: "Wheat & Cypress",
-    type: "original",
-    description: "Oil on canvas, 73×93cm. Wind moving through a summer field.",
-    basePriceCents: 168000,
-    accentHex: "#c79a2e",
-    image: "falling-light.jpg",
-  },
-  {
-    slug: "boulevard-winter",
-    title: "Boulevard, Winter",
-    type: "print",
-    description: "Giclée print on archival cotton rag. Open edition, signed.",
-    basePriceCents: 6500,
-    accentHex: "#9a7b52",
-    image: "window-woods.jpg",
-    variants: [
-      { name: "A3 / Unframed", priceCents: 6500, stockQty: 25 },
-      { name: "A2 / Unframed", priceCents: 9500, stockQty: 12 },
-      { name: "A2 / Oak frame", priceCents: 16500, stockQty: 5 },
-    ],
-  },
-  {
-    slug: "tideline",
-    title: "Tideline",
-    type: "print",
-    description: "Giclée print on archival cotton rag. Open edition, signed.",
-    basePriceCents: 6500,
-    accentHex: "#4e9fb0",
-    image: "tideline.jpg",
-    variants: [
-      { name: "A3 / Unframed", priceCents: 6500, stockQty: 25 },
-      { name: "A2 / Oak frame", priceCents: 16500, stockQty: 0 },
-    ],
-  },
-  {
-    slug: "garden-chrysanthemums",
-    title: "Garden Chrysanthemums",
-    type: "original",
-    description:
-      "Oil on canvas, 60×73cm. A bank of late blooms in full colour.",
-    basePriceCents: 98000,
-    accentHex: "#c2557a",
-    image: "magnolia-velvet.jpg",
-  },
-  {
-    slug: "southern-light",
-    title: "Southern Light",
-    type: "original",
-    description:
-      "Oil on canvas, 80×100cm. A sun-warmed coast in shimmering colour.",
-    basePriceCents: 132000,
-    accentHex: "#6f9b54",
-    image: "distant-peak.jpg",
-  },
-];
+// Draft price applied to every placeholder original, in pence. Deliberately
+// uniform and obvious so nothing reads as a real, confirmed price. Anna sets the
+// true value per piece. In COMMERCE_MODE=inquiry these are not charged at all.
+const DRAFT_PRICE_CENTS = 45000;
 
 const NOW = new Date("2026-06-01T00:00:00Z");
 
-function toProductWithMedia(spec: DemoSpec, i: number): ProductWithMedia {
-  const id = `demo-${spec.slug}`;
+function toProductWithMedia(item: GalleryItem, i: number): ProductWithMedia {
+  const id = `demo-${item.slug}`;
+  const number = String(i + 1).padStart(2, "0");
   return {
     id,
-    slug: spec.slug,
-    title: spec.title,
-    description: spec.description,
-    type: spec.type,
-    basePriceCents: spec.basePriceCents,
+    slug: item.slug,
+    title: `Untitled No. ${number}`,
+    description:
+      "Original painting — mixed media on canvas. Provisional listing: title, " +
+      "dimensions and price to be confirmed by the artist.",
+    type: "original",
+    basePriceCents: DRAFT_PRICE_CENTS,
     currency: "GBP",
     status: "available",
-    accentHex: spec.accentHex,
+    accentHex: item.accentHex,
     paletteJson: null,
     createdAt: new Date(NOW.getTime() - i * 1000),
     updatedAt: NOW,
@@ -117,28 +46,22 @@ function toProductWithMedia(spec: DemoSpec, i: number): ProductWithMedia {
       {
         id: `${id}-img`,
         productId: id,
-        s3Key: `/sample-art/${spec.image}`,
-        altText: `${spec.title} by Anna Barnett`,
-        width: 843,
-        height: 1052,
+        s3Key: item.large,
+        altText: `Untitled painting No. ${number} by Anna Barnett`,
+        width: item.width ?? 1126,
+        height: item.height ?? 2000,
         position: 0,
       },
     ],
-    variants: (spec.variants ?? []).map((v, vi) => ({
-      id: `${id}-v${vi}`,
-      productId: id,
-      name: v.name,
-      priceCents: v.priceCents,
-      sku: `${spec.slug}-${vi + 1}`,
-      stockQty: v.stockQty,
-      createdAt: NOW,
-    })),
+    variants: [],
   };
 }
 
 let cache: ProductWithMedia[] | null = null;
 function all(): ProductWithMedia[] {
-  if (!cache) cache = SPECS.map(toProductWithMedia);
+  if (!cache) {
+    cache = getGalleryItems().slice(0, SHOP_COUNT).map(toProductWithMedia);
+  }
   return cache;
 }
 

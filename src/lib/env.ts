@@ -75,6 +75,27 @@ const serverSchema = z.object({
   RESEND_API_KEY: requiredInProd(z.string().startsWith("re_")),
   EMAIL_FROM: requiredInProd(z.string().email()),
 
+  // Where the "contact Anna" form delivers. Optional: if unset, contact
+  // messages fall back to the first ADMIN_EMAILS entry, and if neither is set
+  // the form logs server-side instead of sending (dev-friendly, never crashes).
+  CONTACT_EMAIL: z
+    .union([z.string().email(), z.literal("")])
+    .optional()
+    .default(""),
+
+  // Commerce model (see docs/anna-art-platform-plan.md §"Commerce model"):
+  //  - "checkout": Stripe Checkout is live (current; the engineering CV story).
+  //  - "inquiry":  direct payment is disabled; buy CTAs become "Enquire to buy"
+  //    and route to the contact form. Flip this one var to switch the whole
+  //    site to enquiry-based ordering — no data migration.
+  // Preprocess so an empty/blank value (a freshly-copied .env) is treated as the
+  // default rather than crashing the enum — `.default()` alone only fills
+  // `undefined`, not "".
+  COMMERCE_MODE: z.preprocess(
+    (v) => (v === "" || v == null ? "checkout" : v),
+    z.enum(["checkout", "inquiry"]),
+  ),
+
   AWS_REGION: z.string().default("eu-west-2"),
   S3_BUCKET_NAME: z.string().optional().default(""),
   CLOUDFRONT_URL: z.string().optional().default(""),
@@ -128,6 +149,22 @@ export const env = {
 export const adminEmails = env.ADMIN_EMAILS.split(",")
   .map((e) => e.trim().toLowerCase())
   .filter(Boolean);
+
+/**
+ * Inbox for "contact Anna" enquiries: CONTACT_EMAIL if set, else the first
+ * admin email, else "" (the email layer then logs instead of sending).
+ */
+export const contactEmail = env.CONTACT_EMAIL || adminEmails[0] || "";
+
+/** Active commerce model. See COMMERCE_MODE above. */
+export const commerceMode = env.COMMERCE_MODE;
+
+/**
+ * True when direct payment is switched off and the site takes orders as
+ * enquiries to Anna instead of Stripe checkout. Drives the buy-CTA copy and
+ * hard-disables the checkout API as defence in depth.
+ */
+export const isInquiryMode = env.COMMERCE_MODE === "inquiry";
 
 /**
  * Demo/prototype mode — true when `DEMO_MODE=true` OR no `DATABASE_URL` is

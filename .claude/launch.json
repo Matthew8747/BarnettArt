@@ -11,6 +11,29 @@
         "DEMO_MODE": "true",
         "DATABASE_URL": ""
       }
+    },
+    {
+      "name": "dev",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "port": 3000,
+      "autoPort": true,
+      "env": {
+        "DEMO_MODE": "true",
+        "DATABASE_URL": ""
+      }
+    },
+    {
+      "name": "dev-inquiry",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "port": 3100,
+      "autoPort": true,
+      "env": {
+        "DEMO_MODE": "true",
+        "DATABASE_URL": "",
+        "COMMERCE_MODE": "inquiry"
+      }
     }
   ]
 }

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getProductBySlug } from "@/db/products";
 import { getSiteSettings } from "@/db/settings";
+import { isInquiryMode } from "@/lib/env";
 import { resolveAccent } from "@/lib/accent";
 import { getStorage } from "@/lib/storage";
 import { formatMoney } from "@/lib/money";
@@ -142,6 +143,22 @@ export default async function ProductPage({ params }: Params) {
                   <button type="button" disabled className="btn btn-ghost">
                     Sold
                   </button>
+                ) : isInquiryMode ? (
+                  /* Enquiry model: direct payment is off — buying happens by
+                     conversation with Anna (see COMMERCE_MODE). */
+                  <div className="flex flex-col gap-4">
+                    <Link
+                      href={`/contact?artwork=${encodeURIComponent(product.title)}`}
+                      className="btn btn-primary self-start"
+                    >
+                      Enquire to buy
+                    </Link>
+                    <p className="text-muted max-w-sm text-sm leading-relaxed">
+                      Each piece is sold personally. Send Anna a note and
+                      she&rsquo;ll arrange price, framing and delivery with you
+                      directly.
+                    </p>
+                  </div>
                 ) : (
                   <form
                     action={addToCartAction}
@@ -181,6 +198,12 @@ export default async function ProductPage({ params }: Params) {
                     >
                       Add to cart
                     </button>
+                    <Link
+                      href={`/contact?artwork=${encodeURIComponent(product.title)}`}
+                      className="link-accent self-start text-[0.72rem] tracking-[0.16em] uppercase"
+                    >
+                      Or enquire about this piece →
+                    </Link>
                   </form>
                 )}
               </div>
