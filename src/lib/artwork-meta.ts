@@ -30,17 +30,34 @@ export type ArtworkMeta = {
   status: "available" | "sold";
 };
 
-/** Real, per-piece values. Add entries here as Anna supplies them. */
+/**
+ * Real, per-piece values. Add an entry keyed by the painting's slug (the slug is
+ * the filename: `IMG_0364.JPG` → `img-0364`). You can override just the fields
+ * you know — anything you omit keeps its placeholder.
+ *
+ * Two worked examples are below, COMMENTED OUT. To use one: delete the `//` on
+ * each of its lines and edit the values. The first sets every field; the second
+ * shows a minimal override (just a title + that it's sold).
+ *
+ *   // Full example — the astronaut piece (img-0364):
+ *   "img-0364": {
+ *     title: "Spacewalk",                       // shows instead of "Untitled No. 06"
+ *     story:
+ *       "Painted from a NASA EVA photograph, working wet-into-wet so the " +
+ *       "figure stays soft against the hard star-field. The earth's limb was " +
+ *       "the last thing added, glazed in over several evenings.",
+ *     medium: "Acrylic on canvas board",        // your real medium
+ *     dimensions: "40 × 50 cm",                 // width × height
+ *     year: "2024",
+ *     status: "available",                      // or "sold"
+ *   },
+ *
+ *   // Minimal example — only a title, and mark it sold (img-8590):
+ *   "img-8590": { title: "Ember Study I", status: "sold" },
+ */
 const OVERRIDES: Record<string, Partial<ArtworkMeta>> = {
-  // Example (delete the leading "//" and edit once you have the real details):
-  // "img-0281": {
-  //   title: "Low Tide, Morning",
-  //   story: "Painted over three weeks on the north coast…",
-  //   medium: "Oil and cold wax on linen",
-  //   dimensions: "70 × 100 cm",
-  //   year: "2025",
-  //   status: "available",
-  // },
+  // Add real entries here, e.g.:
+  // "img-0364": { title: "Spacewalk", year: "2024", status: "available" },
 };
 
 const PLACEHOLDER_STORY =

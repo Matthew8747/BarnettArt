@@ -61,7 +61,7 @@ const REVIEWS: Review[] = [
     author: "Sample Collector",
     rating: 5,
     body: "(Placeholder review.) Commissioned a companion piece after this one — couldn't be happier. Replace with a real testimonial for this painting.",
-    productSlug: "img-0281",
+    productSlug: "img-0364",
     dateISO: "2026-05-10",
     verified: false,
   },
@@ -85,9 +85,21 @@ const REVIEWS: Review[] = [
   },
 ];
 
-/** Featured general testimonials for the home page (productSlug === null). */
+/** Featured general testimonials (productSlug === null). */
 export function getFeaturedReviews(n: number): Review[] {
   return REVIEWS.filter((r) => r.productSlug === null).slice(0, n);
+}
+
+/**
+ * Reviews for the home page — piece-tied ones first (so each can link to the
+ * exact work it was left on), then general testimonials to fill. Newest first
+ * within each group.
+ */
+export function getHomeReviews(n: number): Review[] {
+  const byDate = (a: Review, b: Review) => b.dateISO.localeCompare(a.dateISO);
+  const tied = REVIEWS.filter((r) => r.productSlug !== null).sort(byDate);
+  const general = REVIEWS.filter((r) => r.productSlug === null).sort(byDate);
+  return [...tied, ...general].slice(0, n);
 }
 
 /** Reviews tied to a specific painting/product slug, newest first. */

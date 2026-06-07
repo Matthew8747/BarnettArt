@@ -16,7 +16,7 @@ describe("reviews", () => {
   it("ratings are integers within 1..5", () => {
     const all = [
       ...getFeaturedReviews(99),
-      ...getReviewsForProduct("img-0281"),
+      ...getReviewsForProduct("img-0364"),
       ...getReviewsForProduct("img-0519"),
       ...getReviewsForProduct("img-8590"),
     ];
@@ -28,15 +28,15 @@ describe("reviews", () => {
   });
 
   it("getReviewsForProduct filters by slug, newest first", () => {
-    const list = getReviewsForProduct("img-0281");
+    const list = getReviewsForProduct("img-0364");
     expect(list.length).toBeGreaterThan(0);
-    expect(list.every((r) => r.productSlug === "img-0281")).toBe(true);
+    expect(list.every((r) => r.productSlug === "img-0364")).toBe(true);
     const dates = list.map((r) => r.dateISO);
     expect([...dates].sort((a, b) => b.localeCompare(a))).toEqual(dates);
   });
 
   it("getAverageRating computes mean + count, or null when none", () => {
-    const stats = getAverageRating("img-0281");
+    const stats = getAverageRating("img-0364");
     expect(stats).not.toBeNull();
     expect(stats!.count).toBeGreaterThan(0);
     expect(stats!.average).toBeGreaterThanOrEqual(1);

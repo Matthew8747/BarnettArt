@@ -41,15 +41,15 @@ const COLLECTIONS: Collection[] = [
       "here were painted across one long stretch of summer, colour worked over " +
       "colour until the surface settled. Swap this for the real story of how the " +
       "series began and what holds it together.",
-    coverSlug: "img-0281",
+    coverSlug: "img-8601",
     paintingSlugs: [
-      "img-0281",
-      "img-0364",
-      "img-0365",
-      "img-0518",
-      "img-0648",
+      "img-0367",
+      "img-0523",
+      "img-0534",
       "img-0649",
       "img-8591",
+      "img-8601",
+      "img-8602",
     ],
   },
   {
@@ -62,13 +62,14 @@ const COLLECTIONS: Collection[] = [
       "shaped it.",
     coverSlug: "img-8597",
     paintingSlugs: [
-      "img-8592",
+      "img-0263",
+      "img-0264",
+      "img-0518",
+      "img-0526",
+      "img-8589",
       "img-8597",
       "img-8598",
-      "img-8601",
-      "img-8602",
-      "img-8603",
-      "img-8589",
+      "img-8600",
     ],
   },
   {
@@ -78,16 +79,8 @@ const COLLECTIONS: Collection[] = [
       `${PLACEHOLDER} Blues and teals run through this group — water, depth and ` +
       "the cold light off it. Replace with the true narrative: where these were " +
       "made, what they are reaching for, and how they relate to one another.",
-    coverSlug: "img-0519",
-    paintingSlugs: [
-      "img-0519",
-      "img-0526",
-      "img-0534",
-      "img-8587",
-      "img-8593",
-      "img-8594",
-      "img-0523",
-    ],
+    coverSlug: "img-0364",
+    paintingSlugs: ["img-0277", "img-0364", "img-0648", "img-8587", "img-8593"],
   },
   {
     slug: "ember",
@@ -97,7 +90,14 @@ const COLLECTIONS: Collection[] = [
       "painted with more heat in the hand. Replace this placeholder with the real " +
       "story of the series and what sets it apart from the cooler collections.",
     coverSlug: "img-8590",
-    paintingSlugs: ["img-8588", "img-8590", "img-8595", "img-8596", "img-8600"],
+    paintingSlugs: [
+      "img-0233",
+      "img-0353",
+      "img-0519",
+      "img-8588",
+      "img-8590",
+      "img-8595",
+    ],
   },
 ];
 

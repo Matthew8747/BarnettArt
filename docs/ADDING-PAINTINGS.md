@@ -28,6 +28,15 @@ re-running one script — no database needed (the live demo reads these files).
 > **Crop first.** If a photo shows the painting on a desk/wall, crop to just the
 > artwork before importing — a clean edge makes the gallery look professional.
 
+> **⚠️ If you ADD or REMOVE paintings (not just re-crop), you must also update
+> `src/lib/collections.ts`.** Every painting has to belong to exactly one
+> collection — a test (`npm test`) fails and the build breaks if a new slug is
+> unassigned or an old slug no longer exists. After importing, run `npm test`: if
+> `collections.test.ts` fails, add the new slug(s) to a collection and remove any
+> deleted slug(s) (and fix any `coverSlug` / review `productSlug` that pointed at
+> a deleted painting). Also delete the leftover `public/gallery/<old-slug>*`
+> files for paintings you removed — the importer overwrites but doesn't delete.
+
 ---
 
 ## 2. Set the title, story & details — `src/lib/artwork-meta.ts`

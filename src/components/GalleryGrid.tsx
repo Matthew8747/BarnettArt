@@ -2,37 +2,23 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import type { GalleryItem } from "@/lib/gallery";
 import { getArtworkMeta } from "@/lib/artwork-meta";
-import { getReviewsForProduct, getAverageRating } from "@/lib/reviews";
 import {
   getCollections,
   getCollectionForPainting,
   paintingCollectionMap,
 } from "@/lib/collections";
+import { ArtworkDrawer } from "@/components/ArtworkDrawer";
 
 /**
  * Masonry showcase of Anna's paintings (DESIGN.md aesthetic — paper mounts,
  * per-artwork accent, no glow). Each work hangs at its true aspect ratio and
- * opens in a two-pane lightbox: the artwork beside a panel with its story,
- * details and reviews. Keyboard-accessible: Esc closes, ←/→ step through.
+ * opens in the sliding ArtworkDrawer (story, details, reviews, navigation).
  *
  * `enableFilter` adds collection filter chips above the grid (used on /gallery).
+ * A `?piece=<slug>` query param opens that work on load (home reviews link in).
  */
-function Stars({ value }: { value: number }) {
-  const rounded = Math.round(value);
-  return (
-    <span
-      aria-label={`${value.toFixed(1)} out of 5`}
-      className="text-[var(--accent-text)]"
-    >
-      {"★★★★★".slice(0, rounded)}
-      <span className="opacity-30">{"★★★★★".slice(rounded)}</span>
-    </span>
-  );
-}
-
 export function GalleryGrid({
   items,
   enableFilter = false,
@@ -71,6 +57,15 @@ export function GalleryGrid({
     [shown.length],
   );
 
+  // Deep link: /gallery?piece=<slug> opens that work on load.
+  useEffect(() => {
+    const slug = new URLSearchParams(window.location.search).get("piece");
+    if (!slug) return;
+    const idx = items.findIndex((it) => it.slug === slug);
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- syncing UI to the URL is a client-only effect
+    if (idx !== -1) setOpen(idx);
+  }, [items]);
+
   useEffect(() => {
     if (open === null) return;
     function onKey(e: KeyboardEvent) {
@@ -86,12 +81,6 @@ export function GalleryGrid({
       document.body.style.overflow = prev;
     };
   }, [open, close, step]);
-
-  const active = open === null ? null : shown[open];
-  const meta = active ? getArtworkMeta(active.slug) : null;
-  const collection = active ? getCollectionForPainting(active.slug) : null;
-  const reviews = active ? getReviewsForProduct(active.slug) : [];
-  const rating = active ? getAverageRating(active.slug) : null;
 
   return (
     <>
@@ -128,7 +117,7 @@ export function GalleryGrid({
                 type="button"
                 onClick={() => setOpen(i)}
                 aria-label={`Open ${title}`}
-                className="hover-lift bg-panel block w-full cursor-zoom-in overflow-hidden p-1.5 shadow-[0_2px_10px_-6px_rgba(28,26,22,0.3)] ring-1 ring-[color-mix(in_srgb,var(--text)_12%,transparent)]"
+                className="hover-lift bg-panel block w-full cursor-pointer overflow-hidden p-1.5 shadow-[0_2px_10px_-6px_rgba(28,26,22,0.3)] ring-1 ring-[color-mix(in_srgb,var(--text)_12%,transparent)]"
               >
                 <span className="block overflow-hidden">
                   <Image
@@ -159,137 +148,13 @@ export function GalleryGrid({
         })}
       </div>
 
-      {active && meta && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-label={meta.title}
-          onClick={close}
-          className="fixed inset-0 z-50 overflow-y-auto bg-[rgba(20,18,14,0.94)] p-4 sm:p-8"
-        >
-          <button
-            type="button"
-            onClick={close}
-            aria-label="Close"
-            className="fixed top-5 right-6 z-10 text-[0.72rem] tracking-[0.2em] text-[var(--bg)]/80 uppercase hover:text-[var(--bg)]"
-          >
-            Close ✕
-          </button>
-          {shown.length > 1 && (
-            <>
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  step(-1);
-                }}
-                aria-label="Previous"
-                className="fixed top-1/2 left-2 z-10 -translate-y-1/2 text-3xl text-[var(--bg)]/60 hover:text-[var(--bg)] sm:left-5"
-              >
-                ‹
-              </button>
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  step(1);
-                }}
-                aria-label="Next"
-                className="fixed top-1/2 right-2 z-10 -translate-y-1/2 text-3xl text-[var(--bg)]/60 hover:text-[var(--bg)] sm:right-5"
-              >
-                ›
-              </button>
-            </>
-          )}
-
-          <div
-            onClick={(e) => e.stopPropagation()}
-            style={{ "--accent": active.accentHex } as React.CSSProperties}
-            className="bg-panel mx-auto my-2 grid max-w-[1100px] grid-cols-1 overflow-hidden rounded-[3px] shadow-[0_40px_120px_-40px_rgba(0,0,0,0.8)] lg:grid-cols-[1.1fr_0.9fr]"
-          >
-            {/* Artwork */}
-            <div className="flex items-center justify-center bg-[var(--accent-soft)] p-4 sm:p-8">
-              <Image
-                src={active.large}
-                alt={meta.title}
-                width={active.width ?? 1500}
-                height={active.height ?? 2000}
-                sizes="(max-width: 1024px) 92vw, 55vw"
-                priority
-                className="max-h-[70vh] w-auto object-contain"
-              />
-            </div>
-
-            {/* Info panel */}
-            <div className="flex max-h-[80vh] flex-col gap-6 overflow-y-auto p-7 sm:p-9">
-              <div>
-                {collection && (
-                  <Link
-                    href={`/collections/${collection.slug}`}
-                    className="eyebrow link-accent"
-                  >
-                    {collection.title}
-                  </Link>
-                )}
-                <h2 className="display text-text mt-2 text-4xl">
-                  {meta.title}
-                </h2>
-                <p className="text-muted mt-2 text-sm">
-                  {meta.medium} · {meta.dimensions} · {meta.year}
-                  {meta.status === "sold" && (
-                    <span className="text-text"> · Sold</span>
-                  )}
-                </p>
-              </div>
-
-              <div className="border-border border-t pt-5">
-                <p className="eyebrow mb-2">The story</p>
-                <p className="text-text/80 leading-relaxed">{meta.story}</p>
-              </div>
-
-              {reviews.length > 0 && (
-                <div className="border-border border-t pt-5">
-                  <div className="mb-3 flex items-center gap-3">
-                    <p className="eyebrow">Reviews</p>
-                    {rating && (
-                      <span className="text-sm">
-                        <Stars value={rating.average} />{" "}
-                        <span className="text-muted">({rating.count})</span>
-                      </span>
-                    )}
-                  </div>
-                  <ul className="flex flex-col gap-4">
-                    {reviews.map((r) => (
-                      <li key={r.id}>
-                        <div className="flex items-baseline justify-between gap-3">
-                          <span className="text-text text-sm font-medium">
-                            {r.author}
-                          </span>
-                          <span className="text-xs">
-                            <Stars value={r.rating} />
-                          </span>
-                        </div>
-                        <p className="text-muted mt-1 text-sm leading-relaxed">
-                          {r.body}
-                        </p>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              <div className="border-border mt-auto border-t pt-5">
-                <Link
-                  href={`/contact?artwork=${encodeURIComponent(meta.title)}`}
-                  className="btn btn-primary"
-                >
-                  Enquire about this piece
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      <ArtworkDrawer
+        items={shown}
+        open={open !== null}
+        index={open ?? 0}
+        onClose={close}
+        onStep={step}
+      />
     </>
   );
 }

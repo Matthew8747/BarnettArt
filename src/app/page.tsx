@@ -6,7 +6,8 @@ import { AccentScope } from "@/components/AccentScope";
 import { readCart } from "@/lib/cart-cookie";
 import { cartCount } from "@/lib/cart";
 import { getFeatured } from "@/lib/gallery";
-import { getFeaturedReviews } from "@/lib/reviews";
+import { getHomeReviews } from "@/lib/reviews";
+import { getArtworkMeta } from "@/lib/artwork-meta";
 
 export const dynamic = "force-dynamic";
 
@@ -22,7 +23,7 @@ export default async function Home() {
   const featured = getFeatured(4);
   const hero = featured[0];
   const strip = featured.slice(1, 4);
-  const reviews = getFeaturedReviews(3);
+  const reviews = getHomeReviews(3);
 
   return (
     <StoreShell cartCount={cartCount(cart)}>
@@ -206,8 +207,16 @@ export default async function Home() {
                   <blockquote className="text-text/80 leading-relaxed">
                     {r.body}
                   </blockquote>
-                  <figcaption className="text-muted mt-auto text-sm">
-                    — {r.author}
+                  <figcaption className="mt-auto">
+                    <span className="text-muted text-sm">— {r.author}</span>
+                    {r.productSlug && (
+                      <Link
+                        href={`/gallery?piece=${encodeURIComponent(r.productSlug)}`}
+                        className="link-accent mt-1 block text-[0.7rem] tracking-[0.04em]"
+                      >
+                        on “{getArtworkMeta(r.productSlug).title}” →
+                      </Link>
+                    )}
                   </figcaption>
                 </figure>
               </Reveal>
