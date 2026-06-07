@@ -54,13 +54,25 @@ export type PricedCart = {
 };
 
 /**
- * Flat shipping at launch (free). Anna can introduce real rates later without
- * touching call sites — change this one function. Kept as a function (not a
- * const) so future rules (weight, prints vs originals, thresholds) slot in here.
+ * Shipping policy (PLACEHOLDER rates — Anna confirms before launch).
+ *
+ * Flat fee per order, with free shipping once the order subtotal reaches a
+ * threshold. UK norm for premium/handmade work. Both numbers are named
+ * constants so changing them is a one-line edit + redeploy.
+ *
+ * For dashboard-level control without a redeploy, this can later be replaced by
+ * a Stripe shipping rate (`shipping_options` on the Checkout Session) — see
+ * docs/EXTERNAL-SETUP.md §"Shipping". Kept as a single function so any future
+ * rule (weight, prints vs originals, per-region) slots in here without touching
+ * call sites.
  */
-export function computeShippingCents(_lines: PricedLine[]): number {
-  void _lines;
-  return 0;
+export const FLAT_SHIPPING_CENTS = 695; // £6.95 per order
+export const FREE_SHIPPING_THRESHOLD_CENTS = 15000; // free at/over £150
+
+export function computeShippingCents(lines: PricedLine[]): number {
+  const subtotal = lines.reduce((sum, l) => sum + l.lineTotalCents, 0);
+  if (subtotal <= 0) return 0; // empty cart — nothing to ship
+  return subtotal >= FREE_SHIPPING_THRESHOLD_CENTS ? 0 : FLAT_SHIPPING_CENTS;
 }
 
 export function priceCart(

@@ -35,7 +35,7 @@ export default function GalleryPage() {
             The gallery is being hung. Please check back soon.
           </p>
         ) : (
-          <GalleryGrid items={items} />
+          <GalleryGrid items={items} enableFilter />
         )}
       </div>
 

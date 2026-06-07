@@ -15,6 +15,9 @@ export function SiteHeader({ cartCount = 0 }: { cartCount?: number }) {
           <Link href="/gallery" className="wipe-underline hover:text-text">
             Gallery
           </Link>
+          <Link href="/collections" className="wipe-underline hover:text-text">
+            Collections
+          </Link>
           <Link href="/shop" className="wipe-underline hover:text-text">
             Shop
           </Link>
@@ -48,6 +51,12 @@ export function SiteFooter() {
         <nav className="order-2 flex flex-wrap gap-x-6 gap-y-2 sm:order-3">
           <Link href="/gallery" className="hover:text-text transition-colors">
             Gallery
+          </Link>
+          <Link
+            href="/collections"
+            className="hover:text-text transition-colors"
+          >
+            Collections
           </Link>
           <Link href="/contact" className="hover:text-text transition-colors">
             Contact

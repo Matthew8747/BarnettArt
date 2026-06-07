@@ -6,6 +6,7 @@ import { AccentScope } from "@/components/AccentScope";
 import { readCart } from "@/lib/cart-cookie";
 import { cartCount } from "@/lib/cart";
 import { getFeatured } from "@/lib/gallery";
+import { getFeaturedReviews } from "@/lib/reviews";
 
 export const dynamic = "force-dynamic";
 
@@ -21,6 +22,7 @@ export default async function Home() {
   const featured = getFeatured(4);
   const hero = featured[0];
   const strip = featured.slice(1, 4);
+  const reviews = getFeaturedReviews(3);
 
   return (
     <StoreShell cartCount={cartCount(cart)}>
@@ -177,6 +179,42 @@ export default async function Home() {
           </Reveal>
         </div>
       </section>
+
+      {/* ── What collectors say ──────────────────────────────────────────── */}
+      {reviews.length > 0 && (
+        <section className="mx-auto max-w-[1180px] px-6 py-16">
+          <Reveal>
+            <div className="border-border flex items-baseline justify-between border-b pb-5">
+              <h2 className="display text-text text-3xl sm:text-4xl">
+                What collectors say
+              </h2>
+            </div>
+          </Reveal>
+          <div className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-3">
+            {reviews.map((r, i) => (
+              <Reveal key={r.id} delay={i * 90}>
+                <figure className="border-border bg-panel flex h-full flex-col gap-4 border p-7">
+                  <span
+                    aria-label={`${r.rating} out of 5`}
+                    className="text-[var(--accent-text)]"
+                  >
+                    {"★★★★★".slice(0, r.rating)}
+                    <span className="opacity-30">
+                      {"★★★★★".slice(r.rating)}
+                    </span>
+                  </span>
+                  <blockquote className="text-text/80 leading-relaxed">
+                    {r.body}
+                  </blockquote>
+                  <figcaption className="text-muted mt-auto text-sm">
+                    — {r.author}
+                  </figcaption>
+                </figure>
+              </Reveal>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* ── Enquire CTA ──────────────────────────────────────────────────── */}
       <section className="mx-auto max-w-[1180px] px-6 pb-24">

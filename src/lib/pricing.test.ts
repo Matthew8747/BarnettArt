@@ -1,8 +1,12 @@
 import { describe, it, expect } from "vitest";
 import {
   priceCart,
+  computeShippingCents,
+  FLAT_SHIPPING_CENTS,
+  FREE_SHIPPING_THRESHOLD_CENTS,
   type PriceableProduct,
   type PriceableVariant,
+  type PricedLine,
 } from "./pricing";
 
 const original: PriceableProduct = {
@@ -137,7 +141,46 @@ describe("priceCart", () => {
       data([original, printProduct], [variant]),
     );
     expect(result.subtotalCents).toBe(145000 + 33000);
-    expect(result.shippingCents).toBe(0);
+    expect(result.shippingCents).toBe(0); // over the free-shipping threshold
     expect(result.totalCents).toBe(178000);
+  });
+});
+
+describe("computeShippingCents", () => {
+  function line(lineTotalCents: number): PricedLine {
+    return {
+      productId: "p",
+      variantId: null,
+      titleSnapshot: "x",
+      unitPriceCents: lineTotalCents,
+      quantity: 1,
+      lineTotalCents,
+    };
+  }
+
+  it("charges the flat fee below the free-shipping threshold", () => {
+    expect(
+      computeShippingCents([line(FREE_SHIPPING_THRESHOLD_CENTS - 1)]),
+    ).toBe(FLAT_SHIPPING_CENTS);
+  });
+
+  it("is free exactly at the threshold", () => {
+    expect(computeShippingCents([line(FREE_SHIPPING_THRESHOLD_CENTS)])).toBe(0);
+  });
+
+  it("is free above the threshold", () => {
+    expect(
+      computeShippingCents([line(FREE_SHIPPING_THRESHOLD_CENTS + 5000)]),
+    ).toBe(0);
+  });
+
+  it("sums multiple lines toward the threshold", () => {
+    const half = Math.floor(FREE_SHIPPING_THRESHOLD_CENTS / 2);
+    // Two half-threshold lines reach the threshold → free.
+    expect(computeShippingCents([line(half), line(half)])).toBe(0);
+  });
+
+  it("charges nothing for an empty cart", () => {
+    expect(computeShippingCents([])).toBe(0);
   });
 });
