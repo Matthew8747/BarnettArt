@@ -67,6 +67,48 @@ Anna (your trading income is yours; hers is hers — each person gets their own
 this project into a *client engagement* on paper rather than a hobby. The honest
 bar is simply: real work, real (even small) invoice.
 
+### LinkedIn — ready-to-paste draft
+
+> I can't create the LinkedIn page for you (account/page creation has to be done
+> by you). But here's a complete draft to paste in. On LinkedIn this can be a
+> **Company Page** ("Create a Company Page" → Small business) or simply your
+> personal profile's experience — start with the personal profile; add a Company
+> Page only if you want a separate brand presence.
+
+**Studio / page name:** _[your studio name — e.g. "Barnett Studio", "North Build",
+or "Matthew <Surname> Studio"]_
+
+**Tagline (under 120 chars):**
+> Design-engineering studio building fast, secure, beautifully-made websites for
+> independent makers and small businesses.
+
+**About:**
+> _[Studio name]_ is a one-person design-engineering studio. I design and build
+> production websites end to end — clean, distinctive front-ends backed by
+> proper engineering: type-safe code, secure payments, and automated testing and
+> deployment. I work with artists, makers and small businesses who want a site
+> that looks considered and actually holds up in production.
+>
+> Recent work: designed and built an e-commerce + portfolio platform for the
+> artist Anna Barnett — a gallery with collections, an enquiry/commerce flow,
+> Stripe checkout, and a security-hardened Next.js stack deployed on Vercel.
+
+**Specialties / skills to list:** Web design · Front-end development · Next.js ·
+React · TypeScript · E-commerce · Stripe · UI/UX · Web performance · SEO ·
+Accessibility · Vercel.
+
+**Experience entry (personal profile):**
+> **Founder & Design Engineer — _[Studio name]_** · Self-employed · _[start
+> month/year]_ – Present
+> Designing and building production websites for independent clients. First
+> engagement: a full e-commerce + portfolio platform for an artist (Next.js,
+> TypeScript, Stripe, Vercel) — gallery, collections, reviews, secure checkout,
+> CI/CD and a documented handover.
+
+> **Truthfulness note:** only publish the "for a fee / client engagement" framing
+> once you've actually invoiced for the work (see §2). Until then, "personal
+> project / freelance build" is the honest wording.
+
 ---
 
 ## 3. Quick "do I need to act?" checklist
