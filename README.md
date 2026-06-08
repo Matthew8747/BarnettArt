@@ -4,9 +4,11 @@ Production e-commerce + portfolio platform for selling original artwork and
 prints. Built to professional standards: secure payments, type-safe data layer,
 infrastructure as code, and CI/CD.
 
-> Full architecture: [`docs/anna-art-platform-plan.md`](docs/anna-art-platform-plan.md)
+> **All docs: [`docs/README.md`](docs/README.md)** (indexed by task)
+> · Architecture: [`docs/anna-art-platform-plan.md`](docs/anna-art-platform-plan.md)
 > · Build status & roadmap: [`docs/IMPLEMENTATION.md`](docs/IMPLEMENTATION.md)
-> · Setup checklist: [`docs/EXTERNAL-SETUP.md`](docs/EXTERNAL-SETUP.md)
+> · Setup + API keys: [`docs/EXTERNAL-SETUP.md`](docs/EXTERNAL-SETUP.md)
+> · Adding paintings: [`docs/ADDING-PAINTINGS.md`](docs/ADDING-PAINTINGS.md)
 
 ## Stack
 
@@ -70,8 +72,9 @@ src/
   db/                  # Drizzle schema + client
   lib/                 # env (Zod), stripe, rate-limit, money, validation
                        #   + co-located *.test.ts (Vitest)
-docs/                  # plan, implementation, runbook, handover, setup,
-                       #   security audit, design system
+docs/                  # README.md (index) + plan, implementation, setup,
+                       #   adding-paintings, runbook, handover, design,
+                       #   security audit, legal checklist, business notes
 drizzle/               # generated migrations (after db:generate)
 ```
 

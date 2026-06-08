@@ -76,6 +76,24 @@ export async function POST(req: Request) {
       },
     })),
     shipping_address_collection: { allowed_countries: ["GB"] },
+    // Server-computed shipping (see computeShippingCents): flat fee, free over
+    // the threshold. Passing it here means Stripe charges the same total we
+    // recorded on the pending order. A 0 amount shows as "Free shipping".
+    shipping_options: [
+      {
+        shipping_rate_data: {
+          type: "fixed_amount",
+          fixed_amount: {
+            amount: priced.shippingCents,
+            currency: priced.currency.toLowerCase(),
+          },
+          display_name:
+            priced.shippingCents === 0
+              ? "Free shipping"
+              : "Standard UK delivery",
+        },
+      },
+    ],
     success_url: `${siteUrl}/shop/success?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${siteUrl}/cart`,
     metadata: { orderId: order.id },

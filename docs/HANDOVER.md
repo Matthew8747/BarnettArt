@@ -26,8 +26,9 @@ billing). The engineer holds collaborator/team access. See
 | Domain registrar | annabarnett.art | **Anna** |
 
 ## For Anna (non-technical, once the admin is built)
-- **Add/edit artwork:** Admin → Products. Upload images, set price, mark
-  available/sold/archived. (Built in Phase 1.)
+- **Add/edit artwork:** until the admin UI lands, this is a quick edit to a few
+  data files — see [`ADDING-PAINTINGS.md`](./ADDING-PAINTINGS.md). After Phase 1b:
+  Admin → Products (upload images, set price, mark available/sold/archived).
 - **See orders:** Admin → Orders. Mark an order fulfilled once posted.
 - **An original sells out automatically** — it's marked sold the moment payment
   succeeds, so it can't be double-sold.
@@ -41,15 +42,14 @@ billing). The engineer holds collaborator/team access. See
 ## The paintings & gallery (current state)
 - Anna's 26 photos were imported, web-optimised, and stripped of metadata
   (including the GPS location iPhone photos embed — a privacy fix). They power
-  the **Gallery** (all works) and the **Shop** (a curated front page of them).
-- **Titles and prices are placeholders** ("Untitled No. 01", a uniform draft
-  price). They are *not* real listings. Rename and price each piece — for now by
-  editing `src/lib/gallery-manifest.json` (titles) and `src/lib/demo-data.ts`
-  (which become which shop listings, and the draft price); from Phase 1b, in the
-  admin UI.
-- **Several photos are in-situ shots** (paintings on a desk/wall, not cropped).
-  For a cleaner gallery, re-shoot or crop to just the artwork and drop the files
-  into `paintings/`, then re-run `node scripts/import-paintings.mjs`.
+  the **Gallery** (all works), the **Collections** (4 grouped series), and the
+  **Shop** (a curated front page of them).
+- **Titles, prices, stories, collection names and reviews are placeholders** —
+  clearly drafted, *not* real listings. Set the real values per
+  [`ADDING-PAINTINGS.md`](./ADDING-PAINTINGS.md) (a quick edit to a few data
+  files now; the admin UI from Phase 1b).
+- Each painting has a **detail view** (a two-pane lightbox) with room for its
+  story, medium, dimensions, year and reviews.
 
 ## Switching to enquiry-based ordering (when Anna's ready)
 The site can move from instant Stripe checkout to "enquire to buy" with **one
