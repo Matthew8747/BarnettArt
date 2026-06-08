@@ -73,21 +73,26 @@ DNS records, and update `NEXT_PUBLIC_SITE_URL`. TLS is automatic.
 
 Everything in Path A still applies (content, legal, email, Vercel). Then add:
 
-> ⚠️ **One engineering piece is needed first.** With a database connected, the
-> shop reads products from the **database**, not the gallery manifest — and there
-> is **no admin UI yet** (Phase 1b) and no importer that loads Anna's real
-> paintings into the DB (`npm run db:seed` inserts *sample* art only). So before
-> Path B, build **one** of: (a) the admin product CRUD (Phase 1b), or (b) a
-> seed script that turns `gallery-manifest.json` + `artwork-meta.ts` into DB
-> products. Until then, connecting a database would show an empty shop. This is
-> the main remaining backend task for paid checkout.
+> **Loading products is solved.** With a database connected, the shop reads
+> products from the **database** (not the gallery manifest). The
+> `npm run db:seed:paintings` script turns the 26 paintings (manifest +
+> `artwork-meta.ts`) into real, buyable `products` rows, reusing the committed
+> `/gallery` images — so you get a full shop without building an admin UI. (A
+> proper admin for editing products is still a nice future addition, but isn't
+> required to take payments.)
 
 ### B1. Database — [Neon](https://neon.tech) Postgres
 1. Create a Neon project in **eu-west-2 (London)**.
 2. Copy the **pooled** connection string (includes `?sslmode=require`) →
-   **`DATABASE_URL`** in Vercel (Production).
-3. Apply the schema: run `npm run db:migrate` against that `DATABASE_URL`
-   (locally with the prod URL, or as a one-off). Then load products (see ⚠️).
+   **`DATABASE_URL`** (in `.env` locally for the seed, and in Vercel for prod).
+3. Apply the schema and load the paintings:
+   ```bash
+   npm run db:migrate          # create the tables
+   npm run db:seed:paintings   # insert the 26 paintings as originals
+   ```
+   Re-running the seed is safe (it upserts by slug). Set real per-piece prices in
+   `src/db/seed-paintings.ts` (or later via an admin) before taking real money —
+   they're the same obvious £450 draft until you do.
 
 ### B2. Payments — [Stripe](https://dashboard.stripe.com) (Anna's account)
 1. Anna creates the Stripe account and completes business verification; add you
@@ -115,13 +120,45 @@ in-memory; production needs real values.)
   cookie). Generate one and set it in Vercel.
 - Keep `RESEND_API_KEY` / `EMAIL_FROM` (now also send order-confirmation emails).
 
-### B5. Flip the switch & test
-1. Set **`COMMERCE_MODE=checkout`** (or remove it; `checkout` is the default).
-2. Redeploy.
-3. Place a **real** test order end-to-end (use a Stripe test card first in a
-   preview with test keys): pay → Stripe webhook fires → order marked `paid` →
-   stock decremented / original marked `sold` → confirmation email sent. Verify
-   in the Stripe dashboard (Webhooks → delivery) and your DB.
+### B5. Prove a real payment works (the CV demo)
+
+The whole point of Path B is being able to say *"I built a working payment
+system."* You can demonstrate the full flow safely in **Stripe test mode** — no
+real money — and screenshot it. Do this locally first:
+
+1. **Start Postgres + load products** (one-off):
+   ```bash
+   docker compose up -d
+   npm run db:migrate
+   npm run db:seed:paintings
+   ```
+2. **Put Stripe TEST keys in `.env`** (Stripe → Developers → API keys, test mode):
+   `STRIPE_SECRET_KEY=sk_test_…`, `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_…`.
+3. **Forward webhooks** with the Stripe CLI (so the "paid" event reaches you):
+   ```bash
+   stripe login
+   stripe listen --forward-to localhost:3000/api/webhooks/stripe
+   ```
+   Copy the printed `whsec_…` into `STRIPE_WEBHOOK_SECRET` in `.env`.
+4. **Run the app against the database** (not demo mode):
+   ```bash
+   # DATABASE_URL set, DEMO_MODE unset, COMMERCE_MODE=checkout
+   npm run dev
+   ```
+   (There's a ready-made `db` profile in `.claude/launch.json` with these envs.)
+5. **Buy a painting:** open `/shop`, add one to the cart, check out, and pay with
+   Stripe's test card **`4242 4242 4242 4242`** (any future expiry, any CVC).
+6. **Watch it complete:** the Stripe CLI logs `checkout.session.completed`; the
+   order flips to `paid`; the original is marked `sold` (atomically, so it can't
+   be double-sold); a confirmation email is logged/sent. Screenshot the Stripe
+   dashboard payment + the order — that's your evidence.
+
+**Going live for real** is the same with **live** keys: set
+`COMMERCE_MODE=checkout`, the live Stripe keys, the production webhook secret,
+`DATABASE_URL`, `CART_SECRET` and Upstash in Vercel, then redeploy. (Remember the
+plan is to run mostly in `inquiry` mode — flip back any time by setting
+`COMMERCE_MODE=inquiry`. The Stripe integration stays in the codebase either way,
+which is exactly the portfolio artifact you want.)
 
 ### B6. Recommended before heavy traffic
 - **Sentry** for error monitoring (`SENTRY_DSN`, `NEXT_PUBLIC_SENTRY_DSN`).

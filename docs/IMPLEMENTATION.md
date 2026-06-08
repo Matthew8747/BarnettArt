@@ -157,6 +157,7 @@ design system (`DESIGN.md`).
 | ✅ | Legal pages made sound | privacy (UK GDPR, essential-cookies-only → no banner) + terms (14-day cancel + commissions exemption, CRA 2015, shipping); `docs/LEGAL-CHECKLIST.md` |
 | ✅ | Docs | merged MANUAL-TODO→EXTERNAL-SETUP (single setup doc, exact key get/put + shipping); new `ADDING-PAINTINGS.md`, `BUSINESS-NOTES.md`, `docs/README.md` index |
 | ✅ | Vitest unit tests | collections (7) + reviews (5) + shipping (5); suite now **101** |
+| ✅ | DB product loader (unblocks Path B checkout) | `npm run db:seed:paintings` (`src/db/seed-paintings.ts`) inserts the 26 paintings as originals from the manifest + `artwork-meta`, reusing `/gallery` images; verified end-to-end against local Postgres (shop renders 26 from DB, "Add to cart" live). Removes the admin-UI prerequisite for taking payments. See `GO-LIVE.md` Path B |
 
 ## Phase 3 — Portfolio & polish
 

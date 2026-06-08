@@ -34,6 +34,17 @@
         "DATABASE_URL": "",
         "COMMERCE_MODE": "inquiry"
       }
+    },
+    {
+      "name": "db",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "port": 3200,
+      "autoPort": true,
+      "env": {
+        "DATABASE_URL": "postgresql://barnett:barnett_dev_password@localhost:5432/barnett_art",
+        "COMMERCE_MODE": "checkout"
+      }
     }
   ]
 }

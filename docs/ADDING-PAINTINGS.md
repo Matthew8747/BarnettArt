@@ -82,6 +82,10 @@ the future admin replaces). Prices are in **integer pence** — never decimals.
 
 > In `COMMERCE_MODE=inquiry`, prices aren't charged at all — buying happens by
 > conversation, so the price is just indicative.
+>
+> **With a database (Path B / card checkout):** the shop reads products from the
+> DB, not this file. Load/refresh them with `npm run db:seed:paintings` and set
+> real per-piece prices in `src/db/seed-paintings.ts`. See `docs/GO-LIVE.md`.
 
 ---
 

@@ -20,6 +20,7 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:seed": "vite-node --config vitest.config.ts src/db/seed.ts",
+    "db:seed:paintings": "vite-node --config vitest.config.ts src/db/seed-paintings.ts",
     "db:studio": "drizzle-kit studio",
     "db:push": "drizzle-kit push",
     "prepare": "husky"
@@ -63,6 +64,7 @@
     "prettier-plugin-tailwindcss": "^0.8.0",
     "tailwindcss": "^4",
     "typescript": "^6",
+    "vite-node": "6.0.0",
     "vitest": "4.1.8"
   }
 }
