@@ -4,7 +4,7 @@
 > whenever you complete or start a piece of work. The architecture reference is
 > [`anna-art-platform-plan.md`](./anna-art-platform-plan.md).
 
-**Last updated:** 2026-06-05 (Phase 2b — gallery, enquiries, commerce toggle)
+**Last updated:** 2026-06-07 (Phase 2c — collections, reviews, painting detail, shipping, legal)
 **Decisions locked:** Hybrid hosting (Vercel app + AWS media) · Drizzle ORM ·
 Originals + Prints · Stripe, UK-only (GBP) · **Stripe Checkout (hosted)** ·
 **`COMMERCE_MODE` toggle (checkout now → enquiry later)** · signed-cookie cart ·
@@ -12,14 +12,16 @@ Auth.js passwordless (admin) · node-vibrant palette extraction · storage
 abstraction (local adapter now, S3+CloudFront later) · light "gallery wall"
 design system (`DESIGN.md`).
 
-> **Manual steps you must do** (accounts, secrets, local services): see
-> [`MANUAL-TODO.md`](./MANUAL-TODO.md).
+> **Setup, manual steps & API keys** (accounts, secrets, local services, what
+> Anna still needs to provide): see [`EXTERNAL-SETUP.md`](./EXTERNAL-SETUP.md).
+> **Adding/editing paintings:** [`ADDING-PAINTINGS.md`](./ADDING-PAINTINGS.md).
+> **Docs index:** [`README.md`](./README.md).
 >
 > **Prototype:** runs with **no database/Stripe** whenever `DATABASE_URL` is
 > unset (or `DEMO_MODE=true`) — the storefront serves an in-repo catalog built
 > from Anna's real paintings (`src/lib/demo-data.ts` over
 > `src/lib/gallery-manifest.json`, images in `public/gallery/`). Deployable to a
-> Vercel preview with zero external services; see MANUAL-TODO §0.
+> Vercel preview with zero external services; see EXTERNAL-SETUP §0a.
 
 ---
 
@@ -118,8 +120,8 @@ design system (`DESIGN.md`).
 | ✅ | Order confirmation email (Resend) | `src/lib/email.ts` (REST, no SDK dep); dev no-op without key; best-effort, never blocks the webhook |
 | ✅ | Cart UI + checkout | `/cart`, add-to-cart on detail page, header count, `/shop/success` (clears cart) |
 | ✅ | Vitest unit tests | cart (12) + pricing (8); suite now **68** |
-| ⬜ | Playwright E2E: full checkout incl. replayed webhook | needs Stripe CLI + live DB (see MANUAL-TODO) |
-| ⬜ | Real shipping rules | currently free (placeholder); awaiting Anna's policy |
+| ⬜ | Playwright E2E: full checkout incl. replayed webhook | needs Stripe CLI + live DB (see EXTERNAL-SETUP) |
+| ✅ | Real shipping rules | flat £6.95, free over £150 (placeholders) in `computeShippingCents`; passed to Stripe as `shipping_options`; 5 tests |
 
 > **Oversell handling:** if a paid order can't claim stock (already sold), the
 > line is logged for a **manual Stripe refund** — payment is real, so it's never
@@ -139,15 +141,26 @@ design system (`DESIGN.md`).
 | ✅ | Bugfix | `COMMERCE_MODE` empty-string `.default()` gap would crash boot — fixed with preprocess |
 | ✅ | Vitest unit tests | contact schema (8) + commerce-mode/contact-email env (5); suite now **84** |
 
-> **Note:** titles/prices on imported paintings are placeholders — see
-> MANUAL-TODO §2. Portfolio **stretch** ideas (about page, per-piece stories,
-> case study) are parked in MANUAL-TODO §5, not half-built.
+> **Note:** titles/prices/stories on imported paintings are placeholders — see
+> [`ADDING-PAINTINGS.md`](./ADDING-PAINTINGS.md) and EXTERNAL-SETUP §A.
+
+**Phase 2c — collections, reviews, painting detail, shipping, legal (`phase-2-commerce`):**
+
+| Status | Item | Notes |
+|--------|------|-------|
+| ✅ | Collections | `src/lib/collections.ts` (4 placeholder collections partition all 26 works); `/collections` index + `/collections/[slug]`; gallery filter chips; nav links; 7 tests |
+| ✅ | Reviews | `src/lib/reviews.ts` (placeholder, `verified:false`, DB-ready); home "What collectors say" + per-product block + lightbox; 5 tests |
+| ✅ | Painting detail view | `GalleryGrid` lightbox rebuilt to a two-pane overlay (artwork + story/medium/dimensions/year/reviews/enquire); `src/lib/artwork-meta.ts` (per-slug, override map) |
+| ✅ | Shipping rules | flat £6.95 / free over £150 in `pricing.ts`; wired to Stripe `shipping_options`; 5 tests |
+| ✅ | Legal pages made sound | privacy (UK GDPR, essential-cookies-only → no banner) + terms (14-day cancel + commissions exemption, CRA 2015, shipping); `docs/LEGAL-CHECKLIST.md` |
+| ✅ | Docs | merged MANUAL-TODO→EXTERNAL-SETUP (single setup doc, exact key get/put + shipping); new `ADDING-PAINTINGS.md`, `BUSINESS-NOTES.md`, `docs/README.md` index |
+| ✅ | Vitest unit tests | collections (7) + reviews (5) + shipping (5); suite now **101** |
 
 ## Phase 3 — Portfolio & polish
 
 | Status | Item |
 |--------|------|
-| ✅ | Portfolio: home, gallery, contact (per `DESIGN.md`) — *about page parked (MANUAL-TODO §5)* |
+| ✅ | Portfolio: home, gallery, collections, contact (per `DESIGN.md`) — *dedicated about page still parked* |
 | ✅ | Motion polish: scroll reveals, hover effects (honour `prefers-reduced-motion`) |
 | ⬜ | SEO: sitemap, structured data (Product schema) — *metadata done per route* |
 | 🚧 | Accessibility pass + Core Web Vitals — *reduced-motion + labels in place; full audit pending* |

@@ -8,6 +8,8 @@ import { isInquiryMode } from "@/lib/env";
 import { resolveAccent } from "@/lib/accent";
 import { getStorage } from "@/lib/storage";
 import { formatMoney } from "@/lib/money";
+import { getArtworkMeta } from "@/lib/artwork-meta";
+import { getReviewsForProduct, getAverageRating } from "@/lib/reviews";
 import { AccentScope } from "@/components/AccentScope";
 import { Reveal } from "@/components/Reveal";
 import { addToCartAction } from "@/app/cart/actions";
@@ -40,6 +42,9 @@ export default async function ProductPage({ params }: Params) {
   const hero = product.images[0];
   const rest = product.images.slice(1);
   const isSold = product.status === "sold";
+  const meta = getArtworkMeta(product.slug);
+  const reviews = getReviewsForProduct(product.slug);
+  const rating = getAverageRating(product.slug);
 
   return (
     <AccentScope accentHex={accent} as="section">
@@ -103,6 +108,25 @@ export default async function ProductPage({ params }: Params) {
                 {product.type === "print" ? "From " : ""}
                 {formatMoney(product.basePriceCents, product.currency)}
               </p>
+              <p className="text-muted mt-3 text-sm">
+                {meta.medium} · {meta.dimensions} · {meta.year}
+              </p>
+              {rating && (
+                <p className="mt-2 text-sm">
+                  <span
+                    aria-label={`${rating.average.toFixed(1)} out of 5`}
+                    className="text-[var(--accent-text)]"
+                  >
+                    {"★★★★★".slice(0, Math.round(rating.average))}
+                    <span className="opacity-30">
+                      {"★★★★★".slice(Math.round(rating.average))}
+                    </span>
+                  </span>{" "}
+                  <span className="text-muted">
+                    ({rating.count} review{rating.count === 1 ? "" : "s"})
+                  </span>
+                </p>
+              )}
             </Reveal>
 
             {product.description && (
@@ -209,6 +233,62 @@ export default async function ProductPage({ params }: Params) {
               </div>
             </Reveal>
           </div>
+        </div>
+
+        {/* The story + reviews */}
+        <div className="mt-20 grid grid-cols-1 gap-14 lg:grid-cols-2">
+          <Reveal>
+            <div>
+              <p className="eyebrow mb-3">The story</p>
+              <p className="text-text/80 max-w-prose leading-relaxed">
+                {meta.story}
+              </p>
+            </div>
+          </Reveal>
+
+          {reviews.length > 0 && (
+            <Reveal delay={100}>
+              <div>
+                <div className="mb-4 flex items-center gap-3">
+                  <p className="eyebrow">Reviews</p>
+                  {rating && (
+                    <span className="text-sm">
+                      <span
+                        aria-label={`${rating.average.toFixed(1)} out of 5`}
+                        className="text-[var(--accent-text)]"
+                      >
+                        {"★★★★★".slice(0, Math.round(rating.average))}
+                        <span className="opacity-30">
+                          {"★★★★★".slice(Math.round(rating.average))}
+                        </span>
+                      </span>{" "}
+                      <span className="text-muted">({rating.count})</span>
+                    </span>
+                  )}
+                </div>
+                <ul className="flex flex-col gap-5">
+                  {reviews.map((r) => (
+                    <li key={r.id} className="border-border border-t pt-4">
+                      <div className="flex items-baseline justify-between gap-3">
+                        <span className="text-text text-sm font-medium">
+                          {r.author}
+                        </span>
+                        <span className="text-xs text-[var(--accent-text)]">
+                          {"★★★★★".slice(0, r.rating)}
+                          <span className="opacity-30">
+                            {"★★★★★".slice(r.rating)}
+                          </span>
+                        </span>
+                      </div>
+                      <p className="text-muted mt-1 text-sm leading-relaxed">
+                        {r.body}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Reveal>
+          )}
         </div>
       </div>
     </AccentScope>

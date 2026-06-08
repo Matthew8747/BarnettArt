@@ -12,6 +12,32 @@ to consume each value via `.env` (local) and the Vercel dashboard (production).
 
 Legend: 🟢 do now (unblocks local dev) · 🟡 before first deploy · 🔵 before launch.
 
+> **This is the single setup + manual-steps doc.** Quick links: §0a deploy a
+> free prototype · §A what Anna still needs to decide/provide · the per-account
+> sections (§1–§11) · the env-var quick reference at the end.
+
+---
+
+## 0a. 🟢 Deploy a free prototype (no accounts, no keys)
+
+The fastest way to put a clickable preview in front of Anna — **no database, no
+Stripe, nothing to provision, no env vars**. It serves the real paintings;
+browsing, collections, the gallery detail view, reviews and the cart all work;
+checkout shows as disabled. **Demo mode turns itself on automatically whenever no
+`DATABASE_URL` is set.**
+
+1. Import the repo at <https://vercel.com/new> (free Hobby plan, sign in with
+   GitHub). Pick the `phase-2-commerce` branch if prompted.
+2. Click **Deploy** — leave everything default, **no env vars needed**.
+3. Share the `*.vercel.app` URL with Anna. (Stay on this free domain until sales
+   justify a custom one.)
+
+CLI alternative from the repo root: `npx vercel` → accept defaults →
+`npx vercel --prod`.
+
+To go live for real later, add `DATABASE_URL` + the Stripe vars (sections below)
+and redeploy — demo mode switches itself off automatically.
+
 ---
 
 ## 0. 🟢 Local development (no external accounts needed)
@@ -210,22 +236,73 @@ rationale.
 
 ---
 
-## Quick reference — which step produces which secret
+## 12. ⚙️ Shipping — a config value, not an account
 
-| Env var | From | When |
+Shipping is computed in code: a flat fee per order, free over a threshold
+(`src/lib/pricing.ts` → `FLAT_SHIPPING_CENTS` / `FREE_SHIPPING_THRESHOLD_CENTS`,
+currently **£6.95 / free over £150** — placeholders). To change rates, edit those
+two constants and redeploy. There are unit tests, so a typo can't silently break
+the total.
+
+The checkout passes this to Stripe as the order's shipping, so the customer is
+charged the same total we record.
+
+**Want to edit shipping from a dashboard instead of code?** It can be moved to a
+**Stripe shipping rate**: create rates in Stripe → Settings → Shipping, then have
+the Checkout Session reference them via `shipping_options` instead of the computed
+amount. Worth doing only if rates change often — for a rarely-used flat fee, the
+constant is simpler. Ask the engineer to switch it if needed.
+
+---
+
+## A. What Anna still needs to decide / provide
+
+Tracked here so nothing's missed. Most feature decisions are now **done**; what
+remains is real content + identity details.
+
+- 🟠 **Real titles & prices.** The 26 paintings show obvious placeholders
+  ("Untitled No. 01", a uniform draft price) — *not* real listings. Set real
+  values per [`ADDING-PAINTINGS.md`](./ADDING-PAINTINGS.md).
+- 🟠 **Real stories & collection names.** The per-painting and per-collection
+  stories are placeholders; the 4 collection names are drafts. Edit as in
+  [`ADDING-PAINTINGS.md`](./ADDING-PAINTINGS.md).
+- 🟠 **Real reviews.** Current reviews are clearly-labelled samples — replace
+  with genuine customer words (`src/lib/reviews.ts`).
+- 🟠 **Legal details.** Drop Anna's trading name, contact email and VAT status
+  into the privacy/terms pages — see [`LEGAL-CHECKLIST.md`](./LEGAL-CHECKLIST.md).
+- 🟠 **Anna's enquiry inbox:** set `CONTACT_EMAIL` (falls back to `ADMIN_EMAILS`,
+  then a server log).
+- 🟠 **Confirm the Stripe API version** pinned in `src/lib/stripe.ts` matches the
+  Stripe dashboard before going live.
+- ✅ **Shipping policy** — decided (flat £6.95, free over £150; §12 to change).
+- ✅ **Business registration** — not needed yet; see
+  [`BUSINESS-NOTES.md`](./BUSINESS-NOTES.md).
+- 🟢 **Commerce model** — ships in `checkout`; flip to `inquiry` (§11) whenever
+  Anna prefers conversation-based ordering.
+
+---
+
+## Quick reference — which step produces which secret, and where it goes
+
+**Where each goes:** *Local* = a line in your `.env` file (copy `.env.example`).
+*Prod* = Vercel → Project → Settings → Environment Variables (choose the
+Production environment), then redeploy.
+
+| Env var | Where to get it | Put in |
 |---|---|---|
-| `DATABASE_URL` (local) | Docker Compose default | 🟢 now |
-| `DATABASE_URL` (prod) | Neon (§3) | 🟡 |
-| `STRIPE_SECRET_KEY` / `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Stripe (§2) | 🟡 |
-| `STRIPE_WEBHOOK_SECRET` | Stripe CLI / dashboard (§2) | 🟡 |
-| `UPSTASH_REDIS_REST_URL` / `_TOKEN` | Upstash (§4) | 🟡 |
-| `RESEND_API_KEY` / `EMAIL_FROM` | Resend (§5) | 🟡 |
-| `CONTACT_EMAIL` | You decide (Anna's enquiry inbox) (§5) | 🟡 |
-| `COMMERCE_MODE` | You decide (`checkout` → later `inquiry`) (§11) | 🟢 |
-| `S3_BUCKET_NAME` / `CLOUDFRONT_URL` / AWS creds | AWS + Terraform (§7) | 🔵 |
-| `NEXT_PUBLIC_SITE_URL` | Domain/Vercel (§6, §8) | 🟡 |
-| `SENTRY_DSN` / `NEXT_PUBLIC_SENTRY_DSN` | Sentry (§9) | 🔵 |
-| `ADMIN_EMAILS` | You decide (Anna's email) | 🟢 |
+| `DATABASE_URL` (local) | Docker Compose default (auto) | `.env` |
+| `DATABASE_URL` (prod) | Neon dashboard → Connection string, **pooled**, `sslmode=require` (§3) | Vercel |
+| `STRIPE_SECRET_KEY` / `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Stripe → Developers → API keys (§2) | `.env` + Vercel |
+| `STRIPE_WEBHOOK_SECRET` | Stripe CLI (`stripe listen`) locally; dashboard webhook endpoint in prod (§2) | `.env` + Vercel |
+| `UPSTASH_REDIS_REST_URL` / `_TOKEN` | Upstash console → your Redis DB → REST (§4) | `.env` + Vercel |
+| `RESEND_API_KEY` / `EMAIL_FROM` | Resend → API Keys; `EMAIL_FROM` = a verified address (§5) | `.env` + Vercel |
+| `CONTACT_EMAIL` | You decide — Anna's enquiry inbox (§5) | `.env` + Vercel |
+| `COMMERCE_MODE` | You decide — `checkout` or `inquiry` (§11) | `.env` + Vercel |
+| `S3_BUCKET_NAME` / `CLOUDFRONT_URL` / AWS creds | Terraform outputs (§7) | Vercel |
+| `NEXT_PUBLIC_SITE_URL` | Your Vercel/prod URL (§6, §8) | Vercel |
+| `SENTRY_DSN` / `NEXT_PUBLIC_SENTRY_DSN` | Sentry project settings (§9) | Vercel |
+| `ADMIN_EMAILS` | You decide — Anna's email (§5) | `.env` + Vercel |
 
 **Never paste any of these into the repo.** Local → `.env` (git-ignored).
-Production → Vercel env vars / AWS Secrets Manager.
+Production → Vercel env vars / AWS Secrets Manager. A `NEXT_PUBLIC_*` value is
+exposed to the browser by design — only put publishable/non-secret values there.
