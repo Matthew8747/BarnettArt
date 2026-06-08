@@ -28,14 +28,19 @@ re-running one script — no database needed (the live demo reads these files).
 > **Crop first.** If a photo shows the painting on a desk/wall, crop to just the
 > artwork before importing — a clean edge makes the gallery look professional.
 
-> **⚠️ If you ADD or REMOVE paintings (not just re-crop), you must also update
-> `src/lib/collections.ts`.** Every painting has to belong to exactly one
-> collection — a test (`npm test`) fails and the build breaks if a new slug is
-> unassigned or an old slug no longer exists. After importing, run `npm test`: if
-> `collections.test.ts` fails, add the new slug(s) to a collection and remove any
-> deleted slug(s) (and fix any `coverSlug` / review `productSlug` that pointed at
-> a deleted painting). Also delete the leftover `public/gallery/<old-slug>*`
-> files for paintings you removed — the importer overwrites but doesn't delete.
+> **⚠️ If you REMOVE or REPLACE a painting, update `src/lib/collections.ts`.**
+> A painting does **not** have to be in a collection — leaving it out just makes
+> it a "one-off" that still shows in the gallery with its own detail view. But a
+> collection must not reference a slug that no longer exists. After importing, run
+> `npm test`: if `collections.test.ts` fails, remove any deleted slug(s) from
+> `collections.ts` (and fix any `coverSlug` / review `productSlug` that pointed at
+> a removed painting). Adding a new painting is free — assign it to a collection
+> if it belongs to a series, or leave it as a one-off. Also delete the leftover
+> `public/gallery/<old-slug>*` files for paintings you removed (the importer
+> overwrites but doesn't delete).
+>
+> *HEIC note:* the importer auto-detects HEIC files even when an iPhone has saved
+> them with a `.jpg`/`.jpeg` name, so mislabeled photos import fine.
 
 ---
 

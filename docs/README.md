@@ -3,6 +3,9 @@
 All project docs, grouped by what you're trying to do. Start here.
 
 ## 🚀 Getting it running
+- **[GO-LIVE.md](./GO-LIVE.md)** — ⭐ the ordered, step-by-step runbook for
+  putting the site live (enquiry path now, full card-checkout path later). Start
+  here when you're ready to launch.
 - **[EXTERNAL-SETUP.md](./EXTERNAL-SETUP.md)** — the single setup doc: deploy a
   free prototype, local dev, every external account + API key (what it is, where
   to get it, where to put it), shipping config, and what Anna still needs to

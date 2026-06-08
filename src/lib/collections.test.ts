@@ -12,15 +12,13 @@ describe("collections", () => {
   const collections = getCollections();
   const allSlugs = getGalleryItems().map((i) => i.slug);
 
-  it("partitions every painting into exactly one collection", () => {
+  it("assigns each painting to at most one collection (one-offs allowed)", () => {
     const assigned = collections.flatMap((c) => c.paintingSlugs);
-    // Every manifest painting is assigned…
-    for (const slug of allSlugs) {
-      expect(assigned).toContain(slug);
-    }
-    // …and none more than once.
-    expect(assigned.length).toBe(allSlugs.length);
+    // No painting may appear in two collections…
     expect(new Set(assigned).size).toBe(assigned.length);
+    // …and every assigned slug is a real painting (one-offs simply aren't here).
+    const known = new Set(allSlugs);
+    for (const slug of assigned) expect(known.has(slug)).toBe(true);
   });
 
   it("has unique collection slugs", () => {
@@ -55,8 +53,11 @@ describe("collections", () => {
     expect(items.map((i) => i.slug)).toEqual(c.paintingSlugs);
   });
 
-  it("paintingCollectionMap covers all paintings", () => {
+  it("paintingCollectionMap maps exactly the assigned paintings", () => {
     const map = paintingCollectionMap();
-    expect(map.size).toBe(allSlugs.length);
+    const assigned = new Set(collections.flatMap((c) => c.paintingSlugs));
+    expect(map.size).toBe(assigned.size);
+    // One-offs (in the manifest but no collection) are absent from the map.
+    for (const slug of assigned) expect(map.has(slug)).toBe(true);
   });
 });

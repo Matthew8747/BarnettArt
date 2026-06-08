@@ -12,9 +12,11 @@ Auth.js passwordless (admin) · node-vibrant palette extraction · storage
 abstraction (local adapter now, S3+CloudFront later) · light "gallery wall"
 design system (`DESIGN.md`).
 
-> **Setup, manual steps & API keys** (accounts, secrets, local services, what
-> Anna still needs to provide): see [`EXTERNAL-SETUP.md`](./EXTERNAL-SETUP.md).
-> **Adding/editing paintings:** [`ADDING-PAINTINGS.md`](./ADDING-PAINTINGS.md).
+> **Going live:** [`GO-LIVE.md`](./GO-LIVE.md) — ordered runbook (enquiry path
+> now; full card-checkout path needs a DB product loader / admin first).
+> **Setup, manual steps & API keys:** [`EXTERNAL-SETUP.md`](./EXTERNAL-SETUP.md).
+> **Adding/editing paintings:** [`ADDING-PAINTINGS.md`](./ADDING-PAINTINGS.md)
+> (collections are optional — paintings can be one-offs).
 > **Docs index:** [`README.md`](./README.md).
 >
 > **Prototype:** runs with **no database/Stripe** whenever `DATABASE_URL` is

@@ -4,7 +4,8 @@ Production e-commerce + portfolio platform for selling original artwork and
 prints. Built to professional standards: secure payments, type-safe data layer,
 infrastructure as code, and CI/CD.
 
-> **All docs: [`docs/README.md`](docs/README.md)** (indexed by task)
+> **Going live? [`docs/GO-LIVE.md`](docs/GO-LIVE.md)** (step-by-step runbook)
+> · **All docs: [`docs/README.md`](docs/README.md)** (indexed by task)
 > · Architecture: [`docs/anna-art-platform-plan.md`](docs/anna-art-platform-plan.md)
 > · Build status & roadmap: [`docs/IMPLEMENTATION.md`](docs/IMPLEMENTATION.md)
 > · Setup + API keys: [`docs/EXTERNAL-SETUP.md`](docs/EXTERNAL-SETUP.md)

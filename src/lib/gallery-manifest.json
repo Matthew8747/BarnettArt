@@ -74,14 +74,14 @@
   {
     "slug": "img-0367",
     "title": "Untitled — IMG 0367",
-    "source": "IMG_0367.HEIC",
+    "source": "IMG_0367.jpg",
     "large": "/gallery/img-0367.webp",
     "largeJpg": "/gallery/img-0367.jpg",
     "thumb": "/gallery/img-0367-thumb.webp",
     "thumbJpg": "/gallery/img-0367-thumb.jpg",
-    "width": 1481,
-    "height": 2000,
-    "accentHex": "#9faa4c"
+    "width": 2000,
+    "height": 697,
+    "accentHex": "#9ab945"
   },
   {
     "slug": "img-0518",
@@ -288,18 +288,6 @@
     "accentHex": "#878777"
   },
   {
-    "slug": "img-8601",
-    "title": "Untitled — IMG 8601",
-    "source": "IMG_8601.jpg",
-    "large": "/gallery/img-8601.webp",
-    "largeJpg": "/gallery/img-8601.jpg",
-    "thumb": "/gallery/img-8601-thumb.webp",
-    "thumbJpg": "/gallery/img-8601-thumb.jpg",
-    "width": 2000,
-    "height": 1045,
-    "accentHex": "#b4bb58"
-  },
-  {
     "slug": "img-8602",
     "title": "Untitled — IMG 8602",
     "source": "IMG_8602.jpg",
@@ -310,5 +298,17 @@
     "width": 2000,
     "height": 1997,
     "accentHex": "#7c7c2c"
+  },
+  {
+    "slug": "img-8612",
+    "title": "Untitled — IMG 8612",
+    "source": "IMG_8612.JPG.jpeg",
+    "large": "/gallery/img-8612.webp",
+    "largeJpg": "/gallery/img-8612.jpg",
+    "thumb": "/gallery/img-8612-thumb.webp",
+    "thumbJpg": "/gallery/img-8612-thumb.jpg",
+    "width": 1586,
+    "height": 1031,
+    "accentHex": "#a6794a"
   }
 ]

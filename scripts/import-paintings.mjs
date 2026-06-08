@@ -47,6 +47,29 @@ function placeholderTitle(slug) {
   return `Untitled — ${slug.replace(/-/g, " ").toUpperCase()}`;
 }
 
+/**
+ * Detect a HEIC/HEIF payload by its ISO-BMFF box signature, regardless of file
+ * extension (iPhones sometimes save HEIC bytes under a .jpg/.jpeg name). The
+ * file starts with a 4-byte box size, then "ftyp", then a brand like "heic".
+ */
+function isHeicBuffer(buf) {
+  if (!buf || buf.length < 12) return false;
+  if (buf.toString("latin1", 4, 8) !== "ftyp") return false;
+  const brand = buf.toString("latin1", 8, 12);
+  return [
+    "heic",
+    "heix",
+    "hevc",
+    "hevx",
+    "heim",
+    "heis",
+    "hevm",
+    "hevs",
+    "mif1",
+    "msf1",
+  ].includes(brand);
+}
+
 async function main() {
   await mkdir(OUT_DIR, { recursive: true });
 
@@ -72,11 +95,15 @@ async function main() {
     // sharp's bundled libheif lacks the HEVC decoder on Windows, so HEIC files
     // are first decoded to a JPEG buffer by the pure-JS heic-convert, then
     // handed to sharp like any other image. JPEG/PNG go straight to sharp.
+    //
+    // iPhones sometimes save a HEIC payload under a .jpg/.jpeg name, so we sniff
+    // the file's magic bytes rather than trusting the extension — otherwise such
+    // a file reaches sharp and crashes the whole run.
     const ext = extname(file).toLowerCase();
+    const raw = await readFile(inputPath);
     let inputForSharp = inputPath;
-    if (ext === ".heic" || ext === ".heif") {
+    if (ext === ".heic" || ext === ".heif" || isHeicBuffer(raw)) {
       try {
-        const raw = await readFile(inputPath);
         inputForSharp = Buffer.from(
           await heicConvert({ buffer: raw, format: "JPEG", quality: 0.95 }),
         );
