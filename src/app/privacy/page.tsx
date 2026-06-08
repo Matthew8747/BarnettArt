@@ -6,8 +6,10 @@ export const metadata: Metadata = {
   description: "How Anna Barnett collects and uses your personal data.",
 };
 
-// DRAFT — review with Anna and a solicitor before launch. Replace bracketed
-// placeholders with real business details. See docs/IMPLEMENTATION.md.
+// UK-GDPR-aligned draft. Bracketed items are Anna's real details to fill in
+// before launch — see docs/LEGAL-CHECKLIST.md. A privacy policy is legally
+// required under UK GDPR. Only essential cookies are used, so no consent banner
+// is required (see "Cookies").
 export default function PrivacyPage() {
   return (
     <main className="mx-auto max-w-2xl px-6 py-20">
@@ -15,38 +17,46 @@ export default function PrivacyPage() {
         ← Back home
       </Link>
       <h1 className="display text-text mt-6 text-5xl">Privacy Policy</h1>
-      <p className="text-muted mt-3 text-sm">Last updated: [DATE]</p>
+      <p className="text-muted mt-3 text-sm">Last updated: 7 June 2026</p>
 
       <div className="text-text/80 mt-10 space-y-8 leading-relaxed">
         <section>
           <h2 className="display text-text text-2xl">Who we are</h2>
           <p>
-            This site is operated by Anna Barnett (&ldquo;we&rdquo;,
-            &ldquo;us&rdquo;). For any privacy questions, contact{" "}
-            <a className="link-accent" href="mailto:[CONTACT EMAIL]">
-              [CONTACT EMAIL]
+            This site is operated by Anna Barnett
+            {" ("}trading as <span className="text-muted">[trading name]</span>
+            {") "}
+            (&ldquo;we&rdquo;, &ldquo;us&rdquo;), based in the United Kingdom.
+            We are the data controller for the personal data described here. For
+            any privacy question, contact us at{" "}
+            <a className="link-accent" href="mailto:[contact email]">
+              [contact email]
             </a>
-            . We are the data controller for the personal data described here.
+            .
           </p>
         </section>
 
         <section>
           <h2 className="display text-text text-2xl">What we collect</h2>
           <p>
-            We collect only what we need to fulfil your order: your name, email,
-            delivery address, and order details. Payment card details are
-            handled entirely by our payment processor (Stripe) and are never
-            stored on our servers.
+            We collect only what we need to deal with you: your name, email
+            address, delivery address and order details when you buy, and the
+            contents of any message you send us through the contact form.
+            Payment card details are handled entirely by our payment processor
+            (Stripe) and are never seen or stored by us.
           </p>
         </section>
 
         <section>
-          <h2 className="display text-text text-2xl">How we use it</h2>
+          <h2 className="display text-text text-2xl">How we use it & why</h2>
           <p>
-            To process and deliver your order, send order confirmations, handle
-            returns or queries, and meet our legal and tax obligations. The
-            lawful bases are performance of a contract and our legitimate
-            interests in running the shop.
+            To take and deliver your order, send order confirmations, answer
+            enquiries, handle returns, and meet our legal and tax obligations.
+            Our lawful bases under UK GDPR are{" "}
+            <em>performance of a contract</em> (to fulfil your order),{" "}
+            <em>legitimate interests</em> (to run and secure the shop and
+            respond to enquiries), and <em>legal obligation</em> (to keep tax
+            and accounting records).
           </p>
         </section>
 
@@ -54,16 +64,32 @@ export default function PrivacyPage() {
           <h2 className="display text-text text-2xl">Who we share it with</h2>
           <p>
             Only the service providers needed to run the shop: our payment
-            processor (Stripe), email provider (Resend), hosting/infrastructure
-            providers, and delivery carriers. We do not sell your data.
+            processor (Stripe), email provider (Resend), hosting and
+            infrastructure provider (Vercel), and the delivery carrier for your
+            order. Each acts under its own data-protection terms. We never sell
+            your data.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="display text-text text-2xl">
+            International transfers
+          </h2>
+          <p>
+            Some of these providers may process data outside the UK. Where they
+            do, the transfer is covered by appropriate safeguards (a UK adequacy
+            decision or the International Data Transfer Agreement / Addendum),
+            keeping your data protected to UK standards.
           </p>
         </section>
 
         <section>
           <h2 className="display text-text text-2xl">How long we keep it</h2>
           <p>
-            We keep order records for as long as required for accounting and
-            legal purposes (typically [X] years), then delete or anonymise them.
+            We keep order and transaction records for <strong>6 years</strong>{" "}
+            to meet UK accounting and tax requirements, then delete or anonymise
+            them. Contact-form enquiries that don&rsquo;t lead to an order are
+            kept only as long as needed to deal with them.
           </p>
         </section>
 
@@ -71,22 +97,28 @@ export default function PrivacyPage() {
           <h2 className="display text-text text-2xl">Your rights</h2>
           <p>
             Under UK GDPR you have the right to access, correct, delete, or
-            restrict use of your personal data, and to object to processing. To
-            exercise these, email{" "}
-            <a className="link-accent" href="mailto:[CONTACT EMAIL]">
-              [CONTACT EMAIL]
+            restrict use of your personal data, to object to processing, and to
+            data portability. To exercise any of these, email{" "}
+            <a className="link-accent" href="mailto:[contact email]">
+              [contact email]
             </a>
-            . You may also complain to the UK Information Commissioner&rsquo;s
-            Office (ICO).
+            . You can also complain to the UK Information Commissioner&rsquo;s
+            Office (ICO) at{" "}
+            <a className="link-accent" href="https://ico.org.uk">
+              ico.org.uk
+            </a>
+            .
           </p>
         </section>
 
         <section>
           <h2 className="display text-text text-2xl">Cookies</h2>
           <p>
-            We use only essential cookies needed for the site and checkout to
-            function. If we add analytics or marketing cookies, we will ask for
-            your consent first.
+            We use only the essential cookies needed for the site and checkout
+            to work (for example, to keep your basket and to secure forms).
+            These don&rsquo;t require consent, so we don&rsquo;t show a cookie
+            banner. If we ever add analytics or marketing cookies, we will ask
+            for your consent first and update this policy.
           </p>
         </section>
       </div>

@@ -15,6 +15,7 @@
   --text: #1c1a16; /* warm near-black ink */
   --muted: #6b6457; /* secondary text — warm taupe */
   --border: #e2dccd; /* hairline rules */
+  --bone: #eae0cd; /* deeper bone — the artwork drawer surface */
 
   /* §2 Accent — overridden per-artwork by AccentScope; this is the site default
      (burnt sienna). --accent-text is the contrast-clamped variant safe for text
@@ -236,6 +237,63 @@ body::after {
   box-shadow: 0 26px 50px -28px rgba(28, 26, 22, 0.38);
 }
 
+/* ── Artwork drawer (slides in from the left over a dimmed page) ───────────── */
+.drawer-scrim {
+  position: fixed;
+  inset: var(--header-h, 64px) 0 0 0;
+  background: rgba(28, 26, 22, 0.34);
+  opacity: 0;
+  transition: opacity 420ms var(--motion-ease);
+  z-index: 40;
+}
+.drawer-scrim[data-shown="true"] {
+  opacity: 1;
+}
+.drawer-panel {
+  position: fixed;
+  top: var(--header-h, 64px);
+  left: 0;
+  bottom: 0;
+  width: min(94vw, 1320px);
+  background: var(--bone);
+  box-shadow: 36px 0 90px -40px rgba(28, 26, 22, 0.65);
+  transform: translateX(-101%);
+  transition: transform 460ms var(--motion-ease);
+  z-index: 41;
+  will-change: transform;
+}
+.drawer-panel[data-shown="true"] {
+  transform: translateX(0);
+}
+/* Faint printed grain on the bone, matching the gallery wall. */
+.drawer-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image: radial-gradient(
+    rgba(28, 26, 22, 0.04) 1px,
+    transparent 1px
+  );
+  background-size: 4px 4px;
+}
+
+/* ── Page transitions (see template.tsx) ──────────────────────────────────── */
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.page-enter {
+  animation: page-enter 560ms var(--motion-ease) both;
+}
+
 /*
  * Non-negotiable accessibility guard (DESIGN.md §3): when the user prefers
  * reduced motion, content still appears (no reliance on motion to reveal) and
@@ -255,6 +313,10 @@ body::after {
   }
   .btn-primary:hover {
     transform: none;
+  }
+  .drawer-panel,
+  .drawer-scrim {
+    transition: none;
   }
   *,
   *::before,
